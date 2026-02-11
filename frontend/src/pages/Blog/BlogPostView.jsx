@@ -70,36 +70,36 @@ const BlogPostView = () => {
   };
 
   // Generate Post Summary
-  const generatePostSummary = async () => {
-    try {
-      setErrorMsg("");
-      setSummaryContent(null);
+  // const generatePostSummary = async () => {
+  //   try {
+  //     setErrorMsg("");
+  //     setSummaryContent(null);
 
-      console.log("blogPostData:", blogPostData);
-      console.log("blogPostData.content:", blogPostData.content);
-      console.log("Type of content:", typeof blogPostData.content);
+  //     console.log("blogPostData:", blogPostData);
+  //     console.log("blogPostData.content:", blogPostData.content);
+  //     console.log("Type of content:", typeof blogPostData.content);
 
-      setIsLoading(true);
-      setOpenSummarizeDrawer(true);
+  //     setIsLoading(true);
+  //     setOpenSummarizeDrawer(true);
 
-      const response = await axiosInstance.post(
-        API_PATHS.AI.GENERATE_POST_SUMMARY,
-        {
-          content: blogPostData.content || "",
-        },
-      );
+  //     const response = await axiosInstance.post(
+  //       API_PATHS.AI.GENERATE_POST_SUMMARY,
+  //       {
+  //         content: blogPostData.content || "",
+  //       },
+  //     );
 
-      if (response.data) {
-        setSummaryContent(response.data);
-      }
-    } catch (error) {
-      setSummaryContent(null);
-      setErrorMsg("Failed to generate summary. Try again later.");
-      console.log("Error:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     if (response.data) {
+  //       setSummaryContent(response.data);
+  //     }
+  //   } catch (error) {
+  //     setSummaryContent(null);
+  //     setErrorMsg("Failed to generate summary. Try again later.");
+  //     console.log("Error:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // Increment views
   const incrementViews = async (postId) => {
@@ -301,7 +301,35 @@ const BlogPostView = () => {
           </Drawer>
         </div>
       ) : (
-        "IsLoading..."
+        <div className="grid p-5 md:grid-cols-[4fr_1fr] md:gap-10">
+          <SkeletonLoader />
+          <span className="p-5 animate-pulse flex flex-col gap-5">
+            <section className="grid grid-cols-[1fr_2fr] bg-gray-200 rounded dark:bg-gray-700 p-2 gap-3">
+              <div className="bg-gray-300 rounded-sm h-20"></div>
+              <div className="grid gap-3">
+                <h1 className="bg-gray-300 w-full h-5 rounded"></h1>
+                <h1 className="bg-gray-300 w-full h-2 rounded"></h1>
+                <h1 className="bg-gray-300 w-full h-2 rounded"></h1>
+              </div>
+            </section>
+            <section className="grid grid-cols-[1fr_2fr] bg-gray-200 rounded dark:bg-gray-700 p-2 gap-3">
+              <div className="bg-gray-300 rounded-sm h-20"></div>
+              <div className="grid gap-3">
+                <h1 className="bg-gray-300 w-full h-5 rounded"></h1>
+                <h1 className="bg-gray-300 w-full h-2 rounded"></h1>
+                <h1 className="bg-gray-300 w-full h-2 rounded"></h1>
+              </div>
+            </section>
+            <section className="grid grid-cols-[1fr_2fr] bg-gray-200 rounded dark:bg-gray-700 p-2 gap-3">
+              <div className="bg-gray-300 rounded-sm h-20"></div>
+              <div className="grid gap-3">
+                <h1 className="bg-gray-300 w-full h-5 rounded"></h1>
+                <h1 className="bg-gray-300 w-full h-2 rounded"></h1>
+                <h1 className="bg-gray-300 w-full h-2 rounded"></h1>
+              </div>
+            </section>
+          </span>
+        </div>
       )}
     </BlogLayout>
   );

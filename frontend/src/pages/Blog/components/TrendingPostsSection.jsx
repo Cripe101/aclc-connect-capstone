@@ -34,7 +34,7 @@ const TrendingPostsSection = () => {
     <div>
       <h4 className="text-base text-black font-medium mb-3">Recent Posts</h4>
 
-      {postList.length > 0 &&
+      {postList.length > 0 ? (
         postList.map((item) => (
           <PostCard
             key={item._id}
@@ -43,7 +43,20 @@ const TrendingPostsSection = () => {
             tags={item.tags}
             onClick={() => handleClick(item)}
           />
-        ))}
+        ))
+      ) : (
+        <div className="w-full h-full animate-pulse">
+          <section className="p-2 grid grid-cols-[1fr_2fr] gap-3 bg-gray-200 dark:bg-gray-500 h-20 rounded-lg">
+            <h1 className="bg-gray-200 rounded-lg"></h1>
+            <h1 className="grid grid-rows-[1fr_1fr_1fr_1fr] gap-1">
+              <p className="bg-gray-200 rounded-full"></p>
+              <p className=""></p>
+              <p className="bg-gray-200 rounded-full"></p>
+              <p className="bg-gray-200 rounded-full"></p>
+            </h1>
+          </section>
+        </div>
+      )}
     </div>
   );
 };

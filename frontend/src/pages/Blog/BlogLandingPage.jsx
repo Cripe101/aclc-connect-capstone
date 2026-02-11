@@ -93,7 +93,7 @@ const BlogLandingPage = () => {
       </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
         <div className="grid grid-cols-1">
-          {sortedPosts?.length > 0 && (
+          {sortedPosts?.length > 0 ? (
             <FeaturedPosts
               title={sortedPosts[0]?.title}
               coverImageUrl={sortedPosts[0]?.coverImageUrl}
@@ -108,10 +108,27 @@ const BlogLandingPage = () => {
               authProfileImg={sortedPosts[0]?.author?.profileImageUrl || ""}
               onClick={() => handleClick(sortedPosts[0])}
             />
+          ) : (
+            <div className="animate-pulse p-5 gap-5 grid grid-cols-[2fr_3fr] rounded-lg bg-gray-200 dark:bg-gray-500 w-full h-96">
+              <section className="bg-gray-200 w-full rounded-lg"></section>
+              <section className="p-6 gap-3 bg-gray-200 rounded-lg grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]">
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className=""></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className=""></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+              </section>
+            </div>
           )}
-          <div className="grid md:grid-cols-2 gap-6 mt-8">
-            {sortedPosts?.length > 0 &&
-              sortedPosts
+          {sortedPosts?.length > 0 ? (
+            <div className="grid md:grid-cols-2 gap-6 mt-8">
+              {sortedPosts
                 .slice(1)
                 .slice(0, 3)
                 .filter(
@@ -139,7 +156,33 @@ const BlogLandingPage = () => {
                     onClick={() => handleClick(item)}
                   />
                 ))}
-          </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-5 mt-8">
+              <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-lg h-60">
+                <section className="bg-gray-200 rounded-lg"></section>
+                <section className="grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr] gap-3">
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className=""></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                </section>
+              </span>
+              <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-lg h-60">
+                <section className="bg-gray-200 rounded-lg"></section>
+                <section className="grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr] gap-3">
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className=""></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                  <p className="rounded-full bg-gray-200 w-full"></p>
+                </section>
+              </span>
+            </div>
+          )}
           {page < totalPages && (
             <div className="flex items-center justify-center mt-5">
               <button
