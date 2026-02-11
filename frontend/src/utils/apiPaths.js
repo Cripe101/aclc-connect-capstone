@@ -1,4 +1,4 @@
-export const BASE_URL = "http://192.168.8.117:4000";
+export const BASE_URL = "https://aclc-connect-capstone.onrender.com";
 
 export const API_PATHS = {
   AUTH: {
