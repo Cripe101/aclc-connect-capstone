@@ -1,26 +1,33 @@
-import { useEffect, useRef, useState } from 'react'
-import DashboardLayout from '../../../components/Layouts/BlogLayout/DashboardLayout'
-import { useNavigate, useParams } from 'react-router-dom'
-import { LuLoaderCircle, LuSave, LuSend, LuSparkles, LuTrash2 } from 'react-icons/lu'
-import CoverImageSelector from '../../../components/Inputs/CoverImageSelector'
-import MDEditor, { commands } from '@uiw/react-md-editor'
-import TagInput from '../../../components/Inputs/TagInput'
-import axiosInstance from '../../../utils/axiosInstance'
-import { API_PATHS } from '../../../utils/apiPaths.js'
-import SkeletonLoader from '../../../components/Loader/SkeletonLoader.jsx'
-import BlogPostIdeaCard from '../../../components/Cards/BlogPostIdeaCard.jsx'
-import Modal from '../../../components/Modal.jsx'
-import GenerateBlogPostForm from './GenerateBlogPostForm.jsx'
-import uploadImage from '../../../utils/uploadImage.js'
-import { toast } from 'react-hot-toast'
-import { getToastMessageByType } from '../../../utils/helper.js'
-import DeleteAlertContent from '../../../components/DeleteAlertContent.jsx'
+import { useEffect, useRef, useState } from "react";
+import DashboardLayout from "../../../components/Layouts/BlogLayout/DashboardLayout";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  LuArrowLeft,
+  LuDelete,
+  LuLoaderCircle,
+  LuSave,
+  LuSend,
+  LuSparkles,
+  LuTrash2,
+} from "react-icons/lu";
+import CoverImageSelector from "../../../components/Inputs/CoverImageSelector";
+import MDEditor, { commands } from "@uiw/react-md-editor";
+import TagInput from "../../../components/Inputs/TagInput";
+import axiosInstance from "../../../utils/axiosInstance";
+import { API_PATHS } from "../../../utils/apiPaths.js";
+import SkeletonLoader from "../../../components/Loader/SkeletonLoader.jsx";
+import BlogPostIdeaCard from "../../../components/Cards/BlogPostIdeaCard.jsx";
+import Modal from "../../../components/Modal.jsx";
+import GenerateBlogPostForm from "./GenerateBlogPostForm.jsx";
+import uploadImage from "../../../utils/uploadImage.js";
+import { toast } from "react-hot-toast";
+import { getToastMessageByType } from "../../../utils/helper.js";
+import DeleteAlertContent from "../../../components/DeleteAlertContent.jsx";
 import { Image as ImageIcon } from "lucide-react";
 
-
 const BlogPostEditor = ({ isEdit }) => {
-  const navigate = useNavigate()
-  const { postSlug = "" } = useParams()
+  const navigate = useNavigate();
+  const { postSlug = "" } = useParams();
 
   const [postData, setPostData] = useState({
     id: "",
@@ -31,78 +38,82 @@ const BlogPostEditor = ({ isEdit }) => {
     tags: "",
     isDraft: "",
     generatedByAI: false,
-  })
+  });
 
-  const [postIdeas, setPostIdeas] = useState([])
-  const [error, setError] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [openBlogPostGenForm, setOpenBlogPostGenForm] = useState({ open: false, data: null })
-  const [ideaLoading, setIdeaLoading] = useState(false)
-  const [openDeleteAlert, setOpenDeleteAlert] = useState(false)
+  const [postIdeas, setPostIdeas] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [openBlogPostGenForm, setOpenBlogPostGenForm] = useState({
+    open: false,
+    data: null,
+  });
+  const [ideaLoading, setIdeaLoading] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
   const handleValueChange = (key, value) => {
-    setPostData((prevData) => ({ ...prevData, [key]: value }))
-  }
+    setPostData((prevData) => ({ ...prevData, [key]: value }));
+  };
 
   // Generate Blog Post Ideas using AI
   const generatePostIdeas = async () => {
-    setIdeaLoading(true)
+    setIdeaLoading(true);
     try {
       const aiResponse = await axiosInstance.post(
         API_PATHS.AI.GENERATE_BLOG_POST_IDEAS,
         {
-          topics: "Registration, Scholarships, Programming, Campus Events, Health & Safety, Library/IT Notices"
-        }
-      )
-      const generatedIdeas = aiResponse.data
+          topics:
+            "Registration, Scholarships, Programming, Campus Events, Health & Safety, Library/IT Notices",
+        },
+      );
+      const generatedIdeas = aiResponse.data;
       if (generatedIdeas?.length > 0) {
-        setPostIdeas(generatedIdeas)
+        setPostIdeas(generatedIdeas);
       }
     } catch (error) {
-      console.log("Something went wrong. Please try again.", error)
+      console.log("Something went wrong. Please try again.", error);
     } finally {
-      setIdeaLoading(false)
+      setIdeaLoading(false);
     }
-  }
+  };
 
   // Handle Blog Post Publish
   const handlePublish = async (isDraft) => {
-    let coverImageUrl = ""
+    let coverImageUrl = "";
 
     if (!postData.title.trim()) {
-      setError("Please enter a title.")
-      return
+      setError("Please enter a title.");
+      return;
     }
     if (!postData.content.trim()) {
-      setError("Please enter some content.")
-      return
+      setError("Please enter some content.");
+      return;
     }
 
     if (!isDraft) {
       if (!isEdit && !postData.coverImageUrl) {
-        setError("Please select cover image.")
-        return
+        setError("Please select cover image.");
+        return;
       }
       if (isEdit && !postData.coverImageUrl && !postData.coverPreview) {
-        setError("Please select cover image.")
-        return
+        setError("Please select cover image.");
+        return;
       }
       if (!postData.tags.length) {
-        setError("Please add some tags.")
-        return
+        setError("Please add some tags.");
+        return;
       }
     }
 
-    setLoading(true)
-    setError("")
+    setLoading(true);
+    setError("");
 
     try {
       // Check if a new image was uploaded (File Type)
       if (postData.coverImageUrl instanceof File) {
-        const imgUploadRes = await uploadImage(postData.coverImageUrl)
-        coverImageUrl = imgUploadRes.imageUrl || ""
+        const imgUploadRes = await uploadImage(postData.coverImageUrl);
+        coverImageUrl = imgUploadRes.imageUrl || "";
       } else {
-        coverImageUrl = postData.coverPreview
+        coverImageUrl = postData.coverPreview;
       }
 
       const reqPayload = {
@@ -111,41 +122,41 @@ const BlogPostEditor = ({ isEdit }) => {
         coverImageUrl,
         tags: postData.tags,
         isDraft: isDraft ? true : false,
-        generatedByAI: true
-      }
+        generatedByAI: true,
+      };
 
       const response = isEdit
         ? await axiosInstance.put(
-          API_PATHS.POSTS.UPDATE(postData.id),
-          reqPayload
-        )
-        : await axiosInstance.post(API_PATHS.POSTS.CREATE, reqPayload)
+            API_PATHS.POSTS.UPDATE(postData.id),
+            reqPayload,
+          )
+        : await axiosInstance.post(API_PATHS.POSTS.CREATE, reqPayload);
 
       if (response.data) {
         toast.success(
           getToastMessageByType(
-            isDraft ? "draft" : isEdit ? "edit" : "published"
-          )
-        )
-        navigate("/admin/posts")
+            isDraft ? "draft" : isEdit ? "edit" : "published",
+          ),
+        );
+        navigate("/admin/posts");
       }
     } catch (error) {
-      setError("Failed to publish post. Please try again.")
-      console.error("Error publishing the post.", error)
+      setError("Failed to publish post. Please try again.");
+      console.error("Error publishing the post.", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Get Post Data by Slug
   const fetchPostDetailsBySlug = async () => {
     try {
       const response = await axiosInstance.get(
-        API_PATHS.POSTS.GET_BY_SLUG(postSlug)
-      )
+        API_PATHS.POSTS.GET_BY_SLUG(postSlug),
+      );
 
       if (response.data) {
-        const data = response.data
+        const data = response.data;
 
         setPostData((prevState) => ({
           ...prevState,
@@ -156,25 +167,25 @@ const BlogPostEditor = ({ isEdit }) => {
           tags: data.tags,
           isDraft: data.isDraft,
           generatedByAI: data.generatedByAI,
-        }))
+        }));
       }
     } catch (error) {
-      console.error("Error:", error)
+      console.error("Error:", error);
     }
-  }
+  };
 
   // Delete Blog Post
   const deletePost = async () => {
     try {
-      await axiosInstance.delete(API_PATHS.POSTS.DELETE(postData.id))
+      await axiosInstance.delete(API_PATHS.POSTS.DELETE(postData.id));
 
-      toast.success("Post deleted successfully!")
-      setOpenDeleteAlert(false)
-      navigate("/admin/posts")
+      toast.success("Post deleted successfully!");
+      setOpenDeleteAlert(false);
+      navigate("/admin/posts");
     } catch (error) {
-      console.error("Error deleting post:", error)
+      console.error("Error deleting post:", error);
     }
-  }
+  };
 
   // Cloudinary image upload
   const fileInputRef = useRef(null);
@@ -187,8 +198,7 @@ const BlogPostEditor = ({ isEdit }) => {
       const imgUploadRes = await uploadImage(file);
       const imageUrl = imgUploadRes.imageUrl;
 
-      const newContent =
-        (postData.content || "") + `\n![image](${imageUrl})\n`;
+      const newContent = (postData.content || "") + `\n![image](${imageUrl})\n`;
 
       handleValueChange("content", newContent);
     } catch (error) {
@@ -206,82 +216,88 @@ const BlogPostEditor = ({ isEdit }) => {
     },
   };
 
-
-
   useEffect(() => {
     if (isEdit) {
-      fetchPostDetailsBySlug()
+      fetchPostDetailsBySlug();
     } else {
       //generatePostIdeas()
     }
 
-    return () => { }
-  }, [])
-
+    return () => {};
+  }, []);
 
   return (
-    <DashboardLayout activeMenu='Blog Posts'>
-      <div className='my-5'>
-        <div className='grid grid-cols-1 md:grid-cols-12 gap-5 my-4'>
-          <div className='form-card p-6 col-span-12 md:col-span-8'>
-            <div className='flex items-center justify-between'>
-              <h2 className='text-base md:text-lg font-medium'>
+    <DashboardLayout activeMenu="Blog Posts">
+      <div className="my-5">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 my-4">
+          <div className="form-card p-6 col-span-12 md:col-span-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base md:text-lg font-medium">
                 {!isEdit ? "Add New Post" : "Edit Post"}
               </h2>
 
-              <div className='flex items-center gap-3'>
+              <div className="flex items-center gap-3">
                 {isEdit && (
                   <button
-                    className='flex items-center gap-2.5 text-[13px] font-medium text-rose-500 bg-rose-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-rose-50 hover:border-rose-300 cursor-pointer hover:scale-[1.02] transition-all'
+                    className="flex items-center gap-2.5 text-[13px] font-medium text-rose-500 bg-rose-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-rose-50 hover:border-rose-300 cursor-pointer hover:scale-[1.02] transition-all"
                     disabled={loading}
                     onClick={() => setOpenDeleteAlert(true)}
                   >
-                    <LuTrash2 className='text-sm' />{" "}
-                    <span className='hidden md:block'>Delete</span>
+                    <LuTrash2 className="text-sm" />{" "}
+                    <span className="hidden md:block">Delete</span>
                   </button>
                 )}
 
                 <button
-                  className='flex items-center gap-2.5 text-[13px] font-medium text-sky-500 bg-sky-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-sky-100 hover:border-sky-400 cursor-pointer hover:scale-[1.02] transition-all'
+                  className="flex items-center gap-2.5 text-[13px] font-medium text-red-500 bg-red-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-red-100 hover:border-red-400 cursor-pointer hover:scale-[1.02] transition-all"
+                  disabled={loading}
+                  onClick={() => navigate("/admin/posts")}
+                >
+                  <LuArrowLeft className="text-sm" />{" "}
+                  <span className="hidden md:block">Cancel</span>
+                </button>
+                <button
+                  className="flex items-center gap-2.5 text-[13px] font-medium text-sky-500 bg-sky-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-sky-100 hover:border-sky-400 cursor-pointer hover:scale-[1.02] transition-all"
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
-                  <LuSave className='text-sm' />{" "}
-                  <span className='hidden md:block'>Save as Draft</span>
+                  <LuSave className="text-sm" />{" "}
+                  <span className="hidden md:block">Save as Draft</span>
                 </button>
 
                 <button
-                  className='flex items-center gap-2.5 text-[13px] font-medium text-sky-600 hover:text-white hover:bg-linear-to-r hover:from-sky-500 hover:to-indigo-500 rounded px-3 py-[3px] border border-sky-500 hover:border-sky-50 cursor-pointer transition-all'
+                  className="flex items-center gap-2.5 text-[13px] font-medium text-sky-600 hover:text-white hover:bg-linear-to-r hover:from-sky-500 hover:to-indigo-500 rounded px-3 py-[3px] border border-sky-500 hover:border-sky-50 cursor-pointer transition-all"
                   disabled={loading}
                   onClick={() => handlePublish(false)}
                 >
                   {loading ? (
-                    <LuLoaderCircle className='animate-spin text-[15px]' />
+                    <LuLoaderCircle className="animate-spin text-[15px]" />
                   ) : (
-                    <LuSend className='text-sm' />
+                    <LuSend className="text-sm" />
                   )}{" "}
                   Publish
                 </button>
               </div>
             </div>
 
-            {error && <p className='text-red-500 text-xs pb-2.5'>{error}</p>}
+            {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
-            <div className='mt-4'>
-              <label className='text-xs font-medium text-slate-600'>
+            <div className="mt-4">
+              <label className="text-xs font-medium text-slate-600">
                 Post Title
               </label>
 
               <input
-                placeholder='Enter Title'
-                className='form-input'
+                placeholder="Enter Title"
+                className="form-input"
                 value={postData.title}
                 onChange={({ target }) =>
-                  handleValueChange("title", target.value)}
+                  handleValueChange("title", target.value)
+                }
               />
             </div>
 
-            <div className='mt-4'>
+            <div className="mt-4">
               <CoverImageSelector
                 image={postData.coverImageUrl}
                 setImage={(value) => handleValueChange("coverImageUrl", value)}
@@ -290,12 +306,12 @@ const BlogPostEditor = ({ isEdit }) => {
               />
             </div>
 
-            <div className='mt-3'>
-              <label className='text-xs font-medium text-slate-600'>
+            <div className="mt-3">
+              <label className="text-xs font-medium text-slate-600">
                 Content
               </label>
 
-              <div data-color-mode="light" className='mt-3'>
+              <div data-color-mode="light" className="mt-3">
                 <input
                   type="file"
                   accept="image/*"
@@ -307,7 +323,7 @@ const BlogPostEditor = ({ isEdit }) => {
                 <MDEditor
                   value={postData.content}
                   onChange={(data) => {
-                    handleValueChange("content", data)
+                    handleValueChange("content", data);
                   }}
                   commands={[
                     commands.heading,
@@ -333,19 +349,18 @@ const BlogPostEditor = ({ isEdit }) => {
 
             <div className="flex justify-between text-xs text-slate-500 mt-2 px-1">
               <span>
-                {postData.content?.split(/\s+/).filter(Boolean).length || 0} words
+                {postData.content?.split(/\s+/).filter(Boolean).length || 0}{" "}
+                words
               </span>
-              <span>
-                {postData.content?.length || 0} characters
-              </span>
+              <span>{postData.content?.length || 0} characters</span>
             </div>
 
-            <div className='mt-3'>
-              <label className='text-xs font-medium text-slate-600'>Tags</label>
+            <div className="mt-3">
+              <label className="text-xs font-medium text-slate-600">Tags</label>
               <TagInput
                 tags={postData.tags || []}
                 setTags={(data) => {
-                  handleValueChange("tags", data)
+                  handleValueChange("tags", data);
                 }}
               />
             </div>
@@ -400,24 +415,24 @@ const BlogPostEditor = ({ isEdit }) => {
       <Modal
         isOpen={openBlogPostGenForm?.open}
         onClose={() => {
-          setOpenBlogPostGenForm({ open: false, data: null })
+          setOpenBlogPostGenForm({ open: false, data: null });
         }}
         hideHeader
       >
         <GenerateBlogPostForm
           contentParams={openBlogPostGenForm?.data || null}
           setPostContent={(title, content) => {
-            const postInfo = openBlogPostGenForm?.data || null
+            const postInfo = openBlogPostGenForm?.data || null;
             setPostData((prevState) => ({
               ...prevState,
               title: title || prevState.title,
               content: content,
               tags: postInfo.tags || prevState.tags,
-              generatedByAI: true
-            }))
+              generatedByAI: true,
+            }));
           }}
           handleCloseForm={() => {
-            setOpenBlogPostGenForm({ open: false, data: null })
+            setOpenBlogPostGenForm({ open: false, data: null });
           }}
         />
       </Modal>
@@ -425,11 +440,11 @@ const BlogPostEditor = ({ isEdit }) => {
       <Modal
         isOpen={openDeleteAlert}
         onClose={() => {
-          setOpenDeleteAlert(false)
+          setOpenDeleteAlert(false);
         }}
         title="Delete Alert"
       >
-        <div className='w-[30vw]'>
+        <div className="w-[30vw]">
           <DeleteAlertContent
             content="Are you sure you want to delete this post?"
             onDelete={() => deletePost()}
@@ -437,7 +452,7 @@ const BlogPostEditor = ({ isEdit }) => {
         </div>
       </Modal>
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export default BlogPostEditor
+export default BlogPostEditor;
