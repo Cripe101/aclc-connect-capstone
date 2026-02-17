@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { BLOG_NAVBAR_DATA, SIDE_MENU_DATA } from "../../../utils/data.js";
 import { LuLogOut } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import CharAvatar from "../../Cards/CharAvatar.jsx";
 import { UserContext } from "../../../context/userContext.jsx";
 import LogoutAlert from "../../Alerts/LogoutAlert.jsx";
@@ -10,6 +10,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
   const { user, setUser, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
+  const [tap, setTap] = useState(false);
 
   const handleClick = (route) => {
     if (route === "logout") {
@@ -55,18 +56,61 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
       )}
 
       {(isBlogMenu ? BLOG_NAVBAR_DATA : SIDE_MENU_DATA).map((item, index) => (
-        <button
-          key={`menu_${index}`}
-          className={`w-full flex items-center gap-4 text-[15px] ${
-            activeMenu == item.label
-              ? "text-white bg-linear-to-r from-sky-500 to-cyan-400"
-              : ""
-          } py-3 px-6 rounded-lg mb-3 cursor-pointer`}
-          onClick={() => handleClick(item.path)}
-        >
-          <item.icon className="text-xl" />
-          {item.label}
-        </button>
+        <div className="relative hover:bg-blue-100 rounded-full group">
+          <button
+            key={`menu_${index}`}
+            className={`w-full flex items-center gap-4 text-[15px] ${
+              activeMenu == item.label
+                ? "text-white bg-linear-to-r from-sky-500 to-cyan-400"
+                : ""
+            } py-3 px-6 rounded-lg mb-3 cursor-pointer`}
+            onClick={() => {
+              item.label.toLowerCase() === "courses offered"
+                ? ""
+                : handleClick(
+                    item.label.toLowerCase() === "courses offered"
+                      ? ""
+                      : item.path,
+                  );
+              tap ? setTap(false) : setTap(true);
+              // handleClick(
+              //   item.label.toLowerCase() === "courses offered" ? "" : item.path,
+              // );
+            }}
+          >
+            <item.icon className="text-xl" />
+            {item.label}
+          </button>
+          <section
+            className={
+              item.label.toLowerCase() === "courses offered"
+                ? `${tap ? "flex" : "hidden"} absolute  left-50 top-0 flex-col w-[120px] duration-200 bg-slate-100`
+                : "hidden"
+            }
+          >
+            <NavLink
+              onClick={() => setOpenSideMenu((prevState) => !prevState)}
+              to={"/courses-offered/bachelors"}
+              className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+            >
+              Bachelors
+            </NavLink>
+            <NavLink
+              onClick={() => setOpenSideMenu((prevState) => !prevState)}
+              to={"/courses-offered/tesda"}
+              className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+            >
+              TESDA
+            </NavLink>
+            <NavLink
+              onClick={() => setOpenSideMenu((prevState) => !prevState)}
+              to={"/courses-offered/seniorhigh"}
+              className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+            >
+              Senior High
+            </NavLink>
+          </section>
+        </div>
       ))}
 
       {user && (

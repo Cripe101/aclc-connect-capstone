@@ -58,16 +58,16 @@ const Announcements = () => {
 
   return (
     <BlogLayout>
-      <div className="p-5 md:p-10 grid md:grid-cols-[4fr_1fr] gap-5">
+      <div className="p-5 md:p-10 grid gap-5">
         {sortedAnnouncements?.length > 0 ? (
           <AnnouncementsCard data={sortedAnnouncements} />
         ) : (
           <div>Data is loading...</div>
         )}
 
-        <span className="border border-slate-300 rounded-sm p-5">
+        {/* <span className="border border-slate-300 rounded-sm p-5">
           Promotional Grapics...
-        </span>
+        </span> */}
       </div>
     </BlogLayout>
   );

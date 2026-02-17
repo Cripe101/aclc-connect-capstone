@@ -44,15 +44,53 @@ const BlogNavbar = ({ activeMenu }) => {
               if (item?.onlySideMenu) return;
 
               return (
-                <NavLink key={item.id} to={item.path} end>
+                <NavLink
+                  key={item.id}
+                  to={
+                    item?.path.toLowerCase() === "/courses-offered"
+                      ? ""
+                      : item?.path
+                  }
+                  end
+                >
                   {({ isActive }) => (
                     <li className="text-[15px] text-black font-medium list-none relative group cursor-pointer">
                       {item.label}
                       <span
-                        className={`absolute inset-x-0 bottom-0 h-0.5 bg-sky-500 transition-all duration-300 origin-left ${
-                          isActive ? "scale-x-100" : "scale-x-0"
-                        } group-hover:scale-x-100`}
+                        className={
+                          item.label.toLowerCase() === "courses offered"
+                            ? ""
+                            : `absolute inset-x-0 bottom-0 h-[2.5px] rounded-full mt-0.5 bg-red-600 transition-all duration-200 origin-left ${
+                                isActive ? "scale-x-100" : "scale-x-0"
+                              } group-hover:scale-x-100`
+                        }
                       ></span>
+                      <section
+                        className={
+                          item.label.toLowerCase() === "courses offered"
+                            ? "absolute hidden group-hover:grid duration-200 border border-slate-100 bg-slate-100"
+                            : "hidden"
+                        }
+                      >
+                        <NavLink
+                          to={"/courses-offered/bachelors"}
+                          className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+                        >
+                          Bachelors
+                        </NavLink>
+                        <NavLink
+                          to={"/courses-offered/tesda"}
+                          className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+                        >
+                          TESDA
+                        </NavLink>
+                        <NavLink
+                          to={"/courses-offered/seniorhigh"}
+                          className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+                        >
+                          Senior High
+                        </NavLink>
+                      </section>
                     </li>
                   )}
                 </NavLink>

@@ -3,11 +3,9 @@ import DashboardLayout from "../../../components/Layouts/BlogLayout/DashboardLay
 import { useNavigate, useParams } from "react-router-dom";
 import {
   LuArrowLeft,
-  LuDelete,
   LuLoaderCircle,
   LuSave,
   LuSend,
-  LuSparkles,
   LuTrash2,
 } from "react-icons/lu";
 import CoverImageSelector from "../../../components/Inputs/CoverImageSelector";
@@ -15,8 +13,6 @@ import MDEditor, { commands } from "@uiw/react-md-editor";
 import TagInput from "../../../components/Inputs/TagInput";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_PATHS } from "../../../utils/apiPaths.js";
-import SkeletonLoader from "../../../components/Loader/SkeletonLoader.jsx";
-import BlogPostIdeaCard from "../../../components/Cards/BlogPostIdeaCard.jsx";
 import Modal from "../../../components/Modal.jsx";
 import GenerateBlogPostForm from "./GenerateBlogPostForm.jsx";
 import uploadImage from "../../../utils/uploadImage.js";
@@ -24,6 +20,7 @@ import { toast } from "react-hot-toast";
 import { getToastMessageByType } from "../../../utils/helper.js";
 import DeleteAlertContent from "../../../components/DeleteAlertContent.jsx";
 import { Image as ImageIcon } from "lucide-react";
+import SwitchButton from "../../Blog/components/Switchbutton.jsx";
 
 const BlogPostEditor = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -49,6 +46,7 @@ const BlogPostEditor = ({ isEdit }) => {
   });
   const [ideaLoading, setIdeaLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  const [switchButton, setSwitchButton] = useState("Event");
 
   const handleValueChange = (key, value) => {
     setPostData((prevData) => ({ ...prevData, [key]: value }));
@@ -356,9 +354,17 @@ const BlogPostEditor = ({ isEdit }) => {
             </div>
 
             <div className="mt-3">
-              <label className="text-xs font-medium text-slate-600">Tags</label>
+              <section className="text-xs font-medium text-slate-600 flex justify-between">
+                <h1>Tags</h1>
+                <SwitchButton
+                  label={switchButton}
+                  condition={switchButton}
+                  setter={setSwitchButton}
+                  isEdit={isEdit}
+                />
+              </section>
               <TagInput
-                tags={postData.tags || []}
+                tags={postData.tags || [switchButton]}
                 setTags={(data) => {
                   handleValueChange("tags", data);
                 }}

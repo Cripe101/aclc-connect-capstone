@@ -197,7 +197,7 @@ const BlogPostView = () => {
               <img
                 src={blogPostData.coverImageUrl || ""}
                 alt={blogPostData.title}
-                className="object-cover w-screen md:w-full h-[450px] mb-6 rounded-sm"
+                className="object-contain w-screen md:w-full h-[450px] mb-6 rounded-sm"
               />
 
               <div className="grid">

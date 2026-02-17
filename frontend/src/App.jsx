@@ -14,7 +14,6 @@ import Comments from "./pages/Admin/components/Comments";
 import UserProvider from "./context/userContext";
 import AboutPage from "./pages/AboutPage";
 import ScrollToTop from "./components/ScrollToTop";
-import CoursesPage from "./pages/CoursesPage";
 import Announcements from "./pages/Announcements";
 import CourseInfo from "./components/coursesOffered/CourseInfo";
 import {
@@ -22,6 +21,7 @@ import {
   SeniorHighCourseData,
   TesdaCourseData,
 } from "./utils/courseData";
+import Courses from "./pages/Blog/components/courses/Courses";
 
 const App = () => {
   return (
@@ -35,20 +35,52 @@ const App = () => {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/announcements" element={<Announcements />} />
             <Route
-              path="/courses-offered/college/bachelor/:slug"
+              path="/courses-offered/bachelors/:slug"
               element={<CourseInfo data={CollegeCourseData} />}
             />
             <Route
-              path="/courses-offered/senior-high/:slug"
+              path="/courses-offered/seniorhigh/:slug"
               element={<CourseInfo data={SeniorHighCourseData} />}
             />
             <Route
-              path="/courses-offered/college/tesda/:slug"
+              path="/courses-offered/tesda/:slug"
               element={<CourseInfo data={TesdaCourseData} />}
             />
             <Route path="/tag/:tagName" element={<PostByTags />} />
             <Route path="/search" element={<SearchPosts />} />
-            <Route path="/courses-offered" element={<CoursesPage />} />
+            <Route
+              path="/courses-offered/bachelors"
+              element={
+                <Courses
+                  title={""}
+                  data={CollegeCourseData}
+                  side={"Bachelor's"}
+                  nav={"/courses-offered/bachelors/"}
+                />
+              }
+            />
+            <Route
+              path="/courses-offered/tesda"
+              element={
+                <Courses
+                  title={""}
+                  data={TesdaCourseData}
+                  side={"Tesda"}
+                  nav={"/courses-offered/tesda/"}
+                />
+              }
+            />
+            <Route
+              path="/courses-offered/seniorhigh"
+              element={
+                <Courses
+                  title={""}
+                  data={SeniorHighCourseData}
+                  side={"Senior High"}
+                  nav={"/courses-offered/seniorhigh/"}
+                />
+              }
+            />
 
             {/* Admin Auth Route - Not protected (for login/signup) */}
             <Route path="/admin-login" element={<AdminLogin />} />

@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import BlogLayout from "../../components/Layouts/BlogLayout/BlogLayout";
-import axiosInstance from "../../utils/axiosInstance";
-import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { LuGalleryVerticalEnd, LuLoaderCircle } from "react-icons/lu";
@@ -9,8 +7,10 @@ import FeaturedPosts from "./components/FeaturedPosts";
 import BlogPostSummary from "./components/BlogPostSummary";
 import TrendingPostsSection from "./components/TrendingPostsSection";
 import logo from "../../assets/aclc-logo-text.png";
+// import aclcVid from "../../assets/aclc-vid.mp4";
 import { getPosts } from "../../utils/api";
 import { useQuery } from "@tanstack/react-query";
+
 const BlogLandingPage = () => {
   const navigate = useNavigate();
 
@@ -84,13 +84,21 @@ const BlogLandingPage = () => {
 
   return (
     <BlogLayout>
-      <div className="mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-blue-900">
+      <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-blue-900">
         <img src={logo} alt="" className="w-60 p-2 bg-white rounded-lg" />
         <p className="text-white text-justify font-serif w-60">
           {" "}
           ACLC College of Ormoc is a member of the AMA Education System.
         </p>
       </div>
+      {/* <div className="flex md:px-5 justify-center">
+        <video
+          src={aclcVid}
+          autoPlay={true}
+          loop={true}
+          className="mt-10 bg-blue-800"
+        ></video>
+      </div> */}
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
         <div className="grid grid-cols-1">
           {sortedPosts?.length > 0 ? (

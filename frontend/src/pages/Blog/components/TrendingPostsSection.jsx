@@ -35,15 +35,17 @@ const TrendingPostsSection = () => {
       <h4 className="text-base text-black font-medium mb-3">Recent Posts</h4>
 
       {postList.length > 0 ? (
-        postList.map((item) => (
-          <PostCard
-            key={item._id}
-            title={item.title}
-            coverImageUrl={item.coverImageUrl}
-            tags={item.tags}
-            onClick={() => handleClick(item)}
-          />
-        ))
+        postList
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .map((item) => (
+            <PostCard
+              key={item._id}
+              title={item.title}
+              coverImageUrl={item.coverImageUrl}
+              tags={item.tags}
+              onClick={() => handleClick(item)}
+            />
+          ))
       ) : (
         <div className="w-full h-full animate-pulse">
           <section className="p-2 grid grid-cols-[1fr_2fr] gap-3 bg-gray-200 dark:bg-gray-500 h-20 rounded-lg">

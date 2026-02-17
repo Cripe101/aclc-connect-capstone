@@ -28,12 +28,12 @@ const Footer = () => {
           <section className="grid lg:grid-cols-3 gap-2">
             <CourseFoorterDisplay
               title={"College"}
-              nav={"/courses-offered/college/bachelor/"}
+              nav={"/courses-offered/bachelors/"}
               data={CollegeCourseData}
             />
             <CourseFoorterDisplay
               title={"TESDA"}
-              nav={"/courses-offered/college/tesda/"}
+              nav={"/courses-offered/tesda/"}
               data={TesdaCourseData}
             />
             <CourseFoorterDisplay
