@@ -20,12 +20,12 @@ import { toast } from "react-hot-toast";
 import { getToastMessageByType } from "../../../utils/helper.js";
 import DeleteAlertContent from "../../../components/DeleteAlertContent.jsx";
 import { Image as ImageIcon } from "lucide-react";
-import SwitchButton from "../../Blog/components/Switchbutton.jsx";
+import SwitchButton from "../../Blog/components/SwitchButton.jsx";
 
 const BlogPostEditor = ({ isEdit }) => {
   const navigate = useNavigate();
   const { postSlug = "" } = useParams();
-  const [switchButton, setSwitchButton] = useState(["Event"]);
+  const [switchButton, setSwitchButton] = useState("Event");
 
   const [postData, setPostData] = useState({
     id: "",
@@ -33,7 +33,7 @@ const BlogPostEditor = ({ isEdit }) => {
     content: "",
     coverImageUrl: "",
     coverPreview: "",
-    tags: switchButton,
+    tags: [],
     isDraft: "",
     generatedByAI: false,
   });
@@ -355,15 +355,15 @@ const BlogPostEditor = ({ isEdit }) => {
             <div className="mt-3">
               <section className="text-xs font-medium text-slate-600 flex justify-between">
                 <h1>Tags</h1>
-                <SwitchButton
+                {/* <SwitchButton
                   label={switchButton}
                   condition={switchButton}
                   setter={setSwitchButton}
                   isEdit={isEdit}
-                />
+                /> */}
               </section>
               <TagInput
-                tags={postData.tags || []}
+                tags={postData.tags || [""]}
                 setTags={(data) => {
                   handleValueChange("tags", data);
                 }}
