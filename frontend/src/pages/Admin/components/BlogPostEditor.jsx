@@ -333,7 +333,7 @@ const BlogPostEditor = ({ isEdit }) => {
                     commands.orderedListCommand,
                     commands.divider,
                     commands.link,
-                    // customImageCommand,
+                    customImageCommand,
                     commands.divider,
                     commands.code,
                   ]}
