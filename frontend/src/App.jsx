@@ -22,6 +22,7 @@ import {
   TesdaCourseData,
 } from "./utils/courseData";
 import Courses from "./pages/Blog/components/courses/Courses";
+import Events from "./pages/Events";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/" element={<BlogLandingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/announcements" element={<Announcements />} />
+            <Route path="/events" element={<Events />} />
             <Route
               path="/courses-offered/bachelors/:slug"
               element={<CourseInfo data={CollegeCourseData} />}

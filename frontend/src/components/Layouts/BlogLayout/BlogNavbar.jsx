@@ -72,24 +72,24 @@ const BlogNavbar = ({ activeMenu }) => {
                             : "hidden"
                         }
                       >
-                        <NavLink
+                        <Link
                           to={"/courses-offered/bachelors"}
                           className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
                         >
                           Bachelors
-                        </NavLink>
-                        <NavLink
+                        </Link>
+                        <Link
                           to={"/courses-offered/tesda"}
                           className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
                         >
                           TESDA
-                        </NavLink>
-                        <NavLink
+                        </Link>
+                        <Link
                           to={"/courses-offered/seniorhigh"}
                           className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
                         >
                           Senior High
-                        </NavLink>
+                        </Link>
                       </section>
                     </li>
                   )}
@@ -131,7 +131,6 @@ const BlogNavbar = ({ activeMenu }) => {
           )}
         </div>
       </div>
-
       <AuthModel />
       <SearchBarPopup isOpen={openSearchBar} setIsOpen={setOpenSearchBar} />
     </>

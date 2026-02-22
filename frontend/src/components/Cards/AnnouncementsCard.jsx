@@ -9,7 +9,7 @@ const AnnouncementsCard = ({ data }) => {
       {data.map((anno) => (
         <section
           key={anno._id}
-          className="border border-slate-300 rounded p-3 grid md:grid-cols-[1fr_2fr] gap-3 cursor-pointer hover:scale-[101%] active:scale-[99%] duration-200"
+          className="rounded p-3 grid md:grid-cols-[1fr_2fr] gap-3 cursor-pointer hover:scale-[101%] active:scale-[99%] duration-200"
           onClick={() => navigate("/" + anno.slug)}
         >
           <img

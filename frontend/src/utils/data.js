@@ -5,6 +5,7 @@ import {
   LuLayoutTemplate,
   LuTag,
   LuBookA,
+  LuUser,
 } from "react-icons/lu";
 
 export const SIDE_MENU_DATA = [
@@ -13,6 +14,12 @@ export const SIDE_MENU_DATA = [
     label: "Dashboard",
     icon: LuLayoutDashboard,
     path: "/admin/dashboard",
+  },
+  {
+    id: "04",
+    label: "Users",
+    icon: LuUser,
+    path: "/admin/users",
   },
 
   {
@@ -51,12 +58,12 @@ export const BLOG_NAVBAR_DATA = [
     icon: LuTag,
     path: "/announcements",
   },
-  // {
-  //   id: "04",
-  //   label: "Programs",
-  //   icon: LuBookA,
-  //   path: "/programs",
-  // },
+  {
+    id: "04",
+    label: "Events",
+    icon: LuBookA,
+    path: "/events",
+  },
 
   {
     id: "05",

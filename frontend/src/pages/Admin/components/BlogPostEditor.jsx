@@ -25,6 +25,7 @@ import SwitchButton from "../../Blog/components/Switchbutton.jsx";
 const BlogPostEditor = ({ isEdit }) => {
   const navigate = useNavigate();
   const { postSlug = "" } = useParams();
+  const [switchButton, setSwitchButton] = useState(["Event"]);
 
   const [postData, setPostData] = useState({
     id: "",
@@ -32,7 +33,7 @@ const BlogPostEditor = ({ isEdit }) => {
     content: "",
     coverImageUrl: "",
     coverPreview: "",
-    tags: "",
+    tags: switchButton,
     isDraft: "",
     generatedByAI: false,
   });
@@ -46,7 +47,6 @@ const BlogPostEditor = ({ isEdit }) => {
   });
   const [ideaLoading, setIdeaLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
-  const [switchButton, setSwitchButton] = useState("Event");
 
   const handleValueChange = (key, value) => {
     setPostData((prevData) => ({ ...prevData, [key]: value }));
@@ -317,7 +317,6 @@ const BlogPostEditor = ({ isEdit }) => {
                   style={{ display: "none" }}
                   onChange={handleFileChange}
                 />
-
                 <MDEditor
                   value={postData.content}
                   onChange={(data) => {
@@ -334,7 +333,7 @@ const BlogPostEditor = ({ isEdit }) => {
                     commands.orderedListCommand,
                     commands.divider,
                     commands.link,
-                    customImageCommand,
+                    // customImageCommand,
                     commands.divider,
                     commands.code,
                   ]}
@@ -364,7 +363,7 @@ const BlogPostEditor = ({ isEdit }) => {
                 />
               </section>
               <TagInput
-                tags={postData.tags || [switchButton]}
+                tags={postData.tags || []}
                 setTags={(data) => {
                   handleValueChange("tags", data);
                 }}

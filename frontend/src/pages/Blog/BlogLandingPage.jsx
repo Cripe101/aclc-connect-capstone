@@ -65,8 +65,8 @@ const BlogLandingPage = () => {
   useEffect(() => {
     // getAllPosts(1);
     setBlogPostList(queryGetPosts?.data?.posts);
-    console.log(blogPostList);
-    console.log("rendered");
+    // console.log(sortedPosts);
+    // console.log("rendered");
   }, [queryGetPosts]);
 
   const sortedPosts = useMemo(() => {
@@ -100,7 +100,7 @@ const BlogLandingPage = () => {
         ></video>
       </div> */}
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
-        <div className="grid grid-cols-1">
+        <div className="grid grid-cols-1 p-5">
           {sortedPosts?.length > 0 ? (
             <FeaturedPosts
               title={sortedPosts[0]?.title}
@@ -138,15 +138,7 @@ const BlogLandingPage = () => {
             <div className="grid md:grid-cols-2 gap-6 mt-8">
               {sortedPosts
                 .slice(1)
-                .slice(0, 3)
-                .filter(
-                  (item) =>
-                    !item.tags?.some(
-                      (tag) =>
-                        tag.toLowerCase() === "announcement" ||
-                        tag.toLowerCase() === "announcements",
-                    ),
-                )
+                .slice(0, 4)
                 .map((item) => (
                   <BlogPostSummary
                     key={item._id}
