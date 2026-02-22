@@ -204,15 +204,15 @@ const BlogPostEditor = ({ isEdit }) => {
     }
   };
 
-  const customImageCommand = {
-    name: "image",
-    keyCommand: "image",
-    buttonProps: { "aria-label": "Insert image" },
-    icon: <ImageIcon size={18} />,
-    execute: () => {
-      fileInputRef.current.click();
-    },
-  };
+  // const customImageCommand = {
+  //   name: "image",
+  //   keyCommand: "image",
+  //   buttonProps: { "aria-label": "Insert image" },
+  //   icon: <ImageIcon size={18} />,
+  //   execute: () => {
+  //     fileInputRef.current.click();
+  //   },
+  // };
 
   useEffect(() => {
     if (isEdit) {
@@ -333,7 +333,7 @@ const BlogPostEditor = ({ isEdit }) => {
                     commands.orderedListCommand,
                     commands.divider,
                     commands.link,
-                    customImageCommand,
+                    // customImageCommand,
                     commands.divider,
                     commands.code,
                   ]}
