@@ -3,7 +3,7 @@ const Modal = ({ children, isOpen, title, hideHeader, onClose }) => {
 
   return (
     <div
-      className={`${isOpen ? "" : "md:left-[1800px]"} w-screen h-screen fixed inset-0 z-9999 flex justify-center items-center bg-black/40 backdrop-blur-sm duration-300 ease-in-out`}
+      className={`${isOpen ? "" : "left-[1500px] md:left-[1800px]"} w-screen h-screen fixed inset-0 z-9999 flex justify-center items-center bg-black/40 backdrop-blur-sm duration-300 ease-in-out`}
     >
       {/* Modal Content */}
       <div
