@@ -9,7 +9,7 @@ const AnnouncementsCard = ({ data }) => {
       {data.map((anno) => (
         <section
           key={anno._id}
-          className="rounded p-3 grid md:grid-cols-[1fr_2fr] gap-3 cursor-pointer hover:scale-[101%] active:scale-[99%] duration-200"
+          className="rounded-lg bg-blue-50 grid md:grid-cols-[1fr_2fr] gap-3 cursor-pointer hover:scale-[101%] active:scale-[99%] duration-200"
           onClick={() => navigate("/" + anno.slug)}
         >
           <img
@@ -17,9 +17,9 @@ const AnnouncementsCard = ({ data }) => {
               anno?.coverImageUrl ||
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ32isJCX6lH9OJwOJvk4Xrt7kF2I06nDqm4Q&s"
             }
-            className="border border-slate-400/70 rounded w-full h-60 md:h-48 object-cover"
+            className="border border-blue-50 rounded-l-lg w-full h-60 md:h-50 object-cover"
           />
-          <section className="w-full font-display py-1 px-5">
+          <section className="w-full font-display py-2 px-5">
             <h1 className="text-xl font-bold text-red-800">{anno.title}</h1>
             <h1 className="flex gap-2 text-sm font-light">
               <p>Posted on</p>

@@ -1,8 +1,10 @@
 const Modal = ({ children, isOpen, title, hideHeader, onClose }) => {
-  if (!isOpen) return null;
+  // if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-9999 flex justify-center items-center w-screen h-screen bg-black/40 backdrop-blur-sm">
+    <div
+      className={`${isOpen ? "" : "md:left-[1800px]"} w-screen h-screen fixed inset-0 z-9999 flex justify-center items-center bg-black/40 backdrop-blur-sm duration-300 ease-in-out`}
+    >
       {/* Modal Content */}
       <div
         className={`relative flex flex-col bg-white rounded-lg overflow-hidden max-h-[90vh] max-w-[90%]`}

@@ -90,6 +90,14 @@ const ProfileDropdown = () => {
     setIsOpen(false);
   };
 
+  const handleCancel = () => {
+    setPwdForm({
+      oldPassword: "",
+      password: "",
+      confirm: "",
+    });
+  };
+
   const handleUpdatePassword = async () => {
     if (
       !pwdForm.oldPassword ||
@@ -262,7 +270,7 @@ const ProfileDropdown = () => {
         onClose={() => setIsPwdModalOpen(false)}
         title="Update Password"
       >
-        <div className="space-y-4 w-full max-w-md mx-auto">
+        <div className="space-y-4 w-full max-w-md mx-auto p-5">
           {/* Current Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -398,15 +406,18 @@ const ProfileDropdown = () => {
 
           <div className="flex gap-3 justify-end pt-2">
             <button
-              onClick={() => setIsPwdModalOpen(false)}
-              className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+              onClick={() => {
+                handleCancel();
+                setIsPwdModalOpen(false);
+              }}
+              className="px-4 py-2 border border-red-600 cursor-pointer text-red-600 rounded-lg hover:bg-red-600 hover:text-white duration-200"
               disabled={isLoading}
             >
               Cancel
             </button>
             <button
               onClick={handleUpdatePassword}
-              className="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition disabled:opacity-50"
+              className="px-4 py-2 bg-blue-700 cursor-pointer text-white rounded-lg hover:bg-blue-800 transition disabled:bg-blue-200"
               disabled={isLoading || pwdStrength.strength < 3}
             >
               {isLoading ? "Updating..." : "Update"}

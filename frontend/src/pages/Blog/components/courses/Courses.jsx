@@ -17,7 +17,7 @@ const Courses = ({ title, data, side, nav }) => {
             <section
               onClick={() => navigate(nav + course.slug)}
               key={course.course}
-              className="bg-white grid md:grid-rows-[3fr_1fr] max-w-[1200px] border border-slate-200 rounded hover:cursor:pointer hover:scale-[101%] active:scale-[99%] hover:cursor-pointer duration-200"
+              className="grid md:grid-rows-[3fr_1fr] max-w-[1200px] bg-blue-50 rounded-lg hover:cursor:pointer hover:scale-[101%] active:scale-[99%] hover:cursor-pointer duration-200"
             >
               <img
                 src={course.image}

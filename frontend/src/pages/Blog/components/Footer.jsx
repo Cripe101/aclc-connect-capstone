@@ -25,7 +25,7 @@ const Footer = () => {
           <h1 className="font-diplay font-bold text-lg text-center">
             Courses Offered
           </h1>
-          <section className="grid lg:grid-cols-3 gap-2">
+          <section className="grid lg:grid-cols-3 gap-1">
             <CourseFoorterDisplay
               title={"College"}
               nav={"/courses-offered/bachelors/"}
