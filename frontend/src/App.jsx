@@ -23,6 +23,7 @@ import {
 } from "./utils/courseData";
 import Courses from "./pages/Blog/components/courses/Courses";
 import Events from "./pages/Events";
+import UsersManagement from "./pages/Admin/components/UsersManagement";
 
 const App = () => {
   return (
@@ -92,6 +93,7 @@ const App = () => {
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/posts" element={<BlogPosts />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
+              <Route path="/admin/users" element={<UsersManagement />} />
               <Route
                 path="/admin/edit/:postSlug"
                 element={<BlogPostEditor isEdit={true} />}

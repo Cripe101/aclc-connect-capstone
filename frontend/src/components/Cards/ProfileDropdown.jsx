@@ -1,7 +1,18 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
-import { LuLogOut, LuUser, LuGithub, LuMail } from "react-icons/lu";
+import {
+  LuLogOut,
+  LuUser,
+  LuMail,
+  LuKey,
+  LuEye,
+  LuEyeOff,
+} from "react-icons/lu";
+import Modal from "../Modal";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import toast from "react-hot-toast";
 import LogoutAlert from "../Alerts/LogoutAlert";
 
 const ProfileDropdown = () => {
@@ -10,6 +21,50 @@ const ProfileDropdown = () => {
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  const [isPwdModalOpen, setIsPwdModalOpen] = useState(false);
+  const [pwdForm, setPwdForm] = useState({
+    oldPassword: "",
+    password: "",
+    confirm: "",
+  });
+  const [showPwdVisibility, setShowPwdVisibility] = useState({
+    old: false,
+    new: false,
+    confirm: false,
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Password strength validator
+  const validatePasswordStrength = (pwd) => {
+    const minLength = pwd.length >= 8;
+    const hasUpper = /[A-Z]/.test(pwd);
+    const hasLower = /[a-z]/.test(pwd);
+    const hasNumber = /[0-9]/.test(pwd);
+    const hasSpecial = /[!@#$%^&*(),./<>?'`~=+_-]/.test(pwd);
+
+    const strength = [
+      minLength,
+      hasUpper,
+      hasLower,
+      hasNumber,
+      hasSpecial,
+    ].filter(Boolean).length;
+    return { strength, minLength, hasUpper, hasLower, hasNumber, hasSpecial };
+  };
+
+  const pwdStrength = validatePasswordStrength(pwdForm.password);
+  const strengthColor =
+    pwdStrength.strength <= 2
+      ? "text-red-500"
+      : pwdStrength.strength <= 4
+        ? "text-yellow-500"
+        : "text-green-500";
+  const strengthText =
+    pwdStrength.strength <= 2
+      ? "Weak"
+      : pwdStrength.strength <= 4
+        ? "Fair"
+        : "Strong";
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -28,6 +83,49 @@ const ProfileDropdown = () => {
   const handleLogoutClick = () => {
     setShowLogoutAlert(true);
     setIsOpen(false);
+  };
+
+  const handleOpenPwd = () => {
+    setIsPwdModalOpen(true);
+    setIsOpen(false);
+  };
+
+  const handleUpdatePassword = async () => {
+    if (
+      !pwdForm.oldPassword ||
+      !pwdForm.password ||
+      pwdForm.password !== pwdForm.confirm
+    ) {
+      toast.error("Please provide old password and matching new passwords");
+      return;
+    }
+
+    if (pwdStrength.strength < 3) {
+      toast.error(
+        "Password must be at least fair strength (8+ chars, mixed case, number)",
+      );
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await axiosInstance.put(API_PATHS.AUTH.CHANGE_PASSWORD, {
+        oldPassword: pwdForm.oldPassword,
+        newPassword: pwdForm.password,
+      });
+      toast.success("Password updated successfully. Please re-login.");
+      setIsPwdModalOpen(false);
+      setPwdForm({ oldPassword: "", password: "", confirm: "" });
+      setShowPwdVisibility({ old: false, new: false, confirm: false });
+      // Clear token and redirect to login
+      localStorage.removeItem("token");
+      setTimeout(() => navigate("/admin-login"), 1500);
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Failed to update password");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -120,6 +218,16 @@ const ProfileDropdown = () => {
                   </span>
                 </button>
               )}
+
+              <button
+                onClick={handleOpenPwd}
+                className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+              >
+                <LuKey className="text-gray-400 group-hover:text-sky-500 transition-colors" />
+                <span className="group-hover:text-sky-600 font-medium">
+                  Update Password
+                </span>
+              </button>
             </div>
 
             {/* Divider */}
@@ -148,6 +256,164 @@ const ProfileDropdown = () => {
 
       {/* Logout Alert */}
       <LogoutAlert isOpen={showLogoutAlert} setIsOpen={setShowLogoutAlert} />
+      {/* Update Password Modal */}
+      <Modal
+        isOpen={isPwdModalOpen}
+        onClose={() => setIsPwdModalOpen(false)}
+        title="Update Password"
+      >
+        <div className="space-y-4 w-full max-w-md mx-auto">
+          {/* Current Password */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Current Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPwdVisibility.old ? "text" : "password"}
+                value={pwdForm.oldPassword}
+                onChange={(e) =>
+                  setPwdForm({ ...pwdForm, oldPassword: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 pr-10"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPwdVisibility({
+                    ...showPwdVisibility,
+                    old: !showPwdVisibility.old,
+                  })
+                }
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+              >
+                {showPwdVisibility.old ? (
+                  <LuEyeOff size={20} />
+                ) : (
+                  <LuEye size={20} />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* New Password */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              New Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPwdVisibility.new ? "text" : "password"}
+                value={pwdForm.password}
+                onChange={(e) =>
+                  setPwdForm({ ...pwdForm, password: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 pr-10"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPwdVisibility({
+                    ...showPwdVisibility,
+                    new: !showPwdVisibility.new,
+                  })
+                }
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+              >
+                {showPwdVisibility.new ? (
+                  <LuEyeOff size={20} />
+                ) : (
+                  <LuEye size={20} />
+                )}
+              </button>
+            </div>
+            {pwdForm.password && (
+              <div className="mt-2 text-sm">
+                <p className={`font-medium ${strengthColor}`}>
+                  Strength: {strengthText}
+                </p>
+                <ul className="text-xs text-gray-600 mt-1 space-y-1">
+                  <li className={pwdStrength.minLength ? "text-green-600" : ""}>
+                    ✓ At least 8 characters
+                  </li>
+                  <li className={pwdStrength.hasUpper ? "text-green-600" : ""}>
+                    ✓ Uppercase letter
+                  </li>
+                  <li className={pwdStrength.hasLower ? "text-green-600" : ""}>
+                    ✓ Lowercase letter
+                  </li>
+                  <li className={pwdStrength.hasNumber ? "text-green-600" : ""}>
+                    ✓ Number
+                  </li>
+                  <li
+                    className={pwdStrength.hasSpecial ? "text-green-600" : ""}
+                  >
+                    ✓ Special character
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPwdVisibility.confirm ? "text" : "password"}
+                value={pwdForm.confirm}
+                onChange={(e) =>
+                  setPwdForm({ ...pwdForm, confirm: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 pr-10"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPwdVisibility({
+                    ...showPwdVisibility,
+                    confirm: !showPwdVisibility.confirm,
+                  })
+                }
+                className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+              >
+                {showPwdVisibility.confirm ? (
+                  <LuEyeOff size={20} />
+                ) : (
+                  <LuEye size={20} />
+                )}
+              </button>
+            </div>
+            {pwdForm.confirm && pwdForm.password !== pwdForm.confirm && (
+              <p className="text-xs text-red-500 mt-1">
+                Passwords do not match
+              </p>
+            )}
+            {pwdForm.confirm && pwdForm.password === pwdForm.confirm && (
+              <p className="text-xs text-green-500 mt-1">Passwords match ✓</p>
+            )}
+          </div>
+
+          <div className="flex gap-3 justify-end pt-2">
+            <button
+              onClick={() => setIsPwdModalOpen(false)}
+              className="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition"
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleUpdatePassword}
+              className="px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition disabled:opacity-50"
+              disabled={isLoading || pwdStrength.strength < 3}
+            >
+              {isLoading ? "Updating..." : "Update"}
+            </button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

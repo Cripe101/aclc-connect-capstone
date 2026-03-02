@@ -1,10 +1,16 @@
-export const BASE_URL = "https://aclc-connect-capstone.onrender.com";
+export const BASE_URL = "http://localhost:4000";
+// http://localhost:4000
+// https://aclc-connect-capstone.onrender.com
 
 export const API_PATHS = {
   AUTH: {
     REGISTER: "/api/auth/register",
     LOGIN: "/api/auth/login",
     GET_PROFILE: "/api/auth/profile",
+    GET_ALL_USERS: "/api/auth/users",
+    DELETE_USER: (id) => `/api/auth/users/${id}`,
+    UPDATE_USER: (id) => `/api/auth/users/${id}`,
+    CHANGE_PASSWORD: "/api/auth/change-password",
   },
 
   IMAGE: {
