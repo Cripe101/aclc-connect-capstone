@@ -138,7 +138,7 @@ const BlogLandingPage = () => {
             <div className="grid md:grid-cols-2 gap-6 mt-8">
               {sortedPosts
                 .slice(1)
-                .slice(0, 4)
+                .slice(0, 6)
                 .map((item) => (
                   <BlogPostSummary
                     key={item._id}

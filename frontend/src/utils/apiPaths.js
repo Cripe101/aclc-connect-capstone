@@ -1,4 +1,4 @@
-export const BASE_URL = "https://aclc-connect-capstone.onrender.com";
+export const BASE_URL = "http://localhost:4000";
 // http://localhost:4000
 // https://aclc-connect-capstone.onrender.com
 

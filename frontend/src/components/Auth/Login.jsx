@@ -204,7 +204,7 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                 ✓
               </div>
-              <span>Explore our blog posts</span>
+              <span>Explore our school posts</span>
             </div>
             <div className="flex items-center gap-3 justify-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
