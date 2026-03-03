@@ -198,45 +198,86 @@ const UsersManagement = () => {
             <LuLoaderCircle className="animate-spin text-2xl text-sky-500" />
           </div>
         ) : filteredUsers.length > 0 ? (
-          <div className="overflow-x-auto">
-            <span className="w-full text-sm">
-              <section>
-                <h1 className="grid grid-cols-[2fr_2fr_1fr_2fr] border-b mb-3 border-gray-200">
-                  <p className="text-left py-3 px-4 font-medium text-gray-700">
-                    Name
-                  </p>
-                  <p className="text-left py-3 px-4 font-medium text-gray-700">
-                    Email
-                  </p>
-                  <p className="text-left py-3 px-4 font-medium text-gray-700">
-                    Role
-                  </p>
-
-                  <p className="text-left py-3 px-4 font-medium text-gray-700">
-                    Actions
-                  </p>
-                </h1>
-              </section>
-              <span>
-                {filteredUsers.map((user) => (
-                  <section
-                    key={user._id}
-                    className="rounded-lg hover:bg-slate-50 duration-200 grid grid-cols-[2fr_2fr_1fr_2fr]"
-                  >
-                    <p className="py-3 px-4">{user.name}</p>
-                    <p className="py-3 px-4 text-gray-600">{user.email}</p>
-                    <p className="py-3 px-4">
-                      <span
-                        className={`py-1 rounded-lg w-[200px] text-xs font-medium ${
-                          user.role === "admin"
-                            ? "px-4 bg-red-100 text-red-700"
-                            : "px-2.5 bg-blue-100 text-blue-700"
-                        }`}
-                      >
-                        {user.role}
-                      </span>
+          <div>
+            <div className="hidden md:block overflow-x-auto">
+              <span className="w-full text-sm">
+                <section>
+                  <h1 className="grid grid-cols-[2fr_2fr_1fr_1fr] border-b mb-3 border-gray-200">
+                    <p className="text-left py-3 px-4 font-medium text-gray-700">
+                      Name
+                    </p>
+                    <p className="text-left py-3 px-4 font-medium text-gray-700">
+                      Email
+                    </p>
+                    <p className="text-left py-3 px-4 font-medium text-gray-700">
+                      Role
                     </p>
 
+                    <p className="text-left py-3 px-4 font-medium text-gray-700">
+                      Actions
+                    </p>
+                  </h1>
+                </section>
+                <span>
+                  {filteredUsers.map((user) => (
+                    <section
+                      key={user._id}
+                      className="rounded-lg hover:bg-slate-50 duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]"
+                    >
+                      <p className="py-3 px-4">{user.name}</p>
+                      <p className="py-3 px-4 text-gray-600">{user.email}</p>
+                      <p className="py-3 px-4">
+                        <span
+                          className={`py-1 rounded-lg w-[200px] text-xs font-medium ${
+                            user.role === "admin"
+                              ? "px-4 bg-red-100 text-red-700"
+                              : "px-2.5 bg-blue-100 text-blue-700"
+                          }`}
+                        >
+                          {user.role}
+                        </span>
+                      </p>
+
+                      <p className="py-3 px-4">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleEditClick(user)}
+                            className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-800 duration-200"
+                            title="Edit User"
+                          >
+                            <LuPencil className="text-lg" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(user)}
+                            className="flex cursor-pointer items-center gap-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                            title="Delete User"
+                          >
+                            <LuTrash2 className="text-lg" />
+                          </button>
+                        </div>
+                      </p>
+                    </section>
+                  ))}
+                </span>
+              </span>
+            </div>
+            {/* Mobile view */}
+            <section className="md:hidden grid grid-cols-1 gap-3">
+              {filteredUsers.map((user) => (
+                <section
+                  key={user._id}
+                  className="flex justify-between bg-blue-50 p-5 rounded-lg"
+                >
+                  <section className="flex flex-col gap-5">
+                    <h1 className="font-bold">{user.name}</h1>
+                    <h1 className="truncate w-40">{user.email}</h1>
+                  </section>
+                  <section className="flex flex-col gap-5">
+                    <h1
+                      className={`${user.role.toLowerCase() === "admin" ? "bg-red-200 text-red-700" : "bg-blue-200 text-blue-800"}  text-center  rounded-lg`}
+                    >
+                      {user.role}
+                    </h1>
                     <p className="py-3 px-4">
                       <div className="flex gap-2">
                         <button
@@ -256,9 +297,9 @@ const UsersManagement = () => {
                       </div>
                     </p>
                   </section>
-                ))}
-              </span>
-            </span>
+                </section>
+              ))}
+            </section>
           </div>
         ) : (
           <div className="flex justify-center items-center py-10">
