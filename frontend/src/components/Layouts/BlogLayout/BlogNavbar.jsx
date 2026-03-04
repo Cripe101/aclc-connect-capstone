@@ -99,12 +99,12 @@ const BlogNavbar = ({ activeMenu }) => {
           </nav>
 
           <div className="flex items-center gap-6">
-            <button
+            {/* <button
               className="hover:text-sky-500 cursor-pointer"
               onClick={() => setOpenSearchBar(true)}
             >
               <LuSearch className="text-[22px]" />
-            </button>
+            </button> */}
 
             {!user ? (
               <button

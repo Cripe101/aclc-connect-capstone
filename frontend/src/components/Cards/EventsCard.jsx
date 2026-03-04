@@ -4,7 +4,7 @@ const EventsCard = ({ data }) => {
   const navigate = useNavigate();
   return (
     <div className="">
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5">
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10">
         {data.map((data) => (
           <section
             key={data._id}

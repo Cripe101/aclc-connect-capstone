@@ -32,7 +32,12 @@ const Events = () => {
 
   return (
     <BlogLayout>
-      <EventsCard data={sortedEvents} />
+      <div className="p-5">
+        <section className="flex bg-blue-900 p-3 rounded-lg text-white sticky w-full">
+          <h1 className="text-lg font-bold">Events</h1>
+        </section>
+        <EventsCard data={sortedEvents} />
+      </div>
     </BlogLayout>
   );
 };
