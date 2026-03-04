@@ -264,6 +264,7 @@ const ProfileDropdown = () => {
 
       {/* Logout Alert */}
       <LogoutAlert isOpen={showLogoutAlert} setIsOpen={setShowLogoutAlert} />
+
       {/* Update Password Modal */}
       <Modal
         isOpen={isPwdModalOpen}

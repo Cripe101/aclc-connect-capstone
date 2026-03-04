@@ -5,13 +5,20 @@ import Input from "../Inputs/Input";
 import { validateEmail } from "../../utils/helper.js";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { API_PATHS } from "../../utils/apiPaths";
-import { LuMail, LuLock, LuArrowRight } from "react-icons/lu";
+import {
+  LuMail,
+  LuLock,
+  LuArrowRight,
+  LuEye,
+  LuEyeClosed,
+} from "react-icons/lu";
 
 const Login = ({ setCurrentPage, isAdmin = false }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   const { updateUser, setOpenAuthForm } = useContext(UserContext);
   const navigate = useNavigate();
@@ -70,6 +77,9 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
       setIsLoading(false);
     }
   };
+  const handleShow = () => {
+    setShowPass(!showPass);
+  };
 
   return (
     <div className="w-full grid md:grid-cols-2 flex-row items-stretch overflow-hidden bg-white">
@@ -111,15 +121,21 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
             <label className="block text-sm font-semibold text-gray-900 mb-2">
               Password
             </label>
-            <div className="relative flex items-center">
+            <div className="relative flex items-center group">
               <LuLock className="absolute left-3 text-gray-400" />
               <input
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
                 placeholder="Enter your password"
-                type="password"
+                type={showPass ? "text" : "password"}
                 className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all text-base"
               />
+              <section
+                onClick={handleShow}
+                className="absolute right-0 mr-3 hidden group-hover:block cursor-pointer"
+              >
+                {showPass ? <LuEye size={20} /> : <LuEyeClosed size={20} />}
+              </section>
             </div>
           </div>
 
