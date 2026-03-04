@@ -38,7 +38,7 @@ const Footer = () => {
             />
             <CourseFoorterDisplay
               title={"Senior High"}
-              nav={"/courses-offered/senior-high/"}
+              nav={"/courses-offered/seniorhigh/"}
               data={SeniorHighCourseData}
             />
           </section>
