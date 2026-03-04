@@ -14,7 +14,7 @@ const Events = () => {
 
   useEffect(() => {
     setEvents(queryEvents?.data?.posts);
-    console.log(events);
+    // console.log(events);
   }, [queryEvents]);
 
   const sortedEvents = useMemo(() => {

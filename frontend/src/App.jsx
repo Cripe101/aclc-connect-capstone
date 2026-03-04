@@ -57,7 +57,7 @@ const App = () => {
                 <Courses
                   title={""}
                   data={CollegeCourseData}
-                  side={"Bachelor's"}
+                  side={"Degree"}
                   nav={"/courses-offered/bachelors/"}
                 />
               }
@@ -68,7 +68,7 @@ const App = () => {
                 <Courses
                   title={""}
                   data={TesdaCourseData}
-                  side={"Tesda"}
+                  side={"Diploma"}
                   nav={"/courses-offered/tesda/"}
                 />
               }

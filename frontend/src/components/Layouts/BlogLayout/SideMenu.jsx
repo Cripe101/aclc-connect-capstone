@@ -82,28 +82,28 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
           <section
             className={
               item.label.toLowerCase() === "courses offered"
-                ? `${tap ? "flex" : "hidden"} absolute  left-50 top-0 flex-col w-[120px] duration-200 bg-slate-100`
+                ? `${tap ? "flex" : "hidden"} absolute rounded-lg left-50 top-0 flex-col w-[120px] duration-200 bg-slate-100`
                 : "hidden"
             }
           >
             <NavLink
               onClick={() => setOpenSideMenu((prevState) => !prevState)}
               to={"/courses-offered/bachelors"}
-              className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+              className="text-sm font-medium font-display py-1 px-4 cursor-pointer active:bg-blue-800 active:text-white rounded-lg hover:bg-blue-900 hover:text-white duration-200"
             >
-              Bachelors
+              Degree
             </NavLink>
             <NavLink
               onClick={() => setOpenSideMenu((prevState) => !prevState)}
               to={"/courses-offered/tesda"}
-              className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+              className="text-sm font-medium font-display py-1 px-4 cursor-pointer active:bg-blue-800 active:text-white rounded-lg hover:bg-blue-900 hover:text-white duration-200"
             >
-              TESDA
+              Diploma
             </NavLink>
             <NavLink
               onClick={() => setOpenSideMenu((prevState) => !prevState)}
               to={"/courses-offered/seniorhigh"}
-              className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+              className="text-sm font-medium font-display py-1 px-4 cursor-pointer active:bg-blue-800 active:text-white rounded-lg hover:bg-blue-900 hover:text-white duration-200"
             >
               Senior High
             </NavLink>

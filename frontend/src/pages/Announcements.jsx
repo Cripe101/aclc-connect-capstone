@@ -53,7 +53,6 @@ const Announcements = () => {
 
   useEffect(() => {
     getAnnouncements();
-    console.log(sortedAnnouncements);
   }, [announcementQuery]);
 
   return (

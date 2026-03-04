@@ -237,7 +237,7 @@ const BlogPostEditor = ({ isEdit }) => {
               <div className="flex items-center gap-3">
                 {isEdit && (
                   <button
-                    className="flex items-center gap-2.5 text-[13px] font-medium text-rose-500 bg-rose-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-rose-50 hover:border-rose-300 cursor-pointer hover:scale-[1.02] transition-all"
+                    className="flex items-center gap-2.5 text-[13px] font-medium text-red-600 rounded-lg px-1.5 md:px-3 py-1 md:py-[3px] border border-red-500 cursor-pointer hover:text-white hover:bg-red-600 hover:scale-105 active:scale-95 duration-200"
                     disabled={loading}
                     onClick={() => setOpenDeleteAlert(true)}
                   >
@@ -247,7 +247,7 @@ const BlogPostEditor = ({ isEdit }) => {
                 )}
 
                 <button
-                  className="flex items-center gap-2.5 text-[13px] font-medium text-red-500 bg-red-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-red-100 hover:border-red-400 cursor-pointer hover:scale-[1.02] transition-all"
+                  className="flex items-center gap-2.5 text-[13px] font-medium text-red-600 rounded-lg px-1.5 md:px-3 py-1 md:py-[3px] border border-red-500 cursor-pointer hover:text-white hover:bg-red-600 hover:scale-105 active:scale-95 duration-200"
                   disabled={loading}
                   onClick={() => navigate("/admin/posts")}
                 >
@@ -255,16 +255,16 @@ const BlogPostEditor = ({ isEdit }) => {
                   <span className="hidden md:block">Cancel</span>
                 </button>
                 <button
-                  className="flex items-center gap-2.5 text-[13px] font-medium text-sky-500 bg-sky-50/60 rounded px-1.5 md:px-3 py-1 md:py-[3px] border border-sky-100 hover:border-sky-400 cursor-pointer hover:scale-[1.02] transition-all"
+                  className="flex items-center gap-2.5 text-[13px] text-blue-400 border border-blue-400 font-medium rounded-lg px-1.5 md:px-3 py-1 md:py-[3px] cursor-pointers hover:text-white hover:bg-blue-400 hover:scale-105 active:scale-95 duration-200"
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
                   <LuSave className="text-sm" />{" "}
-                  <span className="hidden md:block">Save as Draft</span>
+                  <span className="hidden md:block">Draft</span>
                 </button>
 
                 <button
-                  className="flex items-center gap-2.5 text-[13px] font-medium text-sky-600 hover:text-white hover:bg-linear-to-r hover:from-sky-500 hover:to-indigo-500 rounded px-3 py-[3px] border border-sky-500 hover:border-sky-50 cursor-pointer transition-all"
+                  className="flex items-center gap-2.5 text-[13px] text-blue-700 font-medium rounded-lg px-3 py-[3px] border border-blue-700 hover:text-white hover:bg-blue-700 hover:scale-105 active:scale-95 cursor-pointer duration-200"
                   disabled={loading}
                   onClick={() => handlePublish(false)}
                 >
@@ -273,7 +273,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   ) : (
                     <LuSend className="text-sm" />
                   )}{" "}
-                  Publish
+                  <span className="hidden md:block">Publish</span>
                 </button>
               </div>
             </div>

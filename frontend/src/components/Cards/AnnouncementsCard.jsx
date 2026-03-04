@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import MarkdownContent from "../../pages/Blog/components/MarkdownContent";
 
 const AnnouncementsCard = ({ data }) => {
-  console.log(data);
   const navigate = useNavigate();
   return (
     <div className="grid lg:grid-cols-2 gap-5">
@@ -17,7 +15,7 @@ const AnnouncementsCard = ({ data }) => {
               anno?.coverImageUrl ||
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ32isJCX6lH9OJwOJvk4Xrt7kF2I06nDqm4Q&s"
             }
-            className="border border-blue-50 rounded-l-lg w-full h-60 md:h-50 object-cover"
+            className="border border-blue-50 rounded-lg w-full h-60 md:h-50 object-cover"
           />
           <section className="w-full font-display py-2 px-5">
             <h1 className="text-xl font-bold text-red-800">{anno.title}</h1>
@@ -35,7 +33,7 @@ const AnnouncementsCard = ({ data }) => {
               <p>Posted By:</p>
               <p className="font-medium">{anno.author.name}</p>
             </h1>
-            <MarkdownContent content={anno.content || ""} />
+            <h1 className="line-clamp-3 mt-3">{anno.content}</h1>
           </section>
         </section>
       ))}

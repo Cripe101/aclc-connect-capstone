@@ -187,7 +187,8 @@ const UsersManagement = () => {
               className="flex items-center gap-2 cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 duration-200"
             >
               <LuPlus />
-              Add User
+              <p className="hidden md:block">Add</p>
+              User
             </button>
           </section>
         </div>
@@ -242,14 +243,14 @@ const UsersManagement = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEditClick(user)}
-                            className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-800 duration-200"
+                            className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-800 duration-200"
                             title="Edit User"
                           >
                             <LuPencil className="text-lg" />
                           </button>
                           <button
                             onClick={() => handleDeleteClick(user)}
-                            className="flex cursor-pointer items-center gap-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                            className="flex cursor-pointer items-center gap-1 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
                             title="Delete User"
                           >
                             <LuTrash2 className="text-lg" />
@@ -266,15 +267,15 @@ const UsersManagement = () => {
               {filteredUsers.map((user) => (
                 <section
                   key={user._id}
-                  className="flex justify-between bg-blue-50 p-5 rounded-lg"
+                  className="grid grid-cols-2 justify-between bg-blue-50 p-5 rounded-lg"
                 >
                   <section className="flex flex-col gap-5">
                     <h1 className="font-bold">{user.name}</h1>
-                    <h1 className="truncate w-40">{user.email}</h1>
+                    <h1 className="truncate max-w-40">{user.email}</h1>
                   </section>
                   <section className="flex flex-col gap-5">
                     <h1
-                      className={`${user.role.toLowerCase() === "admin" ? "bg-red-200 text-red-700" : "bg-blue-200 text-blue-800"}  text-center  rounded-lg`}
+                      className={`${user.role.toLowerCase() === "admin" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-800"}  text-center  rounded-lg`}
                     >
                       {user.role}
                     </h1>
@@ -282,14 +283,14 @@ const UsersManagement = () => {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEditClick(user)}
-                          className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-800 duration-200"
+                          className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-800 duration-200"
                           title="Edit User"
                         >
                           <LuPencil className="text-lg" />
                         </button>
                         <button
                           onClick={() => handleDeleteClick(user)}
-                          className="flex cursor-pointer items-center gap-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                          className="flex cursor-pointer items-center gap-1 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
                           title="Delete User"
                         >
                           <LuTrash2 className="text-lg" />

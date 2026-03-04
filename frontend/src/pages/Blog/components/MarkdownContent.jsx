@@ -10,7 +10,7 @@ const MarkdownContent = ({ content }) => {
 
   return (
     <div className="">
-      <div className="text-[14px] prose prose-slate dark:prose-invert max-w-none line-clamp-3">
+      <div className="text-[14px] prose prose-slate dark:prose-invert max-w-none">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{

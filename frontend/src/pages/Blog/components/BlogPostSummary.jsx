@@ -15,14 +15,14 @@ const BlogPostSummary = ({
 
   return (
     <div
-      className="grid grid-cols-[2fr_3fr] bg-blue-50 rounded-lg overflow-hidden cursor-pointer hover:scale-[100.5%] active:scale-[99%] duration-200"
+      className="grid md:grid-cols-[2fr_3fr] bg-blue-50 rounded-lg overflow-hidden cursor-pointer hover:scale-[100.5%] active:scale-[99%] duration-200"
       onClick={onClick}
     >
       <section>
         <img
           src={coverImageUrl}
           alt={title}
-          className="max-w-80 w-full h-full max-h-80 object-cover"
+          className="max-w-80 w-full h-full rounded-lg max-h-80 object-cover"
         />
       </section>
 

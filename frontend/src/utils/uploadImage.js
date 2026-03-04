@@ -1,19 +1,10 @@
 import { API_PATHS } from "./apiPaths.js";
 import axiosInstance from "./axiosInstance";
 
-const uploadImage = async (imageFiles) => {
+const uploadImage = async (imageFile) => {
   const formData = new FormData();
-
-  // If multiple files (array)
-  if (Array.isArray(imageFiles)) {
-    imageFiles.forEach((file) => {
-      formData.append("images", file); // same key name
-    });
-  }
-  // If single file
-  else {
-    formData.append("images", imageFiles);
-  }
+  // Append image file to form data
+  formData.append("image", imageFile);
 
   try {
     const response = await axiosInstance.post(
@@ -25,10 +16,9 @@ const uploadImage = async (imageFiles) => {
         },
       },
     );
-
     return response.data;
   } catch (error) {
-    console.error("Error uploading image(s):", error);
+    console.error("Error uploading the image:", error);
     throw error;
   }
 };

@@ -68,25 +68,25 @@ const BlogNavbar = ({ activeMenu }) => {
                       <section
                         className={
                           item.label.toLowerCase() === "courses offered"
-                            ? "absolute hidden group-hover:grid duration-200 border border-slate-100 bg-slate-100"
+                            ? "absolute hidden group-hover:grid duration-200 rounded-lg bg-blue-50"
                             : "hidden"
                         }
                       >
                         <Link
                           to={"/courses-offered/bachelors"}
-                          className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+                          className="text-sm font-medium font-display rounded-t-lg py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
                         >
-                          Bachelors
+                          Degree
                         </Link>
                         <Link
                           to={"/courses-offered/tesda"}
                           className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
                         >
-                          TESDA
+                          Diploma
                         </Link>
                         <Link
                           to={"/courses-offered/seniorhigh"}
-                          className="text-sm font-medium font-display py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
+                          className="text-sm font-medium font-display rounded-b-lg py-1 px-4 cursor-pointer hover:bg-blue-900 hover:text-white duration-200"
                         >
                           Senior High
                         </Link>

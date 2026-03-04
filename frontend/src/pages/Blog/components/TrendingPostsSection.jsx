@@ -27,7 +27,6 @@ const TrendingPostsSection = () => {
 
   useEffect(() => {
     getTrendingPosts();
-    console.log(postList);
     return () => {};
   }, []);
 

@@ -95,10 +95,14 @@ const BlogPosts = () => {
           <h2 className="text-2xl font-semibold mt-5 mb-5">My Posts</h2>
 
           <button
-            className="btn-small"
+            className="flex items-center gap-2 bg-blue-700 cursor-pointer text-white font-medium py-2 border px-4 rounded-lg hover:border-blue-700 hover:bg-white hover:text-blue-700 hover:font-extrabold active:scale-95 duration-200"
             onClick={() => navigate("/admin/create")}
           >
-            <LuPlus className="text-[18px]" /> Create Post
+            <LuPlus />
+            <h1 className="flex gap-1">
+              <p className="hidden md:block">Create</p>
+              <p>Post</p>
+            </h1>
           </button>
         </div>
 
