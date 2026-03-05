@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const AnnouncementsCard = ({ data }) => {
   const navigate = useNavigate();
   return (
-    <div className="grid lg:grid-cols-2 gap-5">
+    <div className="grid lg:grid-cols-2 gap-5 mt-5">
       {data.map((anno) => (
         <section
           key={anno._id}

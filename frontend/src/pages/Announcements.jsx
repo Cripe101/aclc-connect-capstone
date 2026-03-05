@@ -8,7 +8,8 @@ import AnnouncementsCard from "../components/Cards/AnnouncementsCard";
 
 const Announcements = () => {
   const location = useLocation();
-  const [annoData, setAnnoData] = useState();
+  const [search, setSearch] = useState("");
+  const [annoData, setAnnoData] = useState("");
 
   useEffect(() => {
     // Scroll to anchor if present in URL hash
@@ -39,17 +40,25 @@ const Announcements = () => {
       : "No data";
   };
 
-  const sortedAnnouncements = useMemo(() => {
+  const filteredAnnouncements = useMemo(() => {
     return [...(annoData || [])]
       .filter((item) =>
         item.tags?.some(
           (tag) =>
-            tag.toLowerCase() === "announcement" ||
-            tag.toLowerCase() === "announcements",
+            tag?.toLowerCase() === "announcement" ||
+            tag?.toLowerCase() === "announcements",
         ),
       )
+      .filter((item) => {
+        const query = search?.toLowerCase();
+
+        return (
+          item.title?.toLowerCase().includes(query) ||
+          item.tags?.some((tag) => tag?.toLowerCase().includes(query))
+        );
+      })
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  }, [annoData]);
+  }, [annoData, search]);
 
   useEffect(() => {
     getAnnouncements();
@@ -58,11 +67,25 @@ const Announcements = () => {
   return (
     <BlogLayout>
       <div className="p-5 md:p-10 grid gap-5">
-        {sortedAnnouncements?.length > 0 ? (
-          <AnnouncementsCard data={sortedAnnouncements} />
-        ) : (
-          <div>Data is loading...</div>
-        )}
+        <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22">
+          <h1 className="bg-blue-100 text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
+            Announcements
+          </h1>
+          <input
+            type="text"
+            placeholder="Q Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="bg-blue-100 placeholder:text-slate-500 placeholder:font-bold w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black"
+          />
+        </section>
+        <section>
+          {filteredAnnouncements?.length > 0 ? (
+            <AnnouncementsCard data={filteredAnnouncements} />
+          ) : (
+            <div>No Announcement</div>
+          )}
+        </section>
 
         {/* <span className="border border-slate-300 rounded-sm p-5">
           Promotional Grapics...

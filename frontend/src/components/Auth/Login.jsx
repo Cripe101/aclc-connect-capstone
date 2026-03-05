@@ -109,7 +109,7 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
               <input
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
-                // placeholder="you@example.com"
+                placeholder="Enter Username"
                 type="text"
                 className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all text-base"
               />
