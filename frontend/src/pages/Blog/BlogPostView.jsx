@@ -149,7 +149,7 @@ const BlogPostView = () => {
   return (
     <BlogLayout>
       {blogPostData ? (
-        <div className="p-5">
+        <div className="">
           <title>{blogPostData.title}</title>
           <meta name="description" content={blogPostData.title} />
           <meta property="og:title" content={blogPostData.title} />
@@ -193,12 +193,13 @@ const BlogPostView = () => {
                   <LuSparkles /> Summarize Post
                 </button> */}
               </div>
-
-              <img
-                src={blogPostData.coverImageUrl || ""}
-                alt={blogPostData.title}
-                className="object-contain w-screen md:w-full h-[450px] mb-6 rounded-sm"
-              />
+              <section className="flex justify-center">
+                <img
+                  src={blogPostData.coverImageUrl || ""}
+                  alt={blogPostData.title}
+                  className="object-contain max-h-[450px] mb-6 rounded-lg"
+                />
+              </section>
 
               <div className="grid">
                 <MarkdownContent

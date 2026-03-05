@@ -29,11 +29,11 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
     if (isLoading) return;
     setIsLoading(true);
 
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
-      setIsLoading(false);
-      return;
-    }
+    // if (!validateEmail(email)) {
+    //   setError("Please enter a valid email address.");
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     if (!password) {
       setError("Please enter the password.");
@@ -102,15 +102,15 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
           {/* Email Input */}
           <div className="relative">
             <label className="block text-sm font-semibold text-gray-900 mb-2">
-              Email Address
+              USN / Username
             </label>
             <div className="relative flex items-center">
               <LuMail className="absolute left-3 text-gray-400" />
               <input
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
-                placeholder="you@example.com"
-                type="email"
+                // placeholder="you@example.com"
+                type="text"
                 className="w-full pl-10 pr-4 py-3 md:py-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all text-base"
               />
             </div>

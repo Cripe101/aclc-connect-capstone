@@ -150,31 +150,30 @@ const ProfileDropdown = () => {
             </p>
             <p className="text-xs text-gray-500 capitalize">{user.role}</p>
           </div>
-          <div className="w-10 h-10 rounded-full border-2 border-blue-600 flex items-center justify-center">
-            <img
-              src={
-                user?.profileImageUrl ||
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnVvDx9Kezwg0D77WzdAUzjOEHf1WEqQ3-fA&s"
-              }
-              alt={user?.name}
-              className="w-full h-full rounded-full object-cover"
-            />
-          </div>
+          <img
+            src={
+              user?.profileImageUrl ||
+              "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+            }
+            alt={user?.name}
+            className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
+          />
         </button>
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute -right-6 md:right-0 mt-2 w-72 bg-white rounded-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="absolute right-0 mt-2 w-52 md:w-72 bg-white rounded-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
             {/* User Info Header */}
             <div className="bg-linear-to-r from-sky-50 to-cyan-50 px-6 py-4 border-b border-gray-100">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-linear-to-br from-sky-400 to-cyan-500 p-0.5 flex items-center justify-center">
-                  <img
-                    src={user.profileImageUrl}
-                    alt={user.name}
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                </div>
+                <img
+                  src={
+                    user.profileImageUrl ||
+                    "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                  }
+                  // alt={user.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
+                />
                 <div>
                   <p className="text-sm font-bold text-gray-900">{user.name}</p>
                   <p className="text-xs text-gray-600">{user.email}</p>

@@ -36,6 +36,15 @@ const UsersManagement = () => {
     role: "member",
   });
   const [showAddPwdVisibility, setShowAddPwdVisibility] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 8;
+
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+
+  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   // Fetch all users
   const getAllUsers = async () => {
@@ -55,6 +64,8 @@ const UsersManagement = () => {
   // Search users
   const handleSearch = (query) => {
     setSearchQuery(query);
+    setCurrentPage(1); // reset page when searching
+
     if (query.trim() === "") {
       setFilteredUsers(users);
     } else {
@@ -165,7 +176,7 @@ const UsersManagement = () => {
 
   return (
     <DashboardLayout activeMenu="Users">
-      <div className="bg-white p-6 rounded-lg border border-gray-200/50 mt-5">
+      <div className="bg-white p-3 rounded-lg border border-gray-200/50 mt-5">
         {/* Header with Add button and Search */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-4 w-full md:w-auto">
@@ -200,39 +211,34 @@ const UsersManagement = () => {
           </div>
         ) : filteredUsers.length > 0 ? (
           <div>
+            {/* Desktop View */}
             <div className="hidden md:block overflow-x-auto">
               <span className="w-full text-sm">
                 <section>
-                  <h1 className="grid grid-cols-[2fr_2fr_1fr_1fr] border-b mb-3 border-gray-200">
-                    <p className="text-left py-3 px-4 font-medium text-gray-700">
-                      Name
+                  <h1 className="grid grid-cols-[2fr_2fr_1fr_1fr] font-bold font-display border-b mb-3 border-gray-200">
+                    <p className="text-left py-3 px-4 text-gray-700">Name</p>
+                    <p className="text-left py-3 px-4 text-gray-700">
+                      Username
                     </p>
-                    <p className="text-left py-3 px-4 font-medium text-gray-700">
-                      Email
-                    </p>
-                    <p className="text-left py-3 px-4 font-medium text-gray-700">
-                      Role
-                    </p>
+                    <p className="text-left py-3 px-4 text-gray-700">Role</p>
 
-                    <p className="text-left py-3 px-4 font-medium text-gray-700">
-                      Actions
-                    </p>
+                    <p className="text-left py-3 px-4 text-gray-700">Actions</p>
                   </h1>
                 </section>
-                <span>
-                  {filteredUsers.map((user) => (
+                <span className="grid gap-1">
+                  {currentUsers.map((user) => (
                     <section
                       key={user._id}
-                      className="rounded-lg hover:bg-slate-50 duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]"
+                      className={`bg-blue-50 rounded-lg hover:bg-blue-200 duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]`}
                     >
                       <p className="py-3 px-4">{user.name}</p>
                       <p className="py-3 px-4 text-gray-600">{user.email}</p>
                       <p className="py-3 px-4">
                         <span
-                          className={`py-1 rounded-lg w-[200px] text-xs font-medium ${
+                          className={`py-1 rounded-lg w-[200px] bg-white text-xs font-bold font-display ${
                             user.role === "admin"
-                              ? "px-4 bg-red-100 text-red-700"
-                              : "px-2.5 bg-blue-100 text-blue-700"
+                              ? "px-4 text-red-600"
+                              : "px-2.5 text-blue-600"
                           }`}
                         >
                           {user.role}
@@ -260,14 +266,32 @@ const UsersManagement = () => {
                     </section>
                   ))}
                 </span>
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
+                    {[...Array(totalPages)].map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentPage(index + 1)}
+                        className={`py-0.5 rounded-lg text-white font-medium cursor-pointer ${
+                          currentPage === index + 1
+                            ? "bg-blue-800 px-2.5"
+                            : "bg-blue-400 px-1.5"
+                        } duration-200`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </span>
             </div>
             {/* Mobile view */}
             <section className="md:hidden grid grid-cols-1 gap-3">
-              {filteredUsers.map((user) => (
+              {currentUsers.map((user) => (
                 <section
                   key={user._id}
-                  className="grid grid-cols-2 justify-between bg-blue-50 p-5 rounded-lg"
+                  className="grid grid-cols-2 justify-between bg-blue-50 p-3 rounded-lg"
                 >
                   <section className="flex flex-col gap-5">
                     <h1 className="font-bold">{user.name}</h1>
@@ -275,7 +299,7 @@ const UsersManagement = () => {
                   </section>
                   <section className="flex flex-col gap-5">
                     <h1
-                      className={`${user.role.toLowerCase() === "admin" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-800"}  text-center  rounded-lg`}
+                      className={`${user.role.toLowerCase() === "admin" ? "text-red-600" : "text-blue-700"} font-bold font-display text-center bg-white rounded-lg`}
                     >
                       {user.role}
                     </h1>
@@ -300,6 +324,24 @@ const UsersManagement = () => {
                   </section>
                 </section>
               ))}
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
+                  {[...Array(totalPages)].map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentPage(index + 1)}
+                      className={`py-0.5 rounded-lg text-white font-medium cursor-pointer ${
+                        currentPage === index + 1
+                          ? "bg-blue-800 px-2.5"
+                          : "bg-blue-400 px-1.5"
+                      } duration-200`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
             </section>
           </div>
         ) : (
@@ -333,10 +375,10 @@ const UsersManagement = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                Username
               </label>
               <input
-                type="email"
+                type="text"
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -405,10 +447,10 @@ const UsersManagement = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                Username
               </label>
               <input
-                type="email"
+                type="text"
                 value={addForm.email}
                 onChange={(e) =>
                   setAddForm({ ...addForm, email: e.target.value })
