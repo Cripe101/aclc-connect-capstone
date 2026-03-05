@@ -497,8 +497,9 @@ const UsersManagement = () => {
               onChange={(e) => setAddForm({ ...addForm, role: e.target.value })}
               className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
-              <option value="member">Member</option>
               <option value="admin">Admin</option>
+              <option value="student">Student</option>
+              <option value="faculty">Faculty</option>
             </select>
           </div>
 
