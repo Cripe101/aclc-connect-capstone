@@ -173,6 +173,12 @@ const UsersManagement = () => {
 
   useEffect(() => {
     getAllUsers();
+
+    const interval = setInterval(() => {
+      getAllUsers();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (

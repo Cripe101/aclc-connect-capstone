@@ -23,13 +23,6 @@ const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Determine user role: Admin if correct token is provided, else Member
-    let role = "member";
-    if (
-      adminAccessToken &&
-      adminAccessToken === process.env.ADMIN_ACCESS_TOKEN
-    ) {
-      role = "admin";
-    }
 
     const user = await User.create({
       name,
