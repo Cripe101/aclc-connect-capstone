@@ -66,17 +66,17 @@ const Announcements = () => {
 
   return (
     <BlogLayout>
-      <div className="p-5 md:p-10 grid gap-5">
+      <div className="p-5 grid gap-5">
         <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22">
-          <h1 className="bg-blue-100 text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
-            Announcements
+          <h1 className=" bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
+            <p className="">Announcements</p>
           </h1>
           <input
             type="text"
             placeholder="Q Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-blue-100 placeholder:text-slate-500 placeholder:font-bold w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black"
+            className="border border-gray-300 w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black backdrop-blur-md"
           />
         </section>
         <section>

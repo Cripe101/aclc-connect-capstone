@@ -18,6 +18,8 @@ const BlogLandingPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const aclcVid =
+    "https://www.dropbox.com/scl/fi/otdreekya8q8pt6cwhut2/ACLC-MARKETING-VIDEO.mp4?rlkey=bq4kmj71z8rcjhivsukvkpv40&st=d89bsl8c&raw=1";
 
   // Fetch paginated post
   // const getAllPosts = async (pageNumber = 1) => {
@@ -91,14 +93,14 @@ const BlogLandingPage = () => {
           ACLC College of Ormoc is a member of the AMA Education System.
         </p>
       </div>
-      {/* <div className="flex md:px-5 justify-center">
+      <div className="flex px-5 md:px-5 justify-center">
         <video
           src={aclcVid}
           autoPlay={true}
           loop={true}
-          className="mt-10 bg-blue-800"
+          className="mt-5 rounded-lg border border-blue-800"
         ></video>
-      </div> */}
+      </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
         <div className="grid grid-cols-1 p-5">
           {sortedPosts?.length > 0 ? (

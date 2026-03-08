@@ -82,7 +82,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
           <section
             className={
               item.label.toLowerCase() === "courses offered"
-                ? `${tap ? "flex" : "hidden"} absolute rounded-lg left-50 top-0 flex-col w-[120px] duration-200 bg-slate-100`
+                ? `${tap ? "flex" : "hidden"} absolute rounded-lg left-50 top-0 flex-col w-[120px] duration-200 bg-blue-50/90 backdrop-blur-sm`
                 : "hidden"
             }
           >

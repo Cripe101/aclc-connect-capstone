@@ -156,13 +156,13 @@ const BlogPostView = () => {
           <meta property="og:image" content={blogPostData.coverImageUrl} />
           <meta property="og:type" content="article" />
 
-          <div className="grid p-2 md:grid-cols-[4fr_1fr] md:gap-10 relative">
+          <div className="grid p-2 md:grid-cols-[4fr_1fr] md:gap-10 relative ">
             <div className="relative">
               <h1 className="text-lg md:text-2xl font-bold mb-2 w-[90%]">
                 {blogPostData.title}
               </h1>
 
-              <div className="grid gap-3">
+              <div className="grid gap-3 ">
                 <section className="flex">
                   <LuDot className="text-xl text-gray-400" />
                   <div className="flex gap-3">

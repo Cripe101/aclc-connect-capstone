@@ -18,7 +18,7 @@ const AnnouncementsCard = ({ data }) => {
             className="border border-blue-50 rounded-lg w-full h-60 md:h-50 object-cover"
           />
           <section className="w-full font-display py-2 px-5">
-            <h1 className="text-xl font-bold text-red-800">{anno.title}</h1>
+            <h1 className="text-xl font-bold text-blue-800">{anno.title}</h1>
             <h1 className="flex gap-2 text-sm font-light">
               <p>Posted on</p>
               <p className="font-medium text-blue-700">

@@ -27,17 +27,17 @@ const UsersManagement = () => {
     name: "",
     email: "",
     bio: "",
-    role: "member",
+    role: "",
   });
   const [addForm, setAddForm] = useState({
     name: "",
     email: "",
     password: "",
-    role: "member",
+    role: "",
   });
   const [showAddPwdVisibility, setShowAddPwdVisibility] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 8;
+  const usersPerPage = 6;
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
@@ -98,7 +98,7 @@ const UsersManagement = () => {
 
   // Open add modal
   const handleAddClick = () => {
-    setAddForm({ name: "", email: "", password: "", role: "member" });
+    setAddForm({ name: "", email: "", password: "", role: "" });
     setIsAddModalOpen(true);
   };
 
@@ -145,6 +145,7 @@ const UsersManagement = () => {
         name: addForm.name,
         email: addForm.email,
         password: addForm.password,
+        role: addForm.role,
       };
 
       const response = await axiosInstance.post(
@@ -190,7 +191,7 @@ const UsersManagement = () => {
                 placeholder="Search by name or email..."
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full outline-none"
               />
             </div>
             <button
@@ -229,16 +230,16 @@ const UsersManagement = () => {
                   {currentUsers.map((user) => (
                     <section
                       key={user._id}
-                      className={`bg-blue-50 rounded-lg hover:bg-blue-200 duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]`}
+                      className={`bg-blue-50 rounded-lg hover:bg-blue-800 hover:text-white duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]`}
                     >
                       <p className="py-3 px-4">{user.name}</p>
-                      <p className="py-3 px-4 text-gray-600">{user.email}</p>
+                      <p className="py-3 px-4">{user.email}</p>
                       <p className="py-3 px-4">
                         <span
-                          className={`py-1 rounded-lg w-[200px] bg-white text-xs font-bold font-display ${
+                          className={`py-1 rounded-full bg-white text-xs font-display ${
                             user.role === "admin"
-                              ? "px-4 text-red-600"
-                              : "px-2.5 text-blue-600"
+                              ? "px-2.5 text-blue-700 font-extrabold"
+                              : "px-2 text-blue-700"
                           }`}
                         >
                           {user.role}
@@ -249,7 +250,7 @@ const UsersManagement = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEditClick(user)}
-                            className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-800 duration-200"
+                            className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 duration-200"
                             title="Edit User"
                           >
                             <LuPencil className="text-lg" />
@@ -299,7 +300,7 @@ const UsersManagement = () => {
                   </section>
                   <section className="flex flex-col gap-5">
                     <h1
-                      className={`${user.role.toLowerCase() === "admin" ? "text-red-600" : "text-blue-700"} font-bold font-display text-center bg-white rounded-lg`}
+                      className={`${user.role.toLowerCase() === "admin" ? "text-blue-700 font-extrabold" : "font-normal text-blue-700"} font-display text-center bg-white rounded-lg`}
                     >
                       {user.role}
                     </h1>
@@ -497,7 +498,9 @@ const UsersManagement = () => {
               onChange={(e) => setAddForm({ ...addForm, role: e.target.value })}
               className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
-              <option value="admin">Admin</option>
+              <option value="admin" selected>
+                Admin
+              </option>
               <option value="student">Student</option>
               <option value="faculty">Faculty</option>
             </select>

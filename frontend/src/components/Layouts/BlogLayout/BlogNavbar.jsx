@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import Logo from "../../../assets/aclc-logo-ormoc.png";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
-import { LuSearch } from "react-icons/lu";
 import { BLOG_NAVBAR_DATA } from "../../../utils/data.js";
 import SideMenu from "./SideMenu.jsx";
 import { UserContext } from "../../../context/userContext.jsx";
@@ -60,7 +59,7 @@ const BlogNavbar = ({ activeMenu }) => {
                         className={
                           item.label.toLowerCase() === "courses offered"
                             ? ""
-                            : `absolute inset-x-0 bottom-0 h-[2.5px] rounded-full mt-0.5 bg-red-600 transition-all duration-200 origin-left ${
+                            : `absolute inset-x-0 bottom-0 h-[2.5px] rounded-full mt-0.5 bg-blue-600 transition-all duration-200 origin-left ${
                                 isActive ? "scale-x-100" : "scale-x-0"
                               } group-hover:scale-x-100`
                         }
@@ -68,7 +67,7 @@ const BlogNavbar = ({ activeMenu }) => {
                       <section
                         className={
                           item.label.toLowerCase() === "courses offered"
-                            ? "absolute hidden group-hover:grid duration-200 rounded-lg bg-blue-50"
+                            ? "absolute hidden group-hover:grid duration-200 rounded-lg bg-blue-50/50 backdrop-blur-sm"
                             : "hidden"
                         }
                       >

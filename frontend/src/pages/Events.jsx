@@ -41,16 +41,16 @@ const Events = () => {
   return (
     <BlogLayout>
       <div className="p-5">
-        <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22 z-30">
-          <h1 className="bg-blue-100 text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
-            Events
+        <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22">
+          <h1 className="bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
+            <p>Events</p>
           </h1>
           <input
             type="text"
             placeholder="Q Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-blue-100 placeholder:text-slate-500 placeholder:font-bold w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black"
+            className="border border-gray-300 backdrop-blur-md w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black"
           />
         </section>
         <AnnouncementsCard data={filteredEvents} />
