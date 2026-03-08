@@ -11,8 +11,7 @@ const generateToken = (userId) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, profileImageUrl, bio, adminAccessToken } =
-      req.body;
+    const { name, email, password, profileImageUrl, bio, role } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -21,8 +20,6 @@ const registerUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Determine user role: Admin if correct token is provided, else Member
 
     const user = await User.create({
       name,
