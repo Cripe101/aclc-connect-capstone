@@ -39,9 +39,7 @@ const BlogPosts = () => {
 
       const { posts, totalPages, counts } = response.data;
 
-      setBlogPostList((prevPost) =>
-        pageNumber === 1 ? posts : [...prevPost, ...posts],
-      );
+      setBlogPostList(posts);
       setTotalPages(totalPages);
       setPage(pageNumber);
 
@@ -75,10 +73,8 @@ const BlogPosts = () => {
   };
 
   // Load more post
-  const handleLoadMore = () => {
-    if (page < totalPages) {
-      getAllPosts(page + 1);
-    }
+  const handlePageChange = (pageNumber) => {
+    getAllPosts(pageNumber);
   };
 
   useEffect(() => {
@@ -133,20 +129,26 @@ const BlogPosts = () => {
             />
           ))}
 
-          {page < totalPages && (
-            <div className="flex items-center justify-center mb-8">
-              <button
-                className="flex items-center gap-3 text-sm text-white font-medium bg-black px-7 py-2.5 rounded-full text-nowrap hover:scale-105 transition-all cursor-pointer"
-                disabled={isLoading}
-                onClick={handleLoadMore}
-              >
-                {isLoading ? (
-                  <LuLoaderCircle className="animate-spin text-[15px]" />
-                ) : (
-                  <LuGalleryVerticalEnd className="text-lg" />
-                )}{" "}
-                {isLoading ? "Loading..." : "Load More"}
-              </button>
+          {totalPages > 1 && (
+            <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">
+              {Array.from({ length: totalPages }, (_, index) => {
+                const pageNumber = index + 1;
+
+                return (
+                  <button
+                    type="button"
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={`py-1 rounded-fullw duration-200 ${
+                      page === pageNumber
+                        ? "bg-blue-700 text-white px-4"
+                        : "bg-white hover:bg-blue-100 px-2"
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>

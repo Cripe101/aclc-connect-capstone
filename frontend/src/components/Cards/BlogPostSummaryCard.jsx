@@ -54,7 +54,7 @@ const BlogPostSummaryCard = ({
         </div>
       </div>
       <button
-        className="md:hidden text-xs bg-red-50 py-1 px-2.5 rounded-lg text-red-600 font-medium border border-red-600 flex-row items-center gap-1 hover:bg-red-600 hover:text-white group-hover:flex cursor-pointer duration-200"
+        className="md:hidden block text-xs bg-red-50 py-1 px-2.5 rounded-lg text-red-600 font-medium border border-red-600 flex-row items-center gap-1 hover:bg-red-600 hover:text-white group-hover:flex cursor-pointer duration-200"
         onClick={(e) => {
           e.stopPropagation();
           onDelete();

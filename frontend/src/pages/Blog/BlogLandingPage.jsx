@@ -98,7 +98,7 @@ const BlogLandingPage = () => {
           src={aclcVid}
           autoPlay={true}
           loop={true}
-          className="mt-5 rounded-lg border border-blue-800"
+          className="mt-5 rounded-lg"
         ></video>
       </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
