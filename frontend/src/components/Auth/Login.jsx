@@ -132,7 +132,7 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
               />
               <section
                 onClick={handleShow}
-                className="absolute right-0 mr-3 hidden group-hover:block cursor-pointer"
+                className="absolute right-0 mr-3 md:hidden group-hover:block cursor-pointer"
               >
                 {showPass ? <LuEye size={20} /> : <LuEyeClosed size={20} />}
               </section>

@@ -49,7 +49,7 @@ const UsersManagement = () => {
   // Fetch all users
   const getAllUsers = async () => {
     try {
-      setIsLoading(true);
+      // setIsLoading(true);
       const response = await axiosInstance.get(API_PATHS.AUTH.GET_ALL_USERS);
       setUsers(response.data);
       setFilteredUsers(response.data);
@@ -57,7 +57,7 @@ const UsersManagement = () => {
       console.error("Error fetching users:", error);
       toast.error("Failed to fetch users");
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -164,7 +164,7 @@ const UsersManagement = () => {
       setIsAddModalOpen(false);
       getAllUsers();
     } catch (error) {
-      console.error("Error creating user:", error);
+      // console.error("Error creating user:", error);
       toast.error("Failed to create user");
     } finally {
       setIsLoading(false);
@@ -173,7 +173,7 @@ const UsersManagement = () => {
 
   useEffect(() => {
     getAllUsers();
-
+    console.log("loaded");
     const interval = setInterval(() => {
       getAllUsers();
     }, 5000);
@@ -445,6 +445,7 @@ const UsersManagement = () => {
               </label>
               <input
                 type="text"
+                required
                 value={addForm.name}
                 onChange={(e) =>
                   setAddForm({ ...addForm, name: e.target.value })
@@ -458,6 +459,7 @@ const UsersManagement = () => {
                 Username
               </label>
               <input
+                required
                 type="text"
                 value={addForm.email}
                 onChange={(e) =>
@@ -474,6 +476,7 @@ const UsersManagement = () => {
             </label>
             <div className="relative">
               <input
+                required
                 type={showAddPwdVisibility ? "text" : "password"}
                 value={addForm.password}
                 onChange={(e) =>
@@ -500,13 +503,15 @@ const UsersManagement = () => {
               Role
             </label>
             <select
+              required
               value={addForm.role}
               onChange={(e) => setAddForm({ ...addForm, role: e.target.value })}
               className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
-              <option value="admin" selected>
-                Admin
+              <option value="" disabled>
+                Select...
               </option>
+              <option value="admin">Admin</option>
               <option value="student">Student</option>
               <option value="faculty">Faculty</option>
             </select>
@@ -521,7 +526,18 @@ const UsersManagement = () => {
               Cancel
             </button>
             <button
-              onClick={handleCreateUser}
+              type="sumbit"
+              onClick={() => {
+                addForm.name == ""
+                  ? toast.error("Enter Name")
+                  : addForm.email == ""
+                    ? toast.error("Enter Username")
+                    : addForm.password == ""
+                      ? toast.error("Enter Password")
+                      : addForm.role == ""
+                        ? toast.error("Select Role")
+                        : handleCreateUser();
+              }}
               className="w-full sm:w-auto px-5 py-2 border border-blue-700 text-white bg-blue-700 rounded-lg hover:border-blue-800 hover:bg-blue-800 transition disabled:opacity-50"
               disabled={isLoading}
             >
