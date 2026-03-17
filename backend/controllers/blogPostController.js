@@ -1,5 +1,4 @@
 const BlogPost = require("../models/blogPostModel.js");
-const mongoose = require("mongoose");
 
 // Create a new blog post
 const createPost = async (req, res) => {
@@ -89,9 +88,9 @@ const deletePost = async (req, res) => {
 const getAllPosts = async (req, res) => {
   try {
     const status = req.query.status || "published";
-    const page = parseInt(req.query.page) || 1;
-    const limit = 5;
-    const skip = (page - 1) * limit;
+    // const page = parseInt(req.query.page) || 1;
+    // const limit = 5;
+    // const skip = (page - 1) * limit;
 
     // Determine filter for main posts response
     let filter = {};
@@ -101,9 +100,9 @@ const getAllPosts = async (req, res) => {
     // Fetch paginated posts
     const posts = await BlogPost.find(filter)
       .populate("author", "name profileImageUrl")
-      .sort({ updatedAt: -1 })
-      .skip(skip)
-      .limit(limit);
+      .sort({ updatedAt: -1 });
+    // .skip(skip)
+    // .limit(limit);
 
     // Count totals for pagination and tab counts
     const [totalCount, allCount, publishedCount, draftCount] =
@@ -116,8 +115,8 @@ const getAllPosts = async (req, res) => {
 
     res.json({
       posts,
-      page,
-      totalPages: Math.ceil(totalCount / limit),
+      // page,
+      // totalPages: Math.ceil(totalCount / limit),
       totalCount,
       counts: {
         all: allCount,
