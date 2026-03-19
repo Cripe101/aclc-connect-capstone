@@ -164,7 +164,6 @@ const UsersManagement = () => {
       setIsAddModalOpen(false);
       getAllUsers();
     } catch (error) {
-      // console.error("Error creating user:", error);
       toast.error("Failed to create user");
     } finally {
       setIsLoading(false);
@@ -173,13 +172,7 @@ const UsersManagement = () => {
 
   useEffect(() => {
     getAllUsers();
-    console.log("loaded");
-    const interval = setInterval(() => {
-      getAllUsers();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [users]);
 
   return (
     <DashboardLayout activeMenu="Users">
