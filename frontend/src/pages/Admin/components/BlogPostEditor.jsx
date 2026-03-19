@@ -15,22 +15,30 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { API_PATHS } from "../../../utils/apiPaths.js";
 import Modal from "../../../components/Modal.jsx";
 import GenerateBlogPostForm from "./GenerateBlogPostForm.jsx";
-import uploadImage from "../../../utils/uploadImage.js";
 import { toast } from "react-hot-toast";
 import { getToastMessageByType } from "../../../utils/helper.js";
 import DeleteAlertContent from "../../../components/DeleteAlertContent.jsx";
 import { Image as ImageIcon } from "lucide-react";
 import SwitchButton from "../../Blog/components/SwitchButton.jsx";
+import PhotosSelector from "../../../components/Inputs/PhotosSelector.jsx";
+import uploadImage from "../../../utils/uploadImage.js";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const BlogPostEditor = ({ isEdit }) => {
+  const [images, setImages] = useState([]);
+  const [prevImages, setPrevImages] = useState([]);
   const navigate = useNavigate();
   const { postSlug = "" } = useParams();
-  const [switchButton, setSwitchButton] = useState("Event");
+  // const [switchButton, setSwitchButton] = useState("Event");
+  const [photo, setPhoto] = useState(1);
+  const [showPhotos, setShowPhotos] = useState(false);
 
   const [postData, setPostData] = useState({
     id: "",
     title: "",
     content: "",
+    images: images,
+    prevImages: prevImages,
     coverImageUrl: "",
     coverPreview: "",
     tags: [],
@@ -96,6 +104,10 @@ const BlogPostEditor = ({ isEdit }) => {
         setError("Please select cover image.");
         return;
       }
+      if (isEdit && postData.images.length <= 0) {
+        setError("Please select images.");
+        return;
+      }
       if (!postData.tags.length) {
         setError("Please add some tags.");
         return;
@@ -114,14 +126,34 @@ const BlogPostEditor = ({ isEdit }) => {
         coverImageUrl = postData.coverPreview;
       }
 
+      let imgSample = [];
+
+      if (images.length > 0) {
+        imgSample = await Promise.all(
+          images.map(async (image) => {
+            if (image instanceof File) {
+              const img = await uploadImage(image);
+              return img.imageUrl;
+            } else {
+              return image;
+            }
+          }),
+        );
+      }
+
+      // console.log("Img Sample", imgSample);
+
       const reqPayload = {
         title: postData.title,
         content: postData.content,
         coverImageUrl,
+        images: imgSample,
         tags: postData.tags,
         isDraft: isDraft ? true : false,
         generatedByAI: true,
       };
+
+      // console.log("Pay Load", reqPayload);
 
       const response = isEdit
         ? await axiosInstance.put(
@@ -161,11 +193,15 @@ const BlogPostEditor = ({ isEdit }) => {
           id: data._id,
           title: data.title,
           content: data.content,
+          images: data.images,
+          prevImages: data.images,
           coverPreview: data.coverImageUrl,
           tags: data.tags,
           isDraft: data.isDraft,
           generatedByAI: data.generatedByAI,
         }));
+        setImages(data.images);
+        setPrevImages(data.images);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -189,18 +225,24 @@ const BlogPostEditor = ({ isEdit }) => {
   const fileInputRef = useRef(null);
 
   const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
 
     try {
-      const imgUploadRes = await uploadImage(file);
-      const imageUrl = imgUploadRes.imageUrl;
+      let newImagesMarkdown = "";
 
-      const newContent = (postData.content || "") + `\n![image](${imageUrl})\n`;
+      for (const file of files) {
+        const imgUploadRes = await uploadImage(file);
+        const imageUrl = imgUploadRes.imageUrl;
+
+        newImagesMarkdown += `\n![image](${imageUrl})\n`;
+      }
+
+      const newContent = (postData.content || "") + newImagesMarkdown;
 
       handleValueChange("content", newContent);
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading images:", error);
     }
   };
 
@@ -224,8 +266,52 @@ const BlogPostEditor = ({ isEdit }) => {
     return () => {};
   }, []);
 
+  useEffect(() => {
+    setPostData((prev) => ({
+      ...prev,
+      images,
+    }));
+  }, [images]);
+
   return (
     <DashboardLayout activeMenu="Blog Posts">
+      <div
+        className={`${showPhotos ? "flex" : "hidden"} justify-center fixed z-50 top-0 left-0 w-screen h-screen bg-slate-50/60 backdrop-blur-md`}
+      >
+        <button
+          onClick={() => {
+            setShowPhotos(false);
+          }}
+          className="absolute right-10 top-5 text-red-600 font-bold cursor-pointer bg-white px-3 py-1 rounded-lg hover:text-white hover:bg-red-600 active:scale-90 duration-200"
+        >
+          X
+        </button>
+        <section className="flex md:p-10">
+          <button
+            onClick={() => {
+              photo === 1 ? "" : setPhoto(photo - 1);
+            }}
+            className="md:p-10 active:text-blue-700 rounded-l-lg cursor-pointer duration-200"
+          >
+            <FaArrowLeft size={25} />
+          </button>
+          {postData.images.slice(photo - 1, photo).map((img) => (
+            <img
+              src={img}
+              alt="No Photo"
+              className="w-80 md:w-full object-cover rounded-lg"
+            />
+          ))}
+          <button
+            onClick={() => {
+              photo === postData.images.length ? "" : setPhoto(photo + 1);
+            }}
+            className="md:p-10 active:text-blue-700 rounded-r-lg cursor-pointer duration-200"
+          >
+            <FaArrowRight size={25} />
+          </button>
+        </section>
+      </div>
       <div className="my-5">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-5 my-4">
           <div className="form-card p-6 col-span-12 md:col-span-8">
@@ -295,12 +381,21 @@ const BlogPostEditor = ({ isEdit }) => {
               />
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 grid grid-cols-2 gap-3">
               <CoverImageSelector
                 image={postData.coverImageUrl}
                 setImage={(value) => handleValueChange("coverImageUrl", value)}
                 preview={postData.coverPreview}
                 setPreview={(value) => handleValueChange("coverPreview", value)}
+              />
+              <PhotosSelector
+                images={images}
+                setImages={setImages}
+                previews={prevImages}
+                setPreviews={setPrevImages}
+                isClick={() => {
+                  setShowPhotos(true);
+                }}
               />
             </div>
 
@@ -333,7 +428,6 @@ const BlogPostEditor = ({ isEdit }) => {
                     commands.orderedListCommand,
                     commands.divider,
                     commands.link,
-                    // customImageCommand,
                     commands.divider,
                     commands.code,
                   ]}

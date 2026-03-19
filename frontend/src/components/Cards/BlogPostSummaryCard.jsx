@@ -13,7 +13,7 @@ const BlogPostSummaryCard = ({
 }) => {
   return (
     <div
-      className="flex items-start gap-4 bg-white p-3 mb-5 rounded-lg cursor-pointer group"
+      className="flex items-start gap-4 bg-white p-3 rounded-lg cursor-pointer group"
       onClick={onClick}
     >
       <img src={imgUrl} alt={title} className="w-16 h-16 rounded-lg" />

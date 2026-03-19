@@ -1,7 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BlogLayout from "../../../../components/Layouts/BlogLayout/BlogLayout";
+import { useEffect } from "react";
 const Courses = ({ title, data, side, nav }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to anchor if present in URL hash
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        // small timeout to ensure element is rendered
+        setTimeout(
+          () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
+          50,
+        );
+      }
+    } else {
+      // if no hash, optionally scroll to top when navigating to About
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [location]);
   return (
     <BlogLayout>
       <div className="p-10 grid justify-center">
@@ -22,10 +42,10 @@ const Courses = ({ title, data, side, nav }) => {
               <img
                 src={course.image}
                 alt=""
-                className="object-cover rounded-t"
+                className="max-h-60 w-full object-cover object-top rounded-t"
               />
               <h1 className="p-4 flex flex-col gap-2 font-display">
-                <p>{course.course}</p>
+                <p className="font-medium">{course.course}</p>
                 <p className="text-xs font-semibold text-blue-950">
                   Click for more details
                 </p>

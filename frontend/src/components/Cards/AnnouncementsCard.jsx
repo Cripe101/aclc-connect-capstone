@@ -15,7 +15,7 @@ const AnnouncementsCard = ({ data }) => {
               anno?.coverImageUrl ||
               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ32isJCX6lH9OJwOJvk4Xrt7kF2I06nDqm4Q&s"
             }
-            className="border border-blue-50 rounded-lg w-full h-60 md:h-50 object-cover"
+            className="border border-blue-50 rounded-lg w-full h-60 md:h-50 object-cover object-top"
           />
           <section className="w-full font-display py-2 px-5">
             <h1 className="text-xl font-bold text-blue-800">{anno.title}</h1>

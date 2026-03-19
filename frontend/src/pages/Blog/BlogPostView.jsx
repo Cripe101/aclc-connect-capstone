@@ -149,7 +149,7 @@ const BlogPostView = () => {
   return (
     <BlogLayout>
       {blogPostData ? (
-        <div className="">
+        <div className="md:p-5">
           <title>{blogPostData.title}</title>
           <meta name="description" content={blogPostData.title} />
           <meta property="og:title" content={blogPostData.title} />
@@ -185,20 +185,70 @@ const BlogPostView = () => {
                 <span className="text-[13px] text-gray-500 font-medium pl-5 mb-2">
                   {moment(blogPostData.updatedAt || "").format("Do MMM YYYY")}
                 </span>
-
-                {/* <button
-                  className="flex items-center gap-2 bg-linear-to-r from-sky-500 to-cyan-400 text-xs text-white font-medium px-3 py-0.5 rounded-full text-nowrap cursor-pointer hover:scale-[1.02] transition-all my-1"
-                  onClick={generatePostSummary}
-                >
-                  <LuSparkles /> Summarize Post
-                </button> */}
               </div>
-              <section className="flex justify-center">
-                <img
-                  src={blogPostData.coverImageUrl || ""}
-                  alt={blogPostData.title}
-                  className="object-contain max-h-[450px] mb-6 rounded-lg"
-                />
+              <section className="mb-6 flex justify-center">
+                {blogPostData.images?.length === 0 && (
+                  <img
+                    src={blogPostData.coverImageUrl}
+                    className="w-full max-w-[400px] rounded-lg object-fill"
+                  />
+                )}
+                {blogPostData.images?.length === 1 && (
+                  <img
+                    src={blogPostData.images[0]}
+                    className="w-full max-h-[400px] object-cover object-top rounded-lg"
+                  />
+                )}
+
+                {blogPostData.images?.length === 2 && (
+                  <div className="grid grid-cols-2 gap-2">
+                    {blogPostData.images.slice(0, 2).map((img, i) => (
+                      <img
+                        key={i}
+                        src={img}
+                        className="w-full h-[400px] border border-slate-300 object-cover object-top rounded-lg"
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {blogPostData.images?.length === 3 && (
+                  <div className="grid grid-cols-2 gap-2">
+                    <img
+                      src={blogPostData.images[0]}
+                      className="w-full h-[400px] object-cover object-top rounded-lg col-span-2"
+                    />
+                    {blogPostData.images.slice(1, 3).map((img, i) => (
+                      <img
+                        key={i}
+                        src={img}
+                        className="w-full h-[400px] object-cover object-top rounded-lg"
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {blogPostData.images?.length >= 4 && (
+                  <div className="grid grid-cols-2 gap-2">
+                    {blogPostData.images.slice(0, 4).map((img, i) => (
+                      <div key={i} className="relative">
+                        <img
+                          src={img}
+                          className="w-full h-[400px] object-cover rounded-lg object-top"
+                        />
+
+                        {/* Overlay for extra images */}
+                        {i === 3 && blogPostData.images.length > 4 && (
+                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
+                            <span className="text-white text-xl font-semibold">
+                              +{blogPostData.images.length - 4}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </section>
 
               <div className="grid">

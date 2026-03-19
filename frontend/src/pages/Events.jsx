@@ -3,9 +3,29 @@ import BlogLayout from "../components/Layouts/BlogLayout/BlogLayout";
 import { getPosts } from "../utils/api";
 import { useEffect, useMemo, useState } from "react";
 import AnnouncementsCard from "../components/Cards/AnnouncementsCard";
+import { useLocation } from "react-router-dom";
 
 const Events = () => {
   const [search, setSearch] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to anchor if present in URL hash
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        // small timeout to ensure element is rendered
+        setTimeout(
+          () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
+          50,
+        );
+      }
+    } else {
+      // if no hash, optionally scroll to top when navigating to About
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [location]);
 
   const queryEvents = useQuery({
     queryKey: ["events"],
@@ -16,7 +36,8 @@ const Events = () => {
 
   useEffect(() => {
     setEvents(queryEvents?.data?.posts);
-    // console.log(events);
+    console.log(events);
+    console.log(filteredEvents);
   }, [queryEvents]);
 
   const filteredEvents = useMemo(() => {
@@ -53,7 +74,15 @@ const Events = () => {
             className="border border-gray-300 backdrop-blur-md w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black"
           />
         </section>
-        <AnnouncementsCard data={filteredEvents} />
+        <section>
+          {queryEvents.isLoading ? (
+            <div>Loading</div>
+          ) : filteredEvents.length === 0 ? (
+            <div>No Events </div>
+          ) : (
+            <AnnouncementsCard data={filteredEvents} />
+          )}
+        </section>
       </div>
     </BlogLayout>
   );

@@ -17,33 +17,32 @@ const BlogPosts = () => {
   const [tabs, setTabs] = useState([]);
   const [filterStatus, setFilterStatus] = useState("All");
   const [blogPostList, setBlogPostList] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const limit = 5;
+  const [page, setPage] = useState(1);
+  const totalPages = Math.ceil(blogPostList.length / limit);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
     open: false,
     data: null,
   });
 
   // Fetch all posts
-  const getAllPosts = async (pageNumber = 1) => {
+  const getAllPosts = async () => {
     try {
       setIsLoading(true);
+
       const response = await axiosInstance.get(API_PATHS.POSTS.GET_ALL, {
         params: {
           status: filterStatus.toLowerCase(),
-          page: pageNumber,
+          page,
+          limit,
         },
       });
 
-      const { posts, totalPages, counts } = response.data;
+      const { posts, counts } = response.data;
 
       setBlogPostList(posts);
-      setTotalPages(totalPages);
-      setPage(pageNumber);
 
-      // Map statusSummary data with fixed labels and order
       const statusSummary = counts || {};
       const statusArray = [
         { label: "All", count: statusSummary.all || 0 },
@@ -59,6 +58,10 @@ const BlogPosts = () => {
     }
   };
 
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
   // Delete post
   const deletePost = async (postId) => {
     try {
@@ -68,18 +71,13 @@ const BlogPosts = () => {
       setOpenDeleteAlert({ open: false, data: null });
       getAllPosts();
     } catch (error) {
-      console.error("Error deleting post:", error);
+      toast.error(error.response.data.message);
     }
   };
 
-  // Load more post
-  const handlePageChange = (pageNumber) => {
-    getAllPosts(pageNumber);
-  };
-
   useEffect(() => {
-    getAllPosts(1);
-    // console.log(blogPostList);
+    setPage(1);
+    getAllPosts();
 
     return () => {};
   }, [filterStatus]);
@@ -109,27 +107,31 @@ const BlogPosts = () => {
         />
 
         <div className="mt-5">
-          {blogPostList.map((post) => (
-            <BlogPostSummaryCard
-              key={post._id}
-              title={post.title}
-              imgUrl={post.coverImageUrl}
-              updatedOn={
-                post.updatedAt
-                  ? moment(post.updatedAt).format("Do MMM YYYY")
-                  : "-"
-              }
-              tags={post.tags}
-              likes={post.likedBy?.length || 0}
-              views={post.views}
-              onClick={() => navigate(`/admin/edit/${post.slug}`)}
-              onDelete={() =>
-                setOpenDeleteAlert({ open: true, data: post._id })
-              }
-            />
-          ))}
+          <section className="grid grid-cols-1 gap-2">
+            {blogPostList
+              .slice((page - 1) * limit, page * limit)
+              .map((post) => (
+                <BlogPostSummaryCard
+                  key={post._id}
+                  title={post.title}
+                  imgUrl={post.coverImageUrl}
+                  updatedOn={
+                    post.updatedAt
+                      ? moment(post.updatedAt).format("Do MMM YYYY")
+                      : "-"
+                  }
+                  tags={post.tags}
+                  likes={post.likedBy?.length || 0}
+                  views={post.views}
+                  onClick={() => navigate(`/admin/edit/${post.slug}`)}
+                  onDelete={() =>
+                    setOpenDeleteAlert({ open: true, data: post._id })
+                  }
+                />
+              ))}
+          </section>
 
-          {totalPages > 1 && (
+          {blogPostList.length > 0 && (
             <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">
               {Array.from({ length: totalPages }, (_, index) => {
                 const pageNumber = index + 1;
@@ -139,9 +141,9 @@ const BlogPosts = () => {
                     type="button"
                     key={pageNumber}
                     onClick={() => handlePageChange(pageNumber)}
-                    className={`py-1 rounded-fullw duration-200 ${
+                    className={`py-1 rounded-lg duration-200 ${
                       page === pageNumber
-                        ? "bg-blue-700 text-white px-4"
+                        ? "bg-blue-700 text-white px-3.5"
                         : "bg-white hover:bg-blue-100 px-2"
                     }`}
                   >

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import BlogLayout from "../../components/Layouts/BlogLayout/BlogLayout";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LuGalleryVerticalEnd, LuLoaderCircle } from "react-icons/lu";
 import FeaturedPosts from "./components/FeaturedPosts";
 import BlogPostSummary from "./components/BlogPostSummary";
@@ -84,6 +84,26 @@ const BlogLandingPage = () => {
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   }, [blogPostList]);
 
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to anchor if present in URL hash
+    if (location.hash) {
+      const id = location.hash.replace("#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        // small timeout to ensure element is rendered
+        setTimeout(
+          () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
+          50,
+        );
+      }
+    } else {
+      // if no hash, optionally scroll to top when navigating to About
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [location]);
+
   return (
     <BlogLayout>
       <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-blue-900">
@@ -103,22 +123,7 @@ const BlogLandingPage = () => {
       </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
         <div className="grid grid-cols-1 p-5">
-          {sortedPosts?.length > 0 ? (
-            <FeaturedPosts
-              title={sortedPosts[0]?.title}
-              coverImageUrl={sortedPosts[0]?.coverImageUrl}
-              description={sortedPosts[0]?.content}
-              tags={sortedPosts[0]?.tags}
-              updatedOn={
-                sortedPosts[0]?.updatedAt
-                  ? moment(sortedPosts[0]?.updatedAt).format("Do MMM YYYY")
-                  : "-"
-              }
-              authorName={sortedPosts[0]?.author?.name || "Unknown"}
-              authProfileImg={sortedPosts[0]?.author?.profileImageUrl || ""}
-              onClick={() => handleClick(sortedPosts[0])}
-            />
-          ) : (
+          {queryGetPosts.isLoading ? (
             <div className="animate-pulse p-5 gap-5 grid grid-cols-[2fr_3fr] rounded-lg bg-gray-200 dark:bg-gray-500 w-full h-96">
               <section className="bg-gray-200 w-full rounded-lg"></section>
               <section className="p-6 gap-3 bg-gray-200 rounded-lg grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]">
@@ -135,31 +140,25 @@ const BlogLandingPage = () => {
                 <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
               </section>
             </div>
-          )}
-          {sortedPosts?.length > 0 ? (
-            <div className="grid md:grid-cols-2 gap-6 mt-8">
-              {sortedPosts
-                .slice(1)
-                .slice(0, 6)
-                .map((item) => (
-                  <BlogPostSummary
-                    key={item._id}
-                    title={item.title}
-                    coverImageUrl={item.coverImageUrl}
-                    description={item.content}
-                    tags={item.tags}
-                    updatedOn={
-                      item.updatedAt
-                        ? moment(item.updatedAt).format("Do MMM YYYY")
-                        : "-"
-                    }
-                    authorName={item.author?.name || "Unknown"}
-                    authProfileImg={item.author?.profileImageUrl || ""}
-                    onClick={() => handleClick(item)}
-                  />
-                ))}
-            </div>
+          ) : sortedPosts?.length > 0 ? (
+            <FeaturedPosts
+              title={sortedPosts[0]?.title}
+              coverImageUrl={sortedPosts[0]?.coverImageUrl}
+              description={sortedPosts[0]?.content}
+              tags={sortedPosts[0]?.tags}
+              updatedOn={
+                sortedPosts[0]?.updatedAt
+                  ? moment(sortedPosts[0]?.updatedAt).format("Do MMM YYYY")
+                  : "-"
+              }
+              authorName={sortedPosts[0]?.author?.name || "Unknown"}
+              authProfileImg={sortedPosts[0]?.author?.profileImageUrl || ""}
+              onClick={() => handleClick(sortedPosts[0])}
+            />
           ) : (
+            ""
+          )}
+          {queryGetPosts.isLoading ? (
             <div className="grid grid-cols-2 gap-5 mt-8">
               <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-lg h-60">
                 <section className="bg-gray-200 rounded-lg"></section>
@@ -184,6 +183,31 @@ const BlogLandingPage = () => {
                 </section>
               </span>
             </div>
+          ) : sortedPosts?.length > 0 ? (
+            <div className="grid md:grid-cols-2 gap-6 mt-8">
+              {sortedPosts
+                .slice(1)
+                .slice(0, 6)
+                .map((item) => (
+                  <BlogPostSummary
+                    key={item._id}
+                    title={item.title}
+                    coverImageUrl={item.coverImageUrl}
+                    description={item.content}
+                    tags={item.tags}
+                    updatedOn={
+                      item.updatedAt
+                        ? moment(item.updatedAt).format("Do MMM YYYY")
+                        : "-"
+                    }
+                    authorName={item.author?.name || "Unknown"}
+                    authProfileImg={item.author?.profileImageUrl || ""}
+                    onClick={() => handleClick(item)}
+                  />
+                ))}
+            </div>
+          ) : (
+            <div className="flex p-10 justify-center">No Events...</div>
           )}
           {page < totalPages && (
             <div className="flex items-center justify-center mt-5">

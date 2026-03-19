@@ -43,7 +43,7 @@ const Announcements = () => {
   const filteredAnnouncements = useMemo(() => {
     return [...(annoData || [])]
       .filter((item) =>
-        item.tags?.some(
+        item?.tags?.some(
           (tag) =>
             tag?.toLowerCase() === "announcement" ||
             tag?.toLowerCase() === "announcements",
@@ -62,11 +62,13 @@ const Announcements = () => {
 
   useEffect(() => {
     getAnnouncements();
+    console.log(announcementQuery.data);
+    console.log(annoData);
   }, [announcementQuery]);
 
   return (
     <BlogLayout>
-      <div className="p-5 grid gap-5">
+      <div className="p-5 grid">
         <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22">
           <h1 className=" bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
             <p className="">Announcements</p>

@@ -24,6 +24,7 @@ import {
 import Courses from "./pages/Blog/components/courses/Courses";
 import Events from "./pages/Events";
 import UsersManagement from "./pages/Admin/components/UsersManagement";
+import SeniorHighInfo from "./components/coursesOffered/SeniorHighInfo";
 
 const App = () => {
   return (
@@ -43,7 +44,7 @@ const App = () => {
             />
             <Route
               path="/courses-offered/seniorhigh/:slug"
-              element={<CourseInfo data={SeniorHighCourseData} />}
+              element={<SeniorHighInfo data={SeniorHighCourseData} />}
             />
             <Route
               path="/courses-offered/tesda/:slug"
@@ -57,7 +58,7 @@ const App = () => {
                 <Courses
                   title={""}
                   data={CollegeCourseData}
-                  side={"Degree"}
+                  side={"Degree Program"}
                   nav={"/courses-offered/bachelors/"}
                 />
               }
@@ -79,7 +80,7 @@ const App = () => {
                 <Courses
                   title={""}
                   data={SeniorHighCourseData}
-                  side={"Senior High"}
+                  side={"Senior High School"}
                   nav={"/courses-offered/seniorhigh/"}
                 />
               }

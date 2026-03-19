@@ -43,10 +43,11 @@ const updatePost = async (req, res) => {
   try {
     const post = await BlogPost.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
-    if (
-      post.author.toString() !== req.user._id.toString() &&
-      !req.user.isAdmin
-    ) {
+
+    const isAuthor = post.author.toString() === req.user._id.toString();
+    const isAdmin = req.user.role.toLowerCase() === "admin";
+
+    if (!isAuthor) {
       return res
         .status(403)
         .json({ message: "Not authorized to update this post" });
@@ -77,7 +78,14 @@ const deletePost = async (req, res) => {
     const post = await BlogPost.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
-    await post.deleteOne();
+    const isAuthor = post.author.toString() === req.user._id.toString();
+    const isAdmin = req.user.role.toLowerCase() === "admin";
+
+    if (!isAuthor) {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to delete this post" });
+    } else await post.deleteOne();
     res.json({ message: "Post deleted" });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });

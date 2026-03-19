@@ -1,19 +1,17 @@
-import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
-import BlogLayout from "../Layouts/BlogLayout/BlogLayout.jsx";
 import { useEffect } from "react";
-import AdmisionRequirements from "./AdmisionRequirements.jsx";
+import { Link, useLocation, useParams } from "react-router-dom";
+import BlogLayout from "../Layouts/BlogLayout/BlogLayout";
 
-const CourseInfo = ({ data }) => {
+const SeniorHighInfo = ({ data }) => {
   const { slug } = useParams();
   const course = data.find((c) => c.slug === slug);
-
   if (!course) {
     return (
       <div className="py-20 container mx-auto px-4">
-        <p className="text-center text-gray-600">Course not found.</p>
+        <p className="text-center text-gray-600">Strand not found.</p>
         <div className="text-center mt-4">
-          <Link to="/courses-offered" className="text-indigo-600">
-            Back to Courses
+          <Link to="/courses-offered/seniorhigh" className="text-indigo-600">
+            Back to Senior High School Strand
           </Link>
         </div>
       </div>
@@ -24,7 +22,6 @@ const CourseInfo = ({ data }) => {
     // ensure we are at the top when opening course details
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-
   const location = useLocation();
 
   useEffect(() => {
@@ -44,7 +41,6 @@ const CourseInfo = ({ data }) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
-
   return (
     <BlogLayout>
       <div className="md:p-20">
@@ -53,7 +49,7 @@ const CourseInfo = ({ data }) => {
             <img
               src={course.image}
               alt={course.course}
-              className="w-full max-h-150 object-top object-scale-down rounded"
+              className="w-full max-h-96 object-cover object-center rounded"
             />
           </div>
 
@@ -90,14 +86,10 @@ const CourseInfo = ({ data }) => {
           ) : (
             ""
           )}
-
-          <section className="mx-10 flex justify-center">
-            <AdmisionRequirements />
-          </section>
         </div>
       </div>
     </BlogLayout>
   );
 };
 
-export default CourseInfo;
+export default SeniorHighInfo;

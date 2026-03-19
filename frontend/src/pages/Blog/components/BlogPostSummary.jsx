@@ -22,7 +22,7 @@ const BlogPostSummary = ({
         <img
           src={coverImageUrl}
           alt={title}
-          className="max-w-80 w-full h-full rounded-lg max-h-80 object-cover"
+          className="w-full h-80 aspect-square rounded-lg object-cover"
         />
       </section>
 

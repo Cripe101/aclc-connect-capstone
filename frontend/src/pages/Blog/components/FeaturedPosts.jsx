@@ -12,13 +12,13 @@ const FeaturedPosts = ({
 }) => {
   return (
     <div
-      className="grid md:grid-cols-[1fr_2fr] rounded-lg cursor-pointer bg-blue-50 hover:scale-[101%] active:scale-[99%] duration-200"
+      className="grid md:grid-cols-[2fr_3fr] rounded-lg cursor-pointer bg-blue-50 hover:scale-[101%] active:scale-[99%] duration-200"
       onClick={onClick}
     >
       <img
         src={coverImageUrl}
         alt={title}
-        className="md:w-full border border-blue-50 aspect-square object-center rounded-lg"
+        className="w-full border border-blue-50 max-h-100 aspect-square object-center rounded-lg"
       />
 
       <div className="p-6 bg-transparent">
