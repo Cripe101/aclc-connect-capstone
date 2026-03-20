@@ -22,7 +22,7 @@ const FeaturedPosts = ({
       />
 
       <div className="p-6 bg-transparent">
-        <h2 className="text-lg md:text-2xl font-bold mb-2 line-clamp-3">
+        <h2 className="text-lg md:text-2xl text-blue-800 font-bold mb-2 line-clamp-3">
           {title}
         </h2>
         <div className="text-gray-700 text-[13px] mb-4 line-clamp-3">

@@ -158,18 +158,18 @@ const BlogPostView = () => {
 
           <div className="grid p-2 md:grid-cols-[4fr_1fr] md:gap-10 relative ">
             <div className="relative">
-              <h1 className="text-lg md:text-2xl font-bold mb-2 w-[90%]">
+              <h1 className="text-lg md:text-3xl w-full font-extrabold mb-5 text-white bg-blue-800 p-3 pl-5 rounded-full">
                 {blogPostData.title}
               </h1>
 
               <div className="grid gap-3 ">
-                <section className="flex">
+                <section className="flex items-center">
                   <LuDot className="text-xl text-gray-400" />
                   <div className="flex gap-3">
                     {blogPostData.tags.slice(0, 3).map((tag, index) => (
                       <button
                         key={index}
-                        className="bg-sky-200/50 text-sky-800/80 text-[10px] md:text-xs font-medium px-3 py-0.5 rounded-full text-nowrap cursor-pointer"
+                        className="bg-blue-300/50 text-blue-800 text-xs md:text-sm font-medium px-3 py-1 rounded-full text-nowrap cursor-pointer"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/tag/${tag}`);

@@ -27,7 +27,7 @@ const BlogPostSummary = ({
       </section>
 
       <div className="p-4 md:p-6">
-        <h2 className="text-base md:text-lg font-bold mb-2 line-clamp-2">
+        <h2 className="text-base text-blue-800 md:text-lg font-bold mb-2 line-clamp-2">
           {title}
         </h2>
         <span className="text-gray-700 text-xs mb-4 line-clamp-2">

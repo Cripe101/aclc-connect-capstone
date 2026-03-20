@@ -36,8 +36,6 @@ const Events = () => {
 
   useEffect(() => {
     setEvents(queryEvents?.data?.posts);
-    console.log(events);
-    console.log(filteredEvents);
   }, [queryEvents]);
 
   const filteredEvents = useMemo(() => {

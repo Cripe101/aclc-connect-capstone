@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import BlogLayout from "../components/Layouts/BlogLayout/BlogLayout";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "../utils/api";
-import { Section, SpaceIcon } from "lucide-react";
 import AnnouncementsCard from "../components/Cards/AnnouncementsCard";
 
 const Announcements = () => {
@@ -62,14 +61,12 @@ const Announcements = () => {
 
   useEffect(() => {
     getAnnouncements();
-    console.log(announcementQuery.data);
-    console.log(annoData);
   }, [announcementQuery]);
 
   return (
     <BlogLayout>
       <div className="p-5 grid">
-        <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22">
+        <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22 z-20">
           <h1 className=" bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
             <p className="">Announcements</p>
           </h1>
