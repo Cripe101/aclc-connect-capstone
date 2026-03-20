@@ -172,7 +172,7 @@ const UsersManagement = () => {
 
   useEffect(() => {
     getAllUsers();
-  }, [users]);
+  }, []);
 
   return (
     <DashboardLayout activeMenu="Users">
