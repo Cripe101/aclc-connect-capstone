@@ -72,11 +72,11 @@ const PostCard = ({ title, coverImageUrl, tags, onClick }) => {
         {(tags[0] || "POST").toUpperCase()}
       </h6>
 
-      <div className="flex items-start gap-4 mt-2">
+      <div className="flex items-center gap-4 mt-2">
         <img
           src={coverImageUrl}
           alt={title}
-          className="w-14 h-14 object-cover rounded"
+          className="w-18 h-18 object-cover rounded"
         />
 
         <h2 className="text-sm md:text-sm font-medium mb-2 line-clamp-3">

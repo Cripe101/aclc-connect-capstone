@@ -334,7 +334,7 @@ const BlogPostView = () => {
               />
             </div>
 
-            <div className="mt-10s">
+            <div className="mt-10 md:mt-0">
               <TrendingPostsSection />
             </div>
           </div>

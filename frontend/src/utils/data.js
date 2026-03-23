@@ -6,6 +6,9 @@ import {
   LuTag,
   LuBookA,
   LuUser,
+  LuCalendar,
+  LuBookImage,
+  LuBookX,
 } from "react-icons/lu";
 
 export const SIDE_MENU_DATA = [
@@ -48,20 +51,20 @@ export const BLOG_NAVBAR_DATA = [
   {
     id: "02",
     label: "Courses Offered",
-    icon: LuTag,
+    icon: LuBookImage,
     path: "/courses-offered",
   },
 
   {
     id: "03",
     label: "Announcements",
-    icon: LuTag,
+    icon: LuCalendar,
     path: "/announcements",
   },
   {
     id: "04",
     label: "Events",
-    icon: LuBookA,
+    icon: LuBookX,
     path: "/events",
   },
 
