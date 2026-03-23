@@ -19,7 +19,7 @@ const BlogLandingPage = () => {
   const [totalPages, setTotalPages] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const aclcVid =
-    "https://www.dropbox.com/scl/fi/otdreekya8q8pt6cwhut2/ACLC-MARKETING-VIDEO.mp4?rlkey=bq4kmj71z8rcjhivsukvkpv40&st=d89bsl8c&raw=1";
+    "https://www.dropbox.com/scl/fi/otdreekya8q8pt6cwhut2/ACLC-MARKETING-VIDEO.mp4?rlkey=bq4kmj71z8rcjhivsukvkpv40&st=epdg61ik&dl=1";
 
   // Fetch paginated post
   // const getAllPosts = async (pageNumber = 1) => {
