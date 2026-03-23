@@ -100,14 +100,6 @@ const BlogPostEditor = ({ isEdit }) => {
         setError("Please select cover image.");
         return;
       }
-      if (isEdit && !postData.coverImageUrl && !postData.coverPreview) {
-        setError("Please select cover image.");
-        return;
-      }
-      if (isEdit && postData.images.length <= 0) {
-        setError("Please select images.");
-        return;
-      }
       if (!postData.tags.length) {
         setError("Please add some tags.");
         return;
