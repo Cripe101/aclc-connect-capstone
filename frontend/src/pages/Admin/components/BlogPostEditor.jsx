@@ -319,7 +319,7 @@ const BlogPostEditor = ({ isEdit }) => {
                     disabled={loading}
                     onClick={() => setOpenDeleteAlert(true)}
                   >
-                    <LuTrash2 className="text-sm" />{" "}
+                    <LuTrash2 className="text-lg" />{" "}
                     <span className="hidden md:block">Delete</span>
                   </button>
                 )}
@@ -329,7 +329,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   disabled={loading}
                   onClick={() => navigate("/admin/posts")}
                 >
-                  <LuArrowLeft className="text-sm" />{" "}
+                  <LuArrowLeft className="text-lg" />{" "}
                   <span className="hidden md:block">Cancel</span>
                 </button>
                 <button
@@ -337,7 +337,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
-                  <LuSave className="text-sm" />{" "}
+                  <LuSave className="text-lg" />{" "}
                   <span className="hidden md:block">Draft</span>
                 </button>
 
@@ -349,7 +349,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   {loading ? (
                     <LuLoaderCircle className="animate-spin text-[15px]" />
                   ) : (
-                    <LuSend className="text-sm" />
+                    <LuSend className="text-lg" />
                   )}{" "}
                   <span className="hidden md:block">Publish</span>
                 </button>
