@@ -217,7 +217,7 @@ const BlogPostView = () => {
                 )}
 
                 {blogPostData.images?.length === 3 && (
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid md:grid-cols-2 gap-2">
                     <img
                       src={blogPostData.images[0]}
                       className="w-full h-[400px] object-cover object-top rounded-lg col-span-2"
@@ -233,7 +233,7 @@ const BlogPostView = () => {
                 )}
 
                 {blogPostData.images?.length >= 4 && (
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid md:grid-cols-2 gap-2">
                     {blogPostData.images.slice(0, 4).map((img, i) => (
                       <div key={i} className="relative">
                         <img
@@ -334,7 +334,7 @@ const BlogPostView = () => {
               />
             </div>
 
-            <div className="">
+            <div className="mt-10s">
               <TrendingPostsSection />
             </div>
           </div>
