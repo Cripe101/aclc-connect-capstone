@@ -74,7 +74,40 @@ const Events = () => {
         </section>
         <section>
           {queryEvents.isLoading ? (
-            <div>Loading</div>
+            <div className="grid md:grid-cols-2 gap-5">
+              <div className="mt-5 animate-pulse p-5 gap-5 grid md:grid-cols-[2fr_3fr] rounded-lg bg-gray-200 dark:bg-gray-500 w-full h-80">
+                <section className="bg-gray-200 w-full rounded-lg"></section>
+                <section className="p-6 gap-3 bg-gray-200 rounded-lg grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]">
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className=""></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className=""></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                </section>
+              </div>
+              <div className="mt-5 animate-pulse p-5 gap-5 grid md:grid-cols-[2fr_3fr] rounded-lg bg-gray-200 dark:bg-gray-500 w-full h-80">
+                <section className="bg-gray-200 w-full rounded-lg"></section>
+                <section className="p-6 gap-3 bg-gray-200 rounded-lg grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr]">
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className=""></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className=""></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                  <h1 className="bg-gray-200 dark:bg-gray-500 rounded-full"></h1>
+                </section>
+              </div>
+            </div>
           ) : filteredEvents.length === 0 ? (
             <div>No Events </div>
           ) : (

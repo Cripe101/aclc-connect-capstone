@@ -19,7 +19,7 @@ const BlogLandingPage = () => {
   const [totalPages, setTotalPages] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const aclcVid =
-    "https://www.dropbox.com/scl/fi/otdreekya8q8pt6cwhut2/ACLC-MARKETING-VIDEO.mp4?rlkey=bq4kmj71z8rcjhivsukvkpv40&st=epdg61ik&dl=1";
+    "https://www.dropbox.com/scl/fi/otdreekya8q8pt6cwhut2/ACLC-MARKETING-VIDEO.mp4?rlkey=6wl5fm597lddm61vmvvhoxkb4&st=p7km97yr&dl=1";
 
   // Fetch paginated post
   // const getAllPosts = async (pageNumber = 1) => {
@@ -116,16 +116,14 @@ const BlogLandingPage = () => {
         </p>
       </div>
       <div className="flex px-5 md:px-5 justify-center">
-        {aclcVid && (
-          <video
-            src={aclcVid}
-            loop={true}
-            autoPlay={true}
-            muted
-            controls
-            className="mt-5 rounded-lg"
-          ></video>
-        )}
+        <video
+          src={aclcVid}
+          loop={true}
+          autoPlay={true}
+          muted
+          controls
+          className="mt-5 rounded-lg w-[90%] md:w-[97%]"
+        ></video>
       </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
         <div className="grid grid-cols-1 p-5">

@@ -39,7 +39,7 @@ const Courses = ({ title, data, side, nav }) => {
               <img
                 src={course.image}
                 alt=""
-                className="max-h-60 w-full object-cover object-top rounded-t"
+                className="max-h-60 md:w-full w-[400px] object-cover object-top rounded-t"
               />
               <h1 className="p-4 flex flex-col gap-2 font-display">
                 <p className="font-medium">{course.course}</p>
