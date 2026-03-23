@@ -128,6 +128,7 @@ const CommentInfo = ({
           setReplyText={setReplyText}
           handleAddReply={handleAddReply}
           handleCancelReply={handleCancelReply}
+          isLoading={loading}
           disableAutoGen
         />
       )}

@@ -12,7 +12,6 @@ import Input from "./Input";
 const CommentReplyInput = ({
   user,
   authorName,
-  content,
   replyText,
   setReplyText,
   handleAddReply,
@@ -20,34 +19,8 @@ const CommentReplyInput = ({
   handleCancelReply,
   type = "reply",
 }) => {
-  const [loading, setLoading] = useState(false);
-
-  // Generate reply using AI
-  const generateReply = async () => {
-    setLoading(true);
-
-    try {
-      const aiResponse = await axiosInstance.post(
-        API_PATHS.AI.GENERATE_COMMENT_REPLY,
-        {
-          author: { name: authorName },
-          content,
-        },
-      );
-      const generatedReply = aiResponse.data;
-
-      if (generatedReply?.length > 0) {
-        setReplyText(generatedReply);
-      }
-    } catch (error) {
-      console.log("Something went wrong. Please try again.", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="mt-5 ml-10 relative">
+    <div className="mt-2 ml-10 relative">
       <div className="flex items-start gap-3">
         <img
           src={user.profileImageUrl}
@@ -87,21 +60,6 @@ const CommentReplyInput = ({
             </button>
           </div>
         </div>
-        {/* {!disableAutoGen && (
-                <button
-                    className='flex items-center gap-1.5 text-[13px] font-medium text-sky-500 bg-sky-50 px-4 py-0.5 rounded-full hover:bg-sky-500 hover:text-white cursor-pointer absolute top-0 right-0'
-                    disabled={loading}
-                    onClick={generateReply}
-                >
-                    {loading ? (
-                        <LuLoaderCircle className='animate-spin text-[15px]' />
-                    ) : (
-                        <LuWandSparkles className='text-[15px]' />
-                    )
-                    }{" "}
-                    {loading ? "Generating..." : "Generate Reply"}
-                </button>
-            )} */}
       </div>
     </div>
   );

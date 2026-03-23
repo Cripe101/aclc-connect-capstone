@@ -104,6 +104,8 @@ const BlogLandingPage = () => {
     }
   }, [location]);
 
+  // console.log(aclcVid);
+
   return (
     <BlogLayout>
       <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-blue-900">
@@ -114,12 +116,16 @@ const BlogLandingPage = () => {
         </p>
       </div>
       <div className="flex px-5 md:px-5 justify-center">
-        <video
-          src={aclcVid}
-          autoPlay={true}
-          loop={true}
-          className="mt-5 rounded-lg"
-        ></video>
+        {aclcVid && (
+          <video
+            src={aclcVid}
+            loop={true}
+            autoPlay={true}
+            muted
+            controls
+            className="mt-5 rounded-lg"
+          ></video>
+        )}
       </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
         <div className="grid grid-cols-1 p-5">

@@ -153,23 +153,23 @@ const BlogPostView = () => {
   return (
     <BlogLayout>
       {blogPostData ? (
-        <div className="md:p-5">
+        <div className="p-5 md:p-10 w-full">
           <title>{blogPostData.title}</title>
           <meta name="description" content={blogPostData.title} />
           <meta property="og:title" content={blogPostData.title} />
           <meta property="og:image" content={blogPostData.coverImageUrl} />
           <meta property="og:type" content="article" />
 
-          <div className="grid p-2 md:grid-cols-[4fr_1fr] md:gap-10 relative ">
+          <div className="grid md:p-2 p-0.5 md:grid-cols-[4fr_1fr] md:gap-10 relative">
             <div className="relative">
-              <h1 className="text-lg md:text-3xl w-full font-extrabold mb-5 text-white bg-blue-800 p-3 pl-5 rounded-full">
+              <h1 className="text-lg md:text-3xl w-full justify-center font-extrabold mb-5 text-white bg-blue-800 py-2 md:p-3 pl-5 md:pl-10 rounded-full">
                 {blogPostData.title}
               </h1>
 
-              <div className="grid gap-3 ">
+              <div className="grid gap-3">
                 <section className="flex items-center">
                   <LuDot className="text-xl text-gray-400" />
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-3">
                     {blogPostData.tags.slice(0, 3).map((tag, index) => (
                       <button
                         key={index}
@@ -205,12 +205,12 @@ const BlogPostView = () => {
                 )}
 
                 {blogPostData.images?.length === 2 && (
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid md:grid-cols-2 gap-2">
                     {blogPostData.images.slice(0, 2).map((img, i) => (
                       <img
                         key={i}
                         src={img}
-                        className="w-full h-[400px] border border-slate-300 object-cover object-top rounded-lg"
+                        className="w-full h-[300px] md:h-[400px] border border-slate-300 object-cover object-top rounded-lg"
                       />
                     ))}
                   </div>
@@ -285,7 +285,6 @@ const BlogPostView = () => {
                       <CommentReplyInput
                         user={user}
                         authorName={user.name}
-                        content={""}
                         replyText={replyText}
                         setReplyText={setReplyText}
                         handleAddReply={handleAddReply}
