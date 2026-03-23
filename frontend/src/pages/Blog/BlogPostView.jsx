@@ -125,6 +125,7 @@ const BlogPostView = () => {
   // Add Reply
   const handleAddReply = async () => {
     try {
+      setIsLoading(true);
       const response = await axiosInstance.post(
         API_PATHS.COMMENTS.ADD(blogPostData._id),
         {
@@ -136,8 +137,11 @@ const BlogPostView = () => {
       setReplyText("");
       setShowReplyForm(false);
       fetchCommentByPostId(blogPostData._id);
+      return response.data;
     } catch (error) {
       console.error("Error replying to comment.", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -287,6 +291,7 @@ const BlogPostView = () => {
                         handleAddReply={handleAddReply}
                         handleCancelReply={handleCancelReply}
                         disableAutoGen
+                        isLoading={isLoading}
                         type="new"
                       />
                     </div>

@@ -24,6 +24,7 @@ const CommentInfo = ({
   const [replyText, setReplyText] = useState("");
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [showSubReplies, setShowSubReplies] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Handles cancelling a reply
   const handleCancelReply = () => {
@@ -34,7 +35,8 @@ const CommentInfo = ({
   // Add reply
   const handleAddReply = async () => {
     try {
-      console.log("post", post);
+      // console.log("post", post);
+      setLoading(true);
 
       const response = await axiosInstance.post(
         API_PATHS.COMMENTS.ADD(post._id),
@@ -47,8 +49,11 @@ const CommentInfo = ({
       setReplyText("");
       setShowReplyForm(false);
       getAllComments();
+      return response.data;
     } catch (error) {
       console.error("Error replying to comment.", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,10 +85,10 @@ const CommentInfo = ({
                 {!isSubReply && (
                   <>
                     <button
-                      className="flex items-center gap-2 text-[13px] font-medium text-sky-600 bg-sky-50 px-4 py-0.5 rounded-full hover:bg-sky-500 hover:text-white cursor-pointer"
+                      className="flex items-center gap-2 text-[13px] disabled:opacity-50 font-medium text-sky-600 bg-sky-50 px-4 py-0.5 rounded-full hover:bg-sky-500 hover:text-white cursor-pointer"
                       onClick={() => {
                         if (!user) {
-                          console.log("USER", user);
+                          // console.log("USER", user);
                           setOpenAuthForm(true);
                           return;
                         }
