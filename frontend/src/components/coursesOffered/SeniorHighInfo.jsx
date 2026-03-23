@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import BlogLayout from "../Layouts/BlogLayout/BlogLayout";
+import AdmisionRequirementsSeniorHigh from "./AdmisionRequirementsSeniorHigh";
 
 const SeniorHighInfo = ({ data }) => {
   const { slug } = useParams();
@@ -19,37 +20,33 @@ const SeniorHighInfo = ({ data }) => {
   }
 
   useEffect(() => {
-    // ensure we are at the top when opening course details
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
   const location = useLocation();
 
   useEffect(() => {
-    // Scroll to anchor if present in URL hash
     if (location.hash) {
       const id = location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
-        // small timeout to ensure element is rendered
         setTimeout(
           () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
           50,
         );
       }
     } else {
-      // if no hash, optionally scroll to top when navigating to About
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
   return (
     <BlogLayout>
-      <div className="md:p-20">
+      <div className="md:p-20 flex flex-col justify-center items-center">
         <div className="mx-5 md:mx-20 bg-white">
           <div className="">
             <img
               src={course.image}
               alt={course.course}
-              className="w-full max-h-96 object-cover object-center rounded"
+              className="w-full max-h-150 object-top object-scale-down rounded"
             />
           </div>
 
@@ -87,6 +84,7 @@ const SeniorHighInfo = ({ data }) => {
             ""
           )}
         </div>
+        <AdmisionRequirementsSeniorHigh />
       </div>
     </BlogLayout>
   );

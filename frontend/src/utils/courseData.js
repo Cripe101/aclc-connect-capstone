@@ -128,25 +128,29 @@ export const TesdaCourseData = [
   {
     course: "Web Application Development",
     slug: "wad",
-    image: "https://picsum.photos/seed/bscs/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/f_auto,q_auto/CS_g3jipp",
     description: `is an academic or technical program focused on teaching the end-to-end process of designing, building, testing, and deploying interactive, browser-based software applications. Unlike general web design, which focuses on visual aesthetics, a WAD course emphasizes the technical, functional, and backend logic required to make web pages dynamic and interactive.`,
   },
   {
     course: "Office Management Technology",
     slug: "omt",
-    image: "https://picsum.photos/seed/bscs/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/BA_ailudo.jpg",
     description: `often offered as a Diploma program (DOMT) or a 2-year bundled services course, is a TESDA-aligned curriculum designed to prepare students for careers in office administration, secretarial work, and specialized legal or medical office management.`,
   },
   {
     course: "Office Administration Technology",
     slug: "oat",
-    image: "https://picsum.photos/seed/bscs/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/BA_ailudo.jpg",
     description: `Office Administration Technology is typically not a single standalone course title but is instead represented through several specific National Certificate (NC) programs or integrated "Diploma" levels. These courses are designed to equip students with the skills needed to manage office operations using modern technology.`,
   },
   {
     course: "Hotel and Restaurant Technology",
     slug: "hrt",
-    image: "https://picsum.photos/seed/bscs/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/HM_ghxeku.jpg",
     description: `Hotel and Restaurant Technology (HRT) is a comprehensive 3-year diploma program designed to equip students with the technical and managerial skills required for the hospitality industry. 
     This program is typically ladderized, meaning it is composed of several National Certificates (NCs) that students earn as they progress, allowing them to enter the workforce even before finishing the full three years.`,
   },
@@ -156,28 +160,32 @@ export const SeniorHighCourseData = [
   {
     course: "Accountancy, Business and Management",
     slug: "abm",
-    image: "https://picsum.photos/seed/abm/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
       "Focuses on fundamentals of accounting, business management, and entrepreneurship — prepares students for business-related tertiary programs.",
   },
   {
     course: "Science, Technology, Engineering and Mathematics",
     slug: "stem",
-    image: "https://picsum.photos/seed/stem/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
       "Emphasizes advanced math and science subjects for students aiming to pursue engineering, IT, or pure sciences in college.",
   },
   {
     course: "Humanities and Social Sciences",
     slug: "humss",
-    image: "https://picsum.photos/seed/humss/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
       "Designed for students interested in social sciences, communication, and education pathways.",
   },
   {
     course: "Technical-Vocational-Livelihood",
     slug: "tvl",
-    image: "https://picsum.photos/seed/tvl/1600/900",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
       "A practical track offering hands-on training in trades and technical skills with opportunities for certification.",
   },

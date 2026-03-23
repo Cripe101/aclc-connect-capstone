@@ -6,19 +6,16 @@ const Courses = ({ title, data, side, nav }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Scroll to anchor if present in URL hash
     if (location.hash) {
       const id = location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
-        // small timeout to ensure element is rendered
         setTimeout(
           () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
           50,
         );
       }
     } else {
-      // if no hash, optionally scroll to top when navigating to About
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
@@ -37,7 +34,7 @@ const Courses = ({ title, data, side, nav }) => {
             <section
               onClick={() => navigate(nav + course.slug)}
               key={course.course}
-              className="grid md:grid-rows-[3fr_1fr] max-w-[1200px] bg-blue-50 rounded-lg hover:cursor:pointer hover:scale-[101%] active:scale-[99%] hover:cursor-pointer duration-200"
+              className="grid md:grid-rows-[3fr_1fr] md:w-[400px] max-w-[1200px] bg-blue-50 rounded-lg hover:cursor:pointer hover:scale-[101%] active:scale-[99%] hover:cursor-pointer duration-200"
             >
               <img
                 src={course.image}
