@@ -164,7 +164,7 @@ const BlogPostView = () => {
               onClick={() => {
                 setShowPhotos(false);
               }}
-              className="absolute right-10 top-5 text-red-600 font-bold cursor-pointer bg-white px-3 py-1 rounded-lg hover:text-white hover:bg-red-600 active:scale-90 duration-200"
+              className="absolute right-10 top-5 text-black text-lg font-bold cursor-pointer px-3 py-1 rounded-lg hover:text-red-600 active:scale-90 duration-200"
             >
               X
             </button>

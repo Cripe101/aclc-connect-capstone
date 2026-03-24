@@ -150,6 +150,7 @@ const BlogLandingPage = () => {
               coverImageUrl={sortedPosts[0]?.coverImageUrl}
               description={sortedPosts[0]?.content}
               tags={sortedPosts[0]?.tags}
+              images={sortedPosts[0]?.images}
               updatedOn={
                 sortedPosts[0]?.updatedAt
                   ? moment(sortedPosts[0]?.updatedAt).format("Do MMM YYYY")

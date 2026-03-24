@@ -9,6 +9,7 @@ const FeaturedPosts = ({
   authorName,
   authProfileImg,
   onClick,
+  images,
 }) => {
   return (
     <div
@@ -16,9 +17,9 @@ const FeaturedPosts = ({
       onClick={onClick}
     >
       <img
-        src={coverImageUrl}
+        src={coverImageUrl === "" ? images[0] : coverImageUrl}
         alt={title}
-        className="w-full border border-blue-50 max-h-100 aspect-square object-center rounded-lg"
+        className="w-full border border-blue-50 max-h-100 object-cover object-top rounded-lg"
       />
 
       <div className="p-6 bg-transparent">
