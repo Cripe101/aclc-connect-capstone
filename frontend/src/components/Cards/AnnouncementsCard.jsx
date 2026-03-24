@@ -12,8 +12,7 @@ const AnnouncementsCard = ({ data }) => {
         >
           <img
             src={
-              anno?.coverImageUrl ||
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ32isJCX6lH9OJwOJvk4Xrt7kF2I06nDqm4Q&s"
+              anno?.coverImageUrl === "" ? anno?.images[0] : anno?.coverImageUrl
             }
             className="border border-blue-50 rounded-lg w-full h-60 md:h-50 object-cover object-top"
           />

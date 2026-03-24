@@ -37,7 +37,7 @@ const AboutPage = () => {
           <h1 className="text-3xl text-center md:text-4xl font-extrabold text-gray-800">
             About ACLC
           </h1>
-          <p className="mt-3 text-gray-600 text-justify max-w-2xl mx-auto">
+          <p className="mt-3 text-gray-600 text-justify max-w-2xl px-4 md:px-0 mx-auto">
             Learn about our history, mission, and vision — and discover the
             courses we offer for Senior High and beyond.
           </p>

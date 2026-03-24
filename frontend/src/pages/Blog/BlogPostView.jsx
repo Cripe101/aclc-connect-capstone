@@ -2,7 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
-import { LuCircleAlert, LuDot } from "react-icons/lu";
+import {
+  LuCircleAlert,
+  LuCross,
+  LuCrosshair,
+  LuDot,
+  LuX,
+} from "react-icons/lu";
 import { UserContext } from "../../context/userContext";
 import CommentReplyInput from "../../components/Inputs/CommentReplyInput";
 import toast from "react-hot-toast";
@@ -166,7 +172,7 @@ const BlogPostView = () => {
               }}
               className="absolute right-10 top-5 text-black text-lg font-bold cursor-pointer px-3 py-1 rounded-lg hover:text-red-600 active:scale-90 duration-200"
             >
-              X
+              <LuX size={30} />
             </button>
             <section className="flex px-3 md:p-10 items-center gap-3">
               {blogPostData.images.length === 0 ? (
