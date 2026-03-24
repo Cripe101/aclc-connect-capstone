@@ -96,10 +96,10 @@ const BlogPostEditor = ({ isEdit }) => {
     }
 
     if (!isDraft) {
-      if (!isEdit && !postData.coverImageUrl) {
-        setError("Please select cover image.");
-        return;
-      }
+      // if (!isEdit && !postData.coverImageUrl) {
+      //   setError("Please select cover image.");
+      //   return;
+      // }
       if (!postData.tags.length) {
         setError("Please add some tags.");
         return;
@@ -278,7 +278,7 @@ const BlogPostEditor = ({ isEdit }) => {
         >
           X
         </button>
-        <section className="flex md:p-10">
+        <section className="flex md:p-10 justify-center items-center">
           <button
             onClick={() => {
               photo === 1 ? "" : setPhoto(photo - 1);
@@ -288,11 +288,19 @@ const BlogPostEditor = ({ isEdit }) => {
             <FaArrowLeft size={25} />
           </button>
           {postData.images.slice(photo - 1, photo).map((img) => (
-            <img
-              src={img}
-              alt="No Photo"
-              className="w-80 md:w-full object-cover rounded-lg"
-            />
+            <section className="w-80 md:w-full md:h-full">
+              <button
+                onClick={() => postData.images.pop(img)}
+                className="text-lg md:text-base fixed top-5 right-25 bg-white px-3 py-2 text-red-700 rounded-lg cursor-pointer active:scale-95 duration-200"
+              >
+                <LuTrash2 />
+              </button>
+              <img
+                src={img}
+                alt="No Photo"
+                className="w-80 md:w-full md:h-full rounded-lg"
+              />
+            </section>
           ))}
           <button
             onClick={() => {
@@ -329,7 +337,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   disabled={loading}
                   onClick={() => navigate("/admin/posts")}
                 >
-                  <LuArrowLeft className="text-lg" />{" "}
+                  <LuArrowLeft className="text-2xl md:text-lg" />{" "}
                   <span className="hidden md:block">Cancel</span>
                 </button>
                 <button
@@ -337,7 +345,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
-                  <LuSave className="text-lg" />{" "}
+                  <LuSave className="text-2xl md:text-lg" />{" "}
                   <span className="hidden md:block">Draft</span>
                 </button>
 
@@ -349,7 +357,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   {loading ? (
                     <LuLoaderCircle className="animate-spin text-[15px]" />
                   ) : (
-                    <LuSend className="text-lg" />
+                    <LuSend className="text-2xl md:text-lg" />
                   )}{" "}
                   <span className="hidden md:block">Publish</span>
                 </button>

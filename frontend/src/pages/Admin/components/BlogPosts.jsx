@@ -114,7 +114,11 @@ const BlogPosts = () => {
                 <BlogPostSummaryCard
                   key={post._id}
                   title={post.title}
-                  imgUrl={post.coverImageUrl}
+                  imgUrl={
+                    post?.coverImageUrl === ""
+                      ? post?.images[0]
+                      : post?.coverImageUrl
+                  }
                   updatedOn={
                     post.updatedAt
                       ? moment(post.updatedAt).format("Do MMM YYYY")

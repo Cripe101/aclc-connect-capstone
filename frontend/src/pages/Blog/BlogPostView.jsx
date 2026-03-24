@@ -16,6 +16,7 @@ import { sanitizeMarkdown } from "../../utils/helper";
 import CommentInfo from "./components/CommentInfo";
 import Drawer from "../../components/Drawer";
 import LikeCommentButton from "./components/LikeCommentButton";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -150,10 +151,61 @@ const BlogPostView = () => {
     return () => {};
   }, [slug]);
 
+  const [showPhotos, setShowPhotos] = useState(false);
+  const [photo, setPhoto] = useState(1);
   return (
     <BlogLayout>
       {blogPostData ? (
-        <div className="p-5 md:p-10 w-full">
+        <div className="p-5 md:p-10 w-full relative">
+          <div
+            className={`${showPhotos ? "flex" : "hidden"} justify-center fixed z-50 top-0 left-0 w-screen h-screen bg-slate-50/60 backdrop-blur-md`}
+          >
+            <button
+              onClick={() => {
+                setShowPhotos(false);
+              }}
+              className="absolute right-10 top-5 text-red-600 font-bold cursor-pointer bg-white px-3 py-1 rounded-lg hover:text-white hover:bg-red-600 active:scale-90 duration-200"
+            >
+              X
+            </button>
+            <section className="flex px-3 md:p-10 items-center gap-3">
+              {blogPostData.images.length === 0 ? (
+                <img
+                  src={blogPostData.coverImageUrl}
+                  alt="No Photo"
+                  className="md:w-full md:h-full rounded-lg"
+                />
+              ) : (
+                <section className="flex md:p-10 items-center justify-center gap-3">
+                  <button
+                    onClick={() => {
+                      photo === 1 ? "" : setPhoto(photo - 1);
+                    }}
+                    className="md:p-10 active:text-blue-700 rounded-l-lg cursor-pointer duration-200"
+                  >
+                    <FaArrowLeft size={25} />
+                  </button>
+                  {blogPostData.images.slice(photo - 1, photo).map((img) => (
+                    <img
+                      src={img}
+                      alt="No Photo"
+                      className="w-80 md:w-full max-h-180 rounded-lg"
+                    />
+                  ))}
+                  <button
+                    onClick={() => {
+                      photo === blogPostData.images.length
+                        ? ""
+                        : setPhoto(photo + 1);
+                    }}
+                    className="md:p-10 active:text-blue-700 rounded-r-lg cursor-pointer duration-200"
+                  >
+                    <FaArrowRight size={25} />
+                  </button>
+                </section>
+              )}
+            </section>
+          </div>
           <title>{blogPostData.title}</title>
           <meta name="description" content={blogPostData.title} />
           <meta property="og:title" content={blogPostData.title} />
@@ -193,12 +245,14 @@ const BlogPostView = () => {
               <section className="mb-6 flex justify-center">
                 {blogPostData.images?.length === 0 && (
                   <img
+                    onClick={() => setShowPhotos(true)}
                     src={blogPostData.coverImageUrl}
                     className="w-full max-w-[400px] rounded-lg object-fill"
                   />
                 )}
                 {blogPostData.images?.length === 1 && (
                   <img
+                    onClick={() => setShowPhotos(true)}
                     src={blogPostData.images[0]}
                     className="w-full max-h-[400px] object-cover object-top rounded-lg"
                   />
@@ -208,6 +262,7 @@ const BlogPostView = () => {
                   <div className="grid md:grid-cols-2 gap-2">
                     {blogPostData.images.slice(0, 2).map((img, i) => (
                       <img
+                        onClick={() => setShowPhotos(true)}
                         key={i}
                         src={img}
                         className="w-full h-[300px] md:h-[400px] border border-slate-300 object-cover object-top rounded-lg"
@@ -219,11 +274,13 @@ const BlogPostView = () => {
                 {blogPostData.images?.length === 3 && (
                   <div className="grid md:grid-cols-2 gap-2">
                     <img
+                      onClick={() => setShowPhotos(true)}
                       src={blogPostData.images[0]}
                       className="w-full h-[400px] object-cover object-top rounded-lg col-span-2"
                     />
                     {blogPostData.images.slice(1, 3).map((img, i) => (
                       <img
+                        onClick={() => setShowPhotos(true)}
                         key={i}
                         src={img}
                         className="w-full h-[400px] object-cover object-top rounded-lg"
@@ -237,13 +294,17 @@ const BlogPostView = () => {
                     {blogPostData.images.slice(0, 4).map((img, i) => (
                       <div key={i} className="relative">
                         <img
+                          onClick={() => setShowPhotos(true)}
                           src={img}
                           className="w-full h-[400px] object-cover rounded-lg object-top"
                         />
 
                         {/* Overlay for extra images */}
                         {i === 3 && blogPostData.images.length > 4 && (
-                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg">
+                          <div
+                            onClick={() => setShowPhotos(true)}
+                            className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg"
+                          >
                             <span className="text-white text-xl font-semibold">
                               +{blogPostData.images.length - 4}
                             </span>
