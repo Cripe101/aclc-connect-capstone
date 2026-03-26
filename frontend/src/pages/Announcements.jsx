@@ -84,11 +84,11 @@ const Announcements = () => {
   return (
     <BlogLayout>
       <div className="p-2 md:p-5 grid">
-        <section className="flex justify-between items-center p-1 rounded-lg text-white w-full">
+        <section className="flex flex-col md:flex-row justify-between items-center p-1 rounded-lg text-white w-full">
           <h1 className=" backdrop-blur-md text-xl text-center md:px-4 py-2 rounded-lg text-black font-bold font-sans">
-            <p className="">Announcements</p>
+            <p className="text-center md:text-start">Announcements</p>
           </h1>
-          <section className="flex flex-col md:flex-row justify-center gap-2 text-black">
+          <section className="flex justify-center gap-2 text-black">
             <select
               value={memo}
               onChange={(e) => setMemo(e.target.value)}
