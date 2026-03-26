@@ -46,7 +46,7 @@ export const SIDE_MENU_DATA = [
     label: "Comments",
     icon: LuMessageSquareQuote,
     path: "/admin/comments",
-    roles: ["offices"],
+    roles: ["offices", "admin"],
   },
 ];
 
