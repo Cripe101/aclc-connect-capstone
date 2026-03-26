@@ -63,13 +63,8 @@ const updatePost = async (req, res) => {
     }
 
     let updatedData = { ...req.body };
+    updatedData.status = "pending";
 
-    // 🔥 If post was rejected, set it back to pending
-    if (post.status === "rejected") {
-      updatedData.status = "pending";
-    }
-
-    // Update slug if title changes
     if (updatedData.title) {
       updatedData.slug = updatedData.title
         .toLowerCase()
