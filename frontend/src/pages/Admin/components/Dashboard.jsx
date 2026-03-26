@@ -148,7 +148,7 @@ const Dashboard = () => {
                 <DashboardSummaryCard
                   icon={<LuGalleryVerticalEnd />}
                   label="Total Posts"
-                  value={dashboardData?.stats?.totalPosts || 0}
+                  value={officeDashboardData.data.counts?.all || 0}
                   bgColor="bg-sky-100/60"
                   color="text-sky-500"
                 />
@@ -156,9 +156,27 @@ const Dashboard = () => {
                 <DashboardSummaryCard
                   icon={<LuCheckCheck />}
                   label="Published"
-                  value={dashboardData?.stats?.published || 0}
+                  value={officeDashboardData.data.counts?.approved || 0}
                   bgColor="bg-green-100/60"
                   color="text-green-600"
+                />
+
+                {/* 🔥 NEW: Drafts (includes rejected) */}
+                <DashboardSummaryCard
+                  icon={<LuBookA />}
+                  label="Rejected"
+                  value={officeDashboardData.data.counts?.rejected || 0}
+                  bgColor="bg-yellow-100/60"
+                  color="text-yellow-600"
+                />
+
+                {/* 🔥 OPTIONAL: Pending */}
+                <DashboardSummaryCard
+                  icon={<LuChartLine />}
+                  label="Pending"
+                  value={officeDashboardData.data.counts?.pending || 0}
+                  bgColor="bg-purple-100/60"
+                  color="text-purple-600"
                 />
               </div>
             )}
