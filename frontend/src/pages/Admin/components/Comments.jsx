@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../../components/Layouts/BlogLayout/DashboardLayout";
 import moment from "moment";
 import CommentInfoCard from "../../../components/Cards/CommentInfoCard";
@@ -7,9 +7,11 @@ import { API_PATHS } from "../../../utils/apiPaths";
 import toast from "react-hot-toast";
 import Modal from "../../../components/Modal";
 import DeleteAlertContent from "../../../components/DeleteAlertContent";
+import { UserContext } from "../../../context/userContext";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
+  const { user } = useContext(UserContext);
 
   const limit = 5;
   const [page, setPage] = useState(1);
@@ -21,18 +23,33 @@ const Comments = () => {
   });
 
   // Get all comments
-  const getAllComments = async () => {
+  // const getAllComments = async () => {
+  //   try {
+  //     const response = await axiosInstance.get(API_PATHS.COMMENTS.GET_ALL);
+
+  //     const data = response.data || [];
+
+  //     setComments(data);
+
+  //     // compute total pages
+  //     setTotalPages(Math.ceil(data.length / limit));
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  const fetchCommentsByUserId = async (userId) => {
     try {
-      const response = await axiosInstance.get(API_PATHS.COMMENTS.GET_ALL);
+      if (!userId) return;
 
-      const data = response.data || [];
+      const response = await axiosInstance.get(
+        API_PATHS.COMMENTS.GET_ALL_BY_USER(userId),
+      );
 
-      setComments(data);
-
-      // compute total pages
-      setTotalPages(Math.ceil(data.length / limit));
+      setComments(response?.data || []);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Failed to fetch user comments:", error);
+      setComments([]);
     }
   };
 
@@ -49,14 +66,14 @@ const Comments = () => {
         data: null,
       });
 
-      getAllComments();
+      fetchCommentsByUserId(user._id);
     } catch (error) {
       console.error("Error deleting comment.", error);
     }
   };
 
   useEffect(() => {
-    getAllComments();
+    fetchCommentsByUserId(user._id);
   }, []);
 
   // pagination logic
@@ -84,7 +101,7 @@ const Comments = () => {
             }
             post={comment.post}
             replies={comment.replies || []}
-            getAllComments={getAllComments}
+            getAllComments={() => fetchCommentsByUserId(user._id)}
             onDelete={(commentId) =>
               setOpenDeleteAlert({ open: true, data: commentId || comment._id })
             }

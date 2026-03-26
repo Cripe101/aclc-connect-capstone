@@ -16,7 +16,7 @@ const app = express();
 // Middleware to handle CORS
 app.use(
   cors({
-    origin: "*", // your frontend
+    origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // include PATCH
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // needed if sending cookies/auth

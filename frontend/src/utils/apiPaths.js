@@ -45,7 +45,8 @@ export const API_PATHS = {
 
   COMMENTS: {
     ADD: (postId) => `/comments/${postId}`,
-    GET_ALL: "/comments",
+    // GET_ALL: "/comments/all",
+    GET_ALL_BY_USER: (userId) => `/comments/user-posts/${userId}`,
     GET_ALL_BY_POST: (postId) => `/comments/${postId}`,
     DELETE: (commentId) => `/comments/${commentId}`,
   },
