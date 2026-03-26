@@ -61,3 +61,13 @@ export const approvePost = async (id) => {
     throw error;
   }
 };
+
+export const rejectPost = async (id) => {
+  try {
+    const response = await axiosInstance.patch(`/posts/reject/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error approving post:", error);
+    throw error;
+  }
+};

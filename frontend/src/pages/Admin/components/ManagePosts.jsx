@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { approvePost, getAllPosts } from "../../../utils/api";
+import { approvePost, getAllPosts, rejectPost } from "../../../utils/api";
 import DashboardLayout from "../../../components/Layouts/BlogLayout/DashboardLayout";
 import Tabs from "../../../components/Tabs";
 import BlogPostSummaryCard from "../../../components/Cards/BlogPostSummaryCard";
@@ -48,7 +48,7 @@ const ManagePosts = () => {
       const newTabs = [
         { label: "All", count: data.counts.all || 0 },
         { label: "Approved", count: data.counts.approved || 0 },
-        { label: "Draft", count: data.counts.draft || 0 },
+        { label: "Rejected", count: data.counts.rejected || 0 },
         { label: "Pending", count: data.counts.pending || 0 },
       ];
 
@@ -70,6 +70,18 @@ const ManagePosts = () => {
     },
     onError: (error) => {
       toast.error(error.message || "Failed to approve post");
+      console.error(error);
+    },
+  });
+
+  const rejectMutation = useMutation({
+    mutationFn: (postId) => rejectPost(postId),
+    onSuccess: () => {
+      toast.success("Post rejected");
+      queryClient.invalidateQueries(["posts"]); // refetch posts
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to reject post");
       console.error(error);
     },
   });
@@ -114,11 +126,12 @@ const ManagePosts = () => {
                   approveMutation.isLoading &&
                   approveMutation.variables === post._id
                 }
+                onReject={() => rejectMutation.mutate(post._id)}
               />
             ))}
           </section>
 
-          {posts?.length > 0 && (
+          {posts?.length > limit && (
             <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">
               {Array.from({ length: totalPages }, (_, index) => {
                 const pageNumber = index + 1;

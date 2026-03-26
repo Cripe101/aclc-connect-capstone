@@ -95,7 +95,7 @@ const Dashboard = () => {
               {/* 🔥 NEW: Drafts (includes rejected) */}
               <DashboardSummaryCard
                 icon={<LuBookA />}
-                label="Drafts"
+                label="Rejected"
                 value={dashboardData?.stats?.drafts || 0}
                 bgColor="bg-yellow-100/60"
                 color="text-yellow-600"

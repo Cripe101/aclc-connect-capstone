@@ -14,6 +14,7 @@ const {
   getTopPosts,
   getMyPosts,
   approvePost,
+  rejectPost,
 } = require("../controllers/blogPostController.js");
 
 // Admin-Only Middleware
@@ -45,7 +46,7 @@ router.post("/", protect, officesOnly, createPost);
 router.get("/", getAllPosts);
 router.get("/slug/:slug", adOfOnly, getPostBySlug);
 router.get("/me", protect, officesOnly, getMyPosts);
-router.put("/:id", protect, adminOnly, updatePost);
+router.put("/:id", protect, officesOnly, updatePost);
 router.delete("/:id", protect, deletePost);
 router.get("/tag/:tag", getPostsByTag);
 router.get("/search", searchPosts);
@@ -53,5 +54,6 @@ router.post("/:id/view", incrementView);
 router.post("/:id/like", protect, likePost);
 router.get("/trending", getTopPosts);
 router.patch("/approve/:id", protect, adminOnly, approvePost);
+router.patch("/reject/:id", protect, adminOnly, rejectPost);
 
 module.exports = router;

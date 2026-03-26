@@ -69,7 +69,7 @@ const BlogPosts = () => {
       const newTabs = [
         { label: "All", count: data.counts.all || 0 },
         { label: "Approved", count: data.counts.approved || 0 },
-        { label: "Draft", count: data.counts.draft || 0 },
+        { label: "Rejected", count: data.counts.rejected || 0 },
         { label: "Pending", count: data.counts.pending || 0 },
       ];
 
@@ -129,9 +129,6 @@ const BlogPosts = () => {
                 likes={post.likedBy?.length || 0}
                 views={post.views}
                 onClick={() => navigate(`/admin/edit/${post.slug}`)}
-                onDelete={() =>
-                  setOpenDeleteAlert({ open: true, data: post._id })
-                }
               />
             ))}
           </section>

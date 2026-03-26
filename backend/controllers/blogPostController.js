@@ -53,7 +53,6 @@ const updatePost = async (req, res) => {
     if (!post) return res.status(404).json({ message: "Post not found" });
 
     const isAuthor = post.author.toString() === req.user._id.toString();
-    const isAdmin = req.user.role.toLowerCase() === "admin";
 
     if (!isAuthor) {
       return res
@@ -61,7 +60,14 @@ const updatePost = async (req, res) => {
         .json({ message: "Not authorized to update this post" });
     }
 
-    const updatedData = req.body;
+    let updatedData = { ...req.body };
+
+    // 🔥 If post was rejected, set it back to pending
+    if (post.status === "rejected") {
+      updatedData.status = "pending";
+    }
+
+    // Update slug if title changes
     if (updatedData.title) {
       updatedData.slug = updatedData.title
         .toLowerCase()
@@ -74,6 +80,7 @@ const updatePost = async (req, res) => {
       updatedData,
       { new: true },
     );
+
     res.json(updatedPost);
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });
@@ -102,15 +109,16 @@ const deletePost = async (req, res) => {
 // Get post for author only
 const getMyPosts = async (req, res) => {
   try {
-    const status = req.query.status || "all";
+    const status = req.query.status || "";
 
     let filter = {
       author: req.user._id,
     };
 
-    if (status !== "all") {
-      filter.status = status;
-    }
+    if (status === "approved") filter.status = "approved";
+    else if (status === "draft") filter.status = "draft";
+    else if (status === "pending") filter.status = "pending";
+    else if (status === "rejected") filter.status = "rejected";
 
     const posts = await BlogPost.find(filter)
       .populate("author", "name profileImageUrl")
@@ -153,7 +161,7 @@ const getMyPosts = async (req, res) => {
 // Get blog posts by status (all, published, draft) include counts
 const getAllPosts = async (req, res) => {
   try {
-    const status = req.query.status || "approved"; // default = published
+    const status = req.query.status || ""; // default = published
 
     let filter = {};
 
@@ -334,6 +342,41 @@ const approvePost = async (req, res) => {
   }
 };
 
+const rejectPost = async (req, res) => {
+  try {
+    // ✅ Admin check (optional if using middleware)
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    const postId = req.params.id;
+
+    // ⚡ Update post atomically if not already approved
+    const post = await BlogPost.findOneAndUpdate(
+      { _id: postId, status: { $ne: "rejected" } },
+      { status: "rejected", rejectionReason: "" },
+      { new: true },
+    );
+
+    if (!post) {
+      return res
+        .status(404)
+        .json({ message: "Post not found or already rejected" });
+    }
+
+    res.json({
+      message: "Post rejected",
+      post,
+    });
+  } catch (error) {
+    console.error("Error rejecting post:", error);
+    res.status(500).json({
+      message: "Failed to reject post",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createPost,
   updatePost,
@@ -347,4 +390,5 @@ module.exports = {
   likePost,
   getTopPosts,
   approvePost,
+  rejectPost,
 };
