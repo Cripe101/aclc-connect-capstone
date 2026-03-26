@@ -65,8 +65,6 @@ const Dashboard = () => {
     );
   }
 
-  console.log(officeDashboardData.data);
-
   return (
     <DashboardLayout activeMenu="Dashboard">
       {dashboardData && (
