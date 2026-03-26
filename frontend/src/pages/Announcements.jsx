@@ -9,6 +9,7 @@ const Announcements = () => {
   const location = useLocation();
   const [search, setSearch] = useState("");
   const [annoData, setAnnoData] = useState("");
+  const [memo, setMemo] = useState("");
 
   useEffect(() => {
     // Scroll to anchor if present in URL hash
@@ -33,8 +34,6 @@ const Announcements = () => {
     queryFn: getPosts,
   });
 
-  console.log(announcementQuery.data);
-
   const getAnnouncements = () => {
     announcementQuery.data
       ? setAnnoData(announcementQuery.data.posts)
@@ -51,6 +50,13 @@ const Announcements = () => {
         ),
       )
       .filter((item) => {
+        if (!memo) return true;
+
+        const query = memo.toLowerCase();
+
+        return item.tags?.some((tag) => tag?.toLowerCase().includes(query));
+      })
+      .filter((item) => {
         const query = search?.toLowerCase();
 
         return (
@@ -59,7 +65,7 @@ const Announcements = () => {
         );
       })
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  }, [annoData, search]);
+  }, [annoData, search, memo]);
 
   useEffect(() => {
     getAnnouncements();
@@ -72,13 +78,25 @@ const Announcements = () => {
           <h1 className=" bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
             <p className="">Announcements</p>
           </h1>
-          <input
-            type="text"
-            placeholder="Q Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="border border-gray-300 w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black backdrop-blur-md"
-          />
+          <section className="flex gap-2 text-black">
+            <select
+              value={memo}
+              onChange={(e) => setMemo(e.target.value)}
+              className="rounded-full border-gray-300 px-2 outline-none border"
+            >
+              <option value="">Select...</option>
+              <option value="memorandum">Memorandum</option>
+              <option value="college">College</option>
+              <option value="seniorhig">Senior High</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Q Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="border border-gray-300 w-40 md:w-60 outline-none rounded-full px-4 py-2 text-black backdrop-blur-md"
+            />
+          </section>
         </section>
         <section>
           {announcementQuery.isLoading ? (

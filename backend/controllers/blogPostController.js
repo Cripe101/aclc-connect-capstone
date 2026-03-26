@@ -19,6 +19,8 @@ const createPost = async (req, res) => {
       slug = `${baseSlug}-${counter++}`;
     }
 
+    const isAdmin = req.user.role?.toLowerCase() === "admin";
+
     const newPost = new BlogPost({
       title,
       slug,
@@ -28,7 +30,7 @@ const createPost = async (req, res) => {
       tags,
       generatedByAI,
       author: req.user._id,
-      status: "pending",
+      status: isAdmin ? "approved" : "pending",
       rejectionReason: "",
     });
 
@@ -292,11 +294,12 @@ const likePost = async (req, res) => {
   }
 };
 
-// Get top trending posts
-// Get top trending posts
 const getTopPosts = async (req, res) => {
   try {
-    const posts = await BlogPost.find({ isDraft: false })
+    const posts = await BlogPost.find({
+      tags: { $nin: ["memorandum", "faculty"] },
+      status: "approved",
+    })
       .populate("author", "name profileImageUrl")
       .sort({ views: -1, createdAt: -1 })
       .limit(5);

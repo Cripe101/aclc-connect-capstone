@@ -42,11 +42,11 @@ const officesOnly = (req, res, next) => {
   }
 };
 
-router.post("/", protect, officesOnly, createPost);
+router.post("/", protect, adOfOnly, createPost);
 router.get("/", getAllPosts);
 router.get("/slug/:slug", adOfOnly, getPostBySlug);
-router.get("/me", protect, officesOnly, getMyPosts);
-router.put("/:id", protect, officesOnly, updatePost);
+router.get("/me", protect, adOfOnly, getMyPosts);
+router.put("/:id", protect, adOfOnly, updatePost);
 router.delete("/:id", protect, deletePost);
 router.get("/tag/:tag", getPostsByTag);
 router.get("/search", searchPosts);

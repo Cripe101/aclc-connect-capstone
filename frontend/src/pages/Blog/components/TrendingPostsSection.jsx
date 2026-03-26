@@ -15,6 +15,7 @@ const TrendingPostsSection = () => {
       );
 
       setPostList(response.data?.length > 0 ? response.data : []);
+      // console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }

@@ -1,4 +1,10 @@
-import { LuAppWindow, LuEye, LuHeart, LuTrash2 } from "react-icons/lu";
+import {
+  LuAppWindow,
+  LuEye,
+  LuHeart,
+  LuLoaderCircle,
+  LuTrash2,
+} from "react-icons/lu";
 import { MdApproval, MdCancel } from "react-icons/md";
 
 const BlogPostSummaryCard = ({
@@ -13,8 +19,15 @@ const BlogPostSummaryCard = ({
   onClick,
   onApprove,
   onReject,
+  isLoading,
   author,
 }) => {
+  if (isLoading)
+    return (
+      <div className="flex justify-center mt-20">
+        <LuLoaderCircle size={50} />
+      </div>
+    );
   return (
     <div
       className="flex items-start gap-4 bg-white p-3 rounded-lg cursor-pointer group"

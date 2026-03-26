@@ -31,7 +31,7 @@ export const SIDE_MENU_DATA = [
     label: "Posts",
     icon: LuGalleryVerticalEnd,
     path: "/admin/posts",
-    roles: ["offices"],
+    roles: ["offices", "admin"],
   },
   {
     id: "05",

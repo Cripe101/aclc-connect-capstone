@@ -73,13 +73,11 @@ const BlogLandingPage = () => {
 
   const sortedPosts = useMemo(() => {
     return [...(blogPostList || [])]
-      .filter(
-        (item) =>
-          !item.tags?.some(
-            (tag) =>
-              tag.toLowerCase() === "announcement" ||
-              tag.toLowerCase() === "announcements",
-          ),
+      .filter((item) =>
+        item.tags?.some(
+          (tag) =>
+            tag.toLowerCase() === "event" || tag.toLowerCase() === "events",
+        ),
       )
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   }, [blogPostList]);

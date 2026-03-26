@@ -108,30 +108,37 @@ const BlogPosts = () => {
         />
 
         <div className="mt-5">
-          <section className="grid grid-cols-1 gap-2">
-            {posts?.map((post) => (
-              <BlogPostSummaryCard
-                key={post._id}
-                title={post.title}
-                imgUrl={
-                  post?.coverImageUrl === ""
-                    ? post?.images[0]
-                    : post?.coverImageUrl
-                }
-                updatedOn={
-                  post.updatedAt
-                    ? moment(post.updatedAt).format("Do MMM YYYY")
-                    : "-"
-                }
-                role={user.role}
-                status={post.status}
-                tags={post.tags}
-                likes={post.likedBy?.length || 0}
-                views={post.views}
-                onClick={() => navigate(`/admin/edit/${post.slug}`)}
-              />
-            ))}
-          </section>
+          {posts?.length === 0 ? (
+            <div className="flex justify-center mt-20">
+              <h1>No Posts Available</h1>
+            </div>
+          ) : (
+            <section className="grid grid-cols-1 gap-2">
+              {posts?.map((post) => (
+                <BlogPostSummaryCard
+                  key={post._id}
+                  title={post.title}
+                  imgUrl={
+                    post?.coverImageUrl === ""
+                      ? post?.images[0]
+                      : post?.coverImageUrl
+                  }
+                  updatedOn={
+                    post.updatedAt
+                      ? moment(post.updatedAt).format("Do MMM YYYY")
+                      : "-"
+                  }
+                  isLoading={isLoading}
+                  role={user.role}
+                  status={post.status}
+                  tags={post.tags}
+                  likes={post.likedBy?.length || 0}
+                  views={post.views}
+                  onClick={() => navigate(`/admin/edit/${post.slug}`)}
+                />
+              ))}
+            </section>
+          )}
 
           {posts?.length > 0 && (
             <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">

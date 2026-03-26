@@ -13,7 +13,7 @@ const FeaturedPosts = ({
 }) => {
   return (
     <div
-      className="grid md:grid-cols-[2fr_3fr] rounded-lg cursor-pointer bg-blue-50 hover:scale-[101%] active:scale-[99%] duration-200"
+      className="grid md:grid-cols-[2fr_3fr] md:max-h-100 rounded-lg cursor-pointer bg-blue-50 hover:scale-[101%] active:scale-[99%] duration-200"
       onClick={onClick}
     >
       <img
