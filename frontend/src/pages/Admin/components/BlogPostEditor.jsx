@@ -265,6 +265,13 @@ const BlogPostEditor = ({ isEdit }) => {
     }));
   }, [images]);
 
+  useEffect(() => {
+    if (prevImages.length === 0 && showPhotos) {
+      setShowPhotos(false);
+      setPhoto(1); // reset index just to be safe
+    }
+  }, [prevImages, showPhotos]);
+
   return (
     <DashboardLayout activeMenu="Blog Posts">
       <div
@@ -279,34 +286,54 @@ const BlogPostEditor = ({ isEdit }) => {
           X
         </button>
         <section className="flex md:p-10 justify-center items-center">
+          {/* LEFT BUTTON */}
           <button
             onClick={() => {
-              photo === 1 ? "" : setPhoto(photo - 1);
+              setPhoto((prev) => Math.max(1, prev - 1));
             }}
-            className="md:p-10 active:text-blue-700 rounded-l-lg cursor-pointer duration-200"
+            disabled={photo === 1}
+            className="md:p-10 active:text-blue-700 rounded-l-lg cursor-pointer duration-200 disabled:opacity-30"
           >
             <FaArrowLeft size={25} />
           </button>
-          {postData.images.slice(photo - 1, photo).map((img) => (
+
+          {/* IMAGE DISPLAY */}
+          {prevImages.length > 0 && (
             <section className="w-80 md:w-full md:h-full">
               <button
-                onClick={() => postData.images.pop(img)}
+                onClick={() => {
+                  setPrevImages((prev) => {
+                    const updated = prev.filter((_, i) => i !== photo - 1);
+
+                    setPhoto((current) => {
+                      if (updated.length === 0) return 1;
+                      if (current > updated.length) return updated.length;
+                      return current;
+                    });
+
+                    return updated;
+                  });
+                }}
                 className="text-lg md:text-base fixed top-5 right-25 bg-white px-3 py-2 text-red-700 rounded-lg cursor-pointer active:scale-95 duration-200"
               >
                 <LuTrash2 />
               </button>
+
               <img
-                src={img}
+                src={prevImages[photo - 1]}
                 alt="No Photo"
                 className="w-80 md:w-full md:h-full rounded-lg"
               />
             </section>
-          ))}
+          )}
+
+          {/* RIGHT BUTTON */}
           <button
             onClick={() => {
-              photo === postData.images.length ? "" : setPhoto(photo + 1);
+              setPhoto((prev) => Math.min(prevImages.length, prev + 1));
             }}
-            className="md:p-10 active:text-blue-700 rounded-r-lg cursor-pointer duration-200"
+            disabled={photo === prevImages.length}
+            className="md:p-10 active:text-blue-700 rounded-r-lg cursor-pointer duration-200 disabled:opacity-30"
           >
             <FaArrowRight size={25} />
           </button>
@@ -327,7 +354,7 @@ const BlogPostEditor = ({ isEdit }) => {
                     disabled={loading}
                     onClick={() => setOpenDeleteAlert(true)}
                   >
-                    <LuTrash2 className="text-lg" />{" "}
+                    <LuTrash2 className="text-xl md:text-lg" />{" "}
                     <span className="hidden md:block">Delete</span>
                   </button>
                 )}
@@ -337,7 +364,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   disabled={loading}
                   onClick={() => navigate(-1)}
                 >
-                  <LuArrowLeft className="text-2xl md:text-lg" />{" "}
+                  <LuArrowLeft className="text-xl md:text-lg" />{" "}
                   <span className="hidden md:block">Cancel</span>
                 </button>
                 <button
@@ -345,7 +372,7 @@ const BlogPostEditor = ({ isEdit }) => {
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
-                  <LuSave className="text-2xl md:text-lg" />{" "}
+                  <LuSave className="text-xl md:text-lg" />{" "}
                   <span className="hidden md:block">Draft</span>
                 </button>
 
@@ -355,9 +382,9 @@ const BlogPostEditor = ({ isEdit }) => {
                   onClick={() => handlePublish(false)}
                 >
                   {loading ? (
-                    <LuLoaderCircle className="animate-spin text-[15px]" />
+                    <LuLoaderCircle className="animate-spin text-xl md:text-lg" />
                   ) : (
-                    <LuSend className="text-2xl md:text-lg" />
+                    <LuSend className="text-xl md:text-lg" />
                   )}{" "}
                   <span className="hidden md:block">Publish</span>
                 </button>
@@ -381,7 +408,7 @@ const BlogPostEditor = ({ isEdit }) => {
               />
             </div>
 
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="mt-4 grid md:grid-cols-2 gap-3">
               <CoverImageSelector
                 image={postData.coverImageUrl}
                 setImage={(value) => handleValueChange("coverImageUrl", value)}
@@ -449,12 +476,6 @@ const BlogPostEditor = ({ isEdit }) => {
             <div className="mt-3">
               <section className="text-xs font-medium text-slate-600 flex justify-between">
                 <h1>Tags</h1>
-                {/* <SwitchButton
-                  label={switchButton}
-                  condition={switchButton}
-                  setter={setSwitchButton}
-                  isEdit={isEdit}
-                /> */}
               </section>
               <TagInput
                 tags={postData.tags || [""]}
@@ -464,50 +485,6 @@ const BlogPostEditor = ({ isEdit }) => {
               />
             </div>
           </div>
-
-          {/* AI Post Generation */}
-          {/* {!isEdit && (
-            <div className='form-card col-span-12 md:col-span-4 p-0'>
-              <div className='flex items-center justify-between px-6 pt-6'>
-                <h4 className='text-sm md:text-base font-medium inline-flex items-center gap-2'>
-                  <span className='text-sky-600'>
-                    <LuSparkles />
-                  </span>
-                  Ideas for you next post
-                </h4>
-
-                <button
-                  className='bg-linear-to-r from-sky-500 to-cyan-400 text-[13px] font-semibold text-white px-3 py-1 rounded hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-sky-200'
-                  onClick={() =>
-                    setOpenBlogPostGenForm({ open: true, data: null })
-                  }
-                >
-                  Generate New
-                </button>
-              </div>
-
-              <div>
-                {ideaLoading ? (
-                  <div className='p-5'>
-                    <SkeletonLoader />
-                  </div>
-                ) : (
-                  postIdeas.map((idea, index) => (
-                    <BlogPostIdeaCard
-                      key={`idea_${index}`}
-                      title={idea.title || ""}
-                      description={idea.description || ""}
-                      tags={idea.tags || []}
-                      tone={idea.tone || "casual"}
-                      onSelect={() =>
-                        setOpenBlogPostGenForm({ open: true, data: idea })
-                      }
-                    />
-                  ))
-                )}
-              </div>
-            </div>
-          )} */}
         </div>
       </div>
 
