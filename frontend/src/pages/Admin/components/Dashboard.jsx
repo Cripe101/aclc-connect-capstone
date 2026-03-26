@@ -144,7 +144,7 @@ const Dashboard = () => {
                 />
               </div>
             ) : (
-              <div>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
                 <DashboardSummaryCard
                   icon={<LuGalleryVerticalEnd />}
                   label="Total Posts"
