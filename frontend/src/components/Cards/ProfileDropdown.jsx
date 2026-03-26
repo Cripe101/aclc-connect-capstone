@@ -153,7 +153,7 @@ const ProfileDropdown = () => {
           <img
             src={
               user?.profileImageUrl ||
-              "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
             }
             alt={user?.name}
             className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
@@ -169,7 +169,7 @@ const ProfileDropdown = () => {
                 <img
                   src={
                     user.profileImageUrl ||
-                    "https://www.transparentpng.com/download/user/gray-user-profile-icon-png-fP8Q1P.png"
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
                   }
                   // alt={user.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
@@ -186,9 +186,11 @@ const ProfileDropdown = () => {
               <button
                 onClick={() => {
                   navigate(
-                    user.role === "admin" || "offices"
+                    user.role === "admin"
                       ? "/admin/dashboard"
-                      : "/",
+                      : user.role === "offices"
+                        ? "/admin/dashboard"
+                        : "/",
                   );
                   setIsOpen(false);
                 }}
@@ -196,11 +198,15 @@ const ProfileDropdown = () => {
               >
                 <LuUser className="text-gray-400 group-hover:text-sky-500 transition-colors" />
                 <span className="group-hover:text-sky-600 font-medium">
-                  {user.role === "admin" || "offices" ? "Admin Dashboard" : ""}
+                  {user.role === "admin"
+                    ? "Admin Dashboard"
+                    : user.role === "offices"
+                      ? "Dashboard"
+                      : ""}
                 </span>
               </button>
 
-              {user.role === ("admin" || "offices") && (
+              {user.role === "admin" ? (
                 <button
                   onClick={() => {
                     navigate("/");
@@ -213,9 +219,26 @@ const ProfileDropdown = () => {
                     Home
                   </span>
                 </button>
+              ) : user.role === "offices" ? (
+                <button
+                  onClick={() => {
+                    navigate("/");
+                    setIsOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+                >
+                  <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
+                  <span className="group-hover:text-sky-600 font-medium">
+                    Home
+                  </span>
+                </button>
+              ) : (
+                ""
               )}
 
-              {user.role !== "admin" && (
+              {user.role !== ("admin" || "offices") ? (
+                ""
+              ) : (
                 <button
                   onClick={() => {
                     navigate("/about");
