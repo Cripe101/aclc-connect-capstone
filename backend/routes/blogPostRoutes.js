@@ -44,7 +44,7 @@ const officesOnly = (req, res, next) => {
 
 router.post("/", protect, adOfOnly, createPost);
 router.get("/", getAllPosts);
-router.get("/slug/:slug", adOfOnly, getPostBySlug);
+router.get("/slug/:slug", getPostBySlug);
 router.get("/me", protect, adOfOnly, getMyPosts);
 router.put("/:id", protect, adOfOnly, updatePost);
 router.delete("/:id", protect, deletePost);
