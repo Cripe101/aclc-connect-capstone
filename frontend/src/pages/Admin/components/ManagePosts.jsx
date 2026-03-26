@@ -40,6 +40,11 @@ const ManagePosts = () => {
   const posts = data?.posts || [];
   const totalPages = Math.ceil((data?.totalCount || 0) / limit);
 
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+
+  const paginatedPosts = posts.slice(startIndex, endIndex);
+
   const handlePageChange = (pageNumber) => setPage(pageNumber);
 
   // Update tabs whenever counts change
@@ -106,7 +111,7 @@ const ManagePosts = () => {
             </div>
           ) : (
             <section className="grid grid-cols-1 gap-2">
-              {posts?.map((post) => (
+              {paginatedPosts?.map((post) => (
                 <BlogPostSummaryCard
                   key={post._id}
                   title={post.title}
@@ -138,7 +143,7 @@ const ManagePosts = () => {
             </section>
           )}
 
-          {posts?.length > limit && (
+          {data?.totalCount > limit && (
             <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">
               {Array.from({ length: totalPages }, (_, index) => {
                 const pageNumber = index + 1;
