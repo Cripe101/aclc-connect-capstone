@@ -196,27 +196,24 @@ const ProfileDropdown = () => {
               >
                 <LuUser className="text-gray-400 group-hover:text-sky-500 transition-colors" />
                 <span className="group-hover:text-sky-600 font-medium">
-                  {user.role === "admin" || "offices"
-                    ? "Admin Dashboard"
-                    : "Home"}
+                  {user.role === "admin" || "offices" ? "Admin Dashboard" : ""}
                 </span>
               </button>
 
-              {user.role === "admin" ||
-                ("offices" && (
-                  <button
-                    onClick={() => {
-                      navigate("/");
-                      setIsOpen(false);
-                    }}
-                    className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
-                  >
-                    <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                    <span className="group-hover:text-sky-600 font-medium">
-                      Home
-                    </span>
-                  </button>
-                ))}
+              {user.role === ("admin" || "offices") && (
+                <button
+                  onClick={() => {
+                    navigate("/");
+                    setIsOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+                >
+                  <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
+                  <span className="group-hover:text-sky-600 font-medium">
+                    Home
+                  </span>
+                </button>
+              )}
 
               {user.role !== "admin" && (
                 <button

@@ -161,7 +161,7 @@ const getMyPosts = async (req, res) => {
 // Get blog posts by status (all, published, draft) include counts
 const getAllPosts = async (req, res) => {
   try {
-    const status = req.query.status || ""; // default = published
+    const status = req.query.status || "approved"; // default = published
 
     let filter = {};
 

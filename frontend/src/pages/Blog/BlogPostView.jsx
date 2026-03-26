@@ -321,12 +321,11 @@ const BlogPostView = () => {
                   </div>
                 )}
               </section>
+              <MarkdownContent
+                content={sanitizeMarkdown(blogPostData?.content || "")}
+              />
 
               <div className="grid">
-                <MarkdownContent
-                  content={sanitizeMarkdown(blogPostData?.content || "")}
-                />
-
                 <SharePost title={blogPostData.title} />
 
                 <div className="bg-gray-50 rounded-lg py-2 px-4">

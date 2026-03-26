@@ -120,7 +120,7 @@ const ManagePosts = () => {
                 role={user.role}
                 likes={post.likedBy?.length || 0}
                 views={post.views}
-                onClick={() => navigate(`/admin/edit/${post.slug}`)}
+                onClick={() => navigate(`/${post.slug}`)}
                 onApprove={() => approveMutation.mutate(post._id)}
                 isApproving={
                   approveMutation.isLoading &&
