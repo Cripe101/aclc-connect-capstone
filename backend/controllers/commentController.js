@@ -68,11 +68,10 @@ const addComment = async (req, res) => {
 // GET /api/comments/user/:userId
 const getCommentsOnUserPosts = async (req, res) => {
   try {
-    const userId = req.user._id; // assuming you're using auth middleware
+    const userId = req.user._id;
 
     // Step 1: Get all posts created by the logged-in user
     const userPosts = await BlogPost.find({ author: userId }).select("_id");
-
     const postIds = userPosts.map((post) => post._id);
 
     // Step 2: Get all comments on those posts
@@ -83,7 +82,31 @@ const getCommentsOnUserPosts = async (req, res) => {
       .populate("post", "title coverImageUrl")
       .sort({ createdAt: -1 });
 
-    res.json(comments);
+    // Step 3: Create comment map and prepare replies array
+    const commentMap = {};
+    comments.forEach((comment) => {
+      const obj = comment.toObject();
+      obj.replies = [];
+      commentMap[obj._id] = obj;
+    });
+
+    // Step 4: Build nested structure
+    const nestedComments = [];
+
+    comments.forEach((comment) => {
+      const obj = commentMap[comment._id];
+
+      if (obj.parentComment) {
+        const parent = commentMap[obj.parentComment];
+        if (parent) {
+          parent.replies.push(obj);
+        }
+      } else {
+        nestedComments.push(obj);
+      }
+    });
+
+    res.json(nestedComments);
   } catch (error) {
     res.status(500).json({
       message: "Failed to fetch comments on user's posts",
