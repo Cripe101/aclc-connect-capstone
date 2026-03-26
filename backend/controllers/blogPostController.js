@@ -163,15 +163,22 @@ const getMyPosts = async (req, res) => {
 // Get blog posts by status (all, published, draft) include counts
 const getAllPosts = async (req, res) => {
   try {
-    const status = req.query.status || "approved"; // default = published
+    const status = req.query.status || "approved"; // default = approved
 
     let filter = {};
 
+    // ✅ Status filter
     if (status === "approved") filter.status = "approved";
     else if (status === "draft") filter.status = "draft";
     else if (status === "pending") filter.status = "pending";
     else if (status === "rejected") filter.status = "rejected";
-    // else "all" → no filter
+    // else "all" → no status filter
+
+    // ✅ Role-based filter
+    if (req.user?.role === "faculty") {
+      filter.tags = "faculty";
+      // or: filter.tags = { $in: ["faculty"] }
+    }
 
     const posts = await BlogPost.find(filter)
       .populate("author", "name profileImageUrl")

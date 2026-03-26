@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import BlogLayout from "../components/Layouts/BlogLayout/BlogLayout";
 import { useQuery } from "@tanstack/react-query";
 import { getPosts } from "../utils/api";
 import AnnouncementsCard from "../components/Cards/AnnouncementsCard";
+import { UserContext } from "../context/userContext";
 
 const Announcements = () => {
   const location = useLocation();
   const [search, setSearch] = useState("");
   const [annoData, setAnnoData] = useState("");
   const [memo, setMemo] = useState("");
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     // Scroll to anchor if present in URL hash
@@ -41,13 +43,19 @@ const Announcements = () => {
   };
 
   const filteredAnnouncements = useMemo(() => {
+    const fac = user?.role?.toLowerCase() === "faculty";
+
     return [...(annoData || [])]
       .filter((item) =>
-        item?.tags?.some(
-          (tag) =>
-            tag?.toLowerCase() === "announcement" ||
-            tag?.toLowerCase() === "announcements",
-        ),
+        item?.tags?.some((tag) => {
+          const t = tag?.toLowerCase();
+
+          return (
+            t === "announcement" ||
+            t === "announcements" ||
+            (fac && t === "faculty")
+          );
+        }),
       )
       .filter((item) => {
         if (!memo) return true;
@@ -57,7 +65,9 @@ const Announcements = () => {
         return item.tags?.some((tag) => tag?.toLowerCase().includes(query));
       })
       .filter((item) => {
-        const query = search?.toLowerCase();
+        if (!search) return true;
+
+        const query = search.toLowerCase();
 
         return (
           item.title?.toLowerCase().includes(query) ||
@@ -65,7 +75,7 @@ const Announcements = () => {
         );
       })
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  }, [annoData, search, memo]);
+  }, [annoData, search, memo, user]);
 
   useEffect(() => {
     getAnnouncements();
