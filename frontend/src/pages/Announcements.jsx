@@ -85,7 +85,7 @@ const Announcements = () => {
     <BlogLayout>
       <div className="p-5 grid">
         <section className="flex justify-between items-center p-1 rounded-lg text-white w-full">
-          <h1 className=" bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
+          <h1 className=" backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
             <p className="">Announcements</p>
           </h1>
           <section className="flex flex-col md:flex-row justify-center gap-2 text-black">
