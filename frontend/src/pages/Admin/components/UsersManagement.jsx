@@ -256,7 +256,7 @@ const UsersManagement = () => {
                     >
                       <p className="py-3 px-4">{user.name}</p>
                       <p className="py-3 px-4">{user?.email}</p>
-                      <p className="py-3 px-4">
+                      <span className="py-3 px-4">
                         <span
                           className={`py-1 rounded-full bg-white text-xs font-display ${
                             user.role === "admin"
@@ -266,9 +266,9 @@ const UsersManagement = () => {
                         >
                           {user.role}
                         </span>
-                      </p>
+                      </span>
 
-                      <p className="py-3 px-4">
+                      <span className="py-3 px-4">
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEditClick(user)}
@@ -285,7 +285,7 @@ const UsersManagement = () => {
                             <LuTrash2 className="text-lg" />
                           </button>
                         </div>
-                      </p>
+                      </span>
                     </section>
                   ))}
                 </span>
@@ -326,7 +326,7 @@ const UsersManagement = () => {
                     >
                       {user.role}
                     </h1>
-                    <p className="py-3 px-4">
+                    <span className="py-3 px-4">
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEditClick(user)}
@@ -343,7 +343,7 @@ const UsersManagement = () => {
                           <LuTrash2 className="text-lg" />
                         </button>
                       </div>
-                    </p>
+                    </span>
                   </section>
                 </section>
               ))}

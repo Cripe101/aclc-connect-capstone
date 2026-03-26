@@ -66,6 +66,10 @@ const ManagePosts = () => {
     }
   }, [data?.counts]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [filterStatus]);
+
   // Approve post mutation
   const approveMutation = useMutation({
     mutationFn: (postId) => approvePost(postId),
