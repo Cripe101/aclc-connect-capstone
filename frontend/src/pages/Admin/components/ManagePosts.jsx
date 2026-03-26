@@ -115,12 +115,13 @@ const ManagePosts = () => {
                     ? moment(post.updatedAt).format("Do MMM YYYY")
                     : "-"
                 }
+                author={post.author.name}
                 status={post.status}
                 tags={post.tags}
                 role={user.role}
                 likes={post.likedBy?.length || 0}
                 views={post.views}
-                onClick={() => navigate(`/${post.slug}`)}
+                onClick={() => navigate(`/preview/${post.slug}`)}
                 onApprove={() => approveMutation.mutate(post._id)}
                 isApproving={
                   approveMutation.isLoading &&

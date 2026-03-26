@@ -13,6 +13,7 @@ const BlogPostSummaryCard = ({
   onClick,
   onApprove,
   onReject,
+  author,
 }) => {
   return (
     <div
@@ -33,6 +34,9 @@ const BlogPostSummaryCard = ({
         </section>
 
         <div className="flex items-center gap-2.5 mt-2 flex-wrap">
+          <div className="text-[11px] text-blue-900 font-bold bg-blue-50 px-2.5 py-1 rounded-lg">
+            {author}
+          </div>
           <div className="text-[11px] text-blue-900 font-bold bg-blue-50 px-2.5 py-1 rounded-lg">
             Updated: {updatedOn}
           </div>
@@ -62,7 +66,7 @@ const BlogPostSummaryCard = ({
           </div>
         </div>
       </div>
-      {status !== "approved" && role === "admin" ? (
+      {status === "pending" && role === "admin" ? (
         <section className="flex gap-1 flex-wrap md:gap-3">
           <button
             className="md:hidden block text-xs bg-green-50 py-1 px-2.5 rounded-lg text-green-600 font-medium border border-green-600 flex-row items-center gap-1 hover:bg-green-700 hover:text-white group-hover:flex cursor-pointer duration-200"

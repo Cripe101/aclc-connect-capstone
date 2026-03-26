@@ -26,6 +26,7 @@ import Events from "./pages/Events";
 import UsersManagement from "./pages/Admin/components/UsersManagement";
 import SeniorHighInfo from "./components/coursesOffered/SeniorHighInfo";
 import ManagePosts from "./pages/Admin/components/ManagePosts";
+import PostPreview from "./pages/Blog/components/PostPreview";
 
 const App = () => {
   return (
@@ -108,6 +109,7 @@ const App = () => {
 
             {/* Blog Post View - Must be last as it uses generic :slug */}
             <Route path="/:slug" element={<BlogPostView />} />
+            <Route path="/preview/:slug" element={<PostPreview />} />
           </Routes>
         </Router>
 
