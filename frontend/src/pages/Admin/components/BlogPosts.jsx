@@ -11,15 +11,14 @@ import Modal from "../../../components/Modal";
 import DeleteAlertContent from "../../../components/DeleteAlertContent";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
-import { getAllPosts, getMyPosts } from "../../../utils/api";
+import { getMyPosts } from "../../../utils/api";
 import { UserContext } from "../../../context/userContext";
 
 const BlogPosts = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
-  // const [isLoading, setIsLoading] = useState(false);
-  const limit = 5; // posts per page
+  const limit = 5;
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState("all"); // must match backend
   const [tabs, setTabs] = useState([]);
@@ -37,10 +36,8 @@ const BlogPosts = () => {
         page,
         limit,
       }),
-    keepPreviousData: true, // keeps old data while fetching new page
+    keepPreviousData: true,
   });
-
-  // console.log(data?.posts);
 
   const posts = data?.posts || [];
   const counts = data?.counts || {};
@@ -58,7 +55,7 @@ const BlogPosts = () => {
       toast.success("Post deleted successfully");
       setOpenDeleteAlert({ open: false, data: null });
 
-      refetch(); // ✅ correct
+      refetch();
     } catch (error) {
       toast.error(error.response.data.message);
     }

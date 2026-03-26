@@ -12,7 +12,7 @@ const Tabs = ({ tabs, activeTab, setActiveTab }) => {
             } cursor-pointer`}
             onClick={() => setActiveTab(tab.label)}
           >
-            <div className="flex items-center">
+            <div className="flex gap-1 items-center">
               <span className="text-sm">{tab.label}</span>
               <span
                 className={`text-xs font-medium px-2 py-0.5 rounded-full ${

@@ -55,6 +55,7 @@ const updatePost = async (req, res) => {
     if (!post) return res.status(404).json({ message: "Post not found" });
 
     const isAuthor = post.author.toString() === req.user._id.toString();
+    const isAdmin = req.user.role?.toLowerCase() === "admin";
 
     if (!isAuthor) {
       return res
@@ -63,7 +64,10 @@ const updatePost = async (req, res) => {
     }
 
     let updatedData = { ...req.body };
-    updatedData.status = "pending";
+
+    if (isAdmin) {
+      updatedData.status = "approved";
+    } else updatedData.status = "pending";
 
     if (updatedData.title) {
       updatedData.slug = updatedData.title

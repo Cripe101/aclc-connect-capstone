@@ -86,27 +86,36 @@ const Comments = () => {
     <DashboardLayout activeMenu="Comments">
       <div className="w-auto sm:max-w-[900px] mx-auto">
         <h2 className="text-2xl font-semibold mt-5 mb-5">Comments</h2>
-
-        {currentComments.map((comment) => (
-          <CommentInfoCard
-            key={comment._id}
-            commentId={comment._id || null}
-            authorName={comment.author?.name || "Unknown"}
-            authorPhoto={comment.author?.profileImageUrl || ""}
-            content={comment.content}
-            updatedOn={
-              comment.updatedAt
-                ? moment(comment.updatedAt).format("Do MMM YYYY")
-                : "-"
-            }
-            post={comment.post}
-            replies={comment.replies || []}
-            getAllComments={() => fetchCommentsByUserId(user._id)}
-            onDelete={(commentId) =>
-              setOpenDeleteAlert({ open: true, data: commentId || comment._id })
-            }
-          />
-        ))}
+        {currentComments.length === 0 ? (
+          <div className="flex justify-center bg-white p-10 rounded-lg">
+            <h1 className="font-medium">No Comment</h1>
+          </div>
+        ) : (
+          currentComments?.map((comment) => (
+            <CommentInfoCard
+              key={comment._id}
+              commentId={comment._id || null}
+              authorName={comment.author?.name || "Unknown"}
+              authorPhoto={comment.author?.profileImageUrl || ""}
+              content={comment.content}
+              updatedOn={
+                comment.updatedAt
+                  ? moment(comment.updatedAt).format("Do MMM YYYY")
+                  : "-"
+              }
+              post={comment.post}
+              replies={comment.replies || []}
+              getAllComments={() => fetchCommentsByUserId(user._id)}
+              onDelete={(commentId) =>
+                setOpenDeleteAlert({
+                  open: true,
+                  data: commentId || comment._id,
+                })
+              }
+            />
+          ))
+        )}
+        {}
       </div>
 
       {/* Pagination */}

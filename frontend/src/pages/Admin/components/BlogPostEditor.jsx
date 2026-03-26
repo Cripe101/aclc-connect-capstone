@@ -110,7 +110,6 @@ const BlogPostEditor = ({ isEdit }) => {
     setError("");
 
     try {
-      // Check if a new image was uploaded (File Type)
       if (postData.coverImageUrl instanceof File) {
         const imgUploadRes = await uploadImage(postData.coverImageUrl);
         coverImageUrl = imgUploadRes.imageUrl || "";
@@ -132,8 +131,6 @@ const BlogPostEditor = ({ isEdit }) => {
           }),
         );
       }
-
-      // console.log("Img Sample", imgSample);
 
       const reqPayload = {
         title: postData.title,
@@ -248,11 +245,15 @@ const BlogPostEditor = ({ isEdit }) => {
   //   },
   // };
 
+  const addTag = (tag) => {
+    if (!postData.tags.includes(tag)) {
+      handleValueChange("tags", [...postData.tags, tag]);
+    }
+  };
+
   useEffect(() => {
     if (isEdit) {
       fetchPostDetailsBySlug();
-    } else {
-      //generatePostIdeas()
     }
 
     return () => {};
@@ -367,14 +368,14 @@ const BlogPostEditor = ({ isEdit }) => {
                   <LuArrowLeft className="text-xl md:text-lg" />{" "}
                   <span className="hidden md:block">Cancel</span>
                 </button>
-                <button
+                {/* <button
                   className="flex items-center gap-2.5 text-[13px] text-blue-400 border border-blue-400 font-medium rounded-lg px-1.5 md:px-3 py-1 md:py-[3px] cursor-pointers hover:text-white hover:bg-blue-400 hover:scale-105 active:scale-95 duration-200"
                   disabled={loading}
                   onClick={() => handlePublish(true)}
                 >
                   <LuSave className="text-xl md:text-lg" />{" "}
                   <span className="hidden md:block">Draft</span>
-                </button>
+                </button> */}
 
                 <button
                   className="flex items-center gap-2.5 text-[13px] text-blue-700 font-medium rounded-lg px-3 py-[3px] border border-blue-700 hover:text-white hover:bg-blue-700 hover:scale-105 active:scale-95 cursor-pointer duration-200"
@@ -471,6 +472,39 @@ const BlogPostEditor = ({ isEdit }) => {
                 words
               </span>
               <span>{postData.content?.length || 0} characters</span>
+            </div>
+
+            <div className="flex flex-wrap p-2 gap-3">
+              <button
+                onClick={() => addTag("announcement")}
+                className="text-sm bg-blue-100/60 py-1.5 px-3 rounded-lg cursor-pointer font-medium active:scale-95 duration-200"
+              >
+                announcement
+              </button>
+              <button
+                onClick={() => addTag("event")}
+                className="text-sm bg-blue-100/60 py-1.5 px-3 rounded-lg cursor-pointer font-medium active:scale-95 duration-200"
+              >
+                event
+              </button>
+              <button
+                onClick={() => addTag("faculty")}
+                className="text-sm bg-blue-100/60 py-1.5 px-3 rounded-lg cursor-pointer font-medium active:scale-95 duration-200"
+              >
+                faculty
+              </button>
+              <button
+                onClick={() => addTag("college")}
+                className="text-sm bg-blue-100/60 py-1.5 px-3 rounded-lg cursor-pointer font-medium active:scale-95 duration-200"
+              >
+                college
+              </button>
+              <button
+                onClick={() => addTag("seniorhigh")}
+                className="text-sm bg-blue-100/60 py-1.5 px-3 rounded-lg cursor-pointer font-medium active:scale-95 duration-200"
+              >
+                seniorhigh
+              </button>
             </div>
 
             <div className="mt-3">
