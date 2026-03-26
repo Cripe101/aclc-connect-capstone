@@ -1,11 +1,11 @@
 const Tabs = ({ tabs, activeTab, setActiveTab }) => {
   return (
     <div className="my-2">
-      <div className="flex">
+      <div className="flex gap-2">
         {tabs.map((tab) => (
           <button
             key={tab.label}
-            className={`relative px-3 md:px-4 py-2 text-sm font-medium ${
+            className={`relative px-1 md:px-4 py-2 text-sm font-medium ${
               activeTab === tab.label
                 ? "text-black"
                 : "text-gray-500 hover:text-gray-700"

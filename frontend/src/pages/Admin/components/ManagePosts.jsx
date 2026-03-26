@@ -1,24 +1,21 @@
-import DashboardLayout from "../../../components/Layouts/BlogLayout/DashboardLayout";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
-import { LuGalleryVerticalEnd, LuLoaderCircle, LuPlus } from "react-icons/lu";
+import { approvePost, getAllPosts } from "../../../utils/api";
+import DashboardLayout from "../../../components/Layouts/BlogLayout/DashboardLayout";
 import Tabs from "../../../components/Tabs";
-import axiosInstance from "../../../utils/axiosInstance";
-import { API_PATHS } from "../../../utils/apiPaths";
-import moment from "moment";
 import BlogPostSummaryCard from "../../../components/Cards/BlogPostSummaryCard";
 import Modal from "../../../components/Modal";
 import DeleteAlertContent from "../../../components/DeleteAlertContent";
+import moment from "moment";
 import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
-import { getAllPosts, getMyPosts } from "../../../utils/api";
 import { UserContext } from "../../../context/userContext";
 
-const BlogPosts = () => {
+const ManagePosts = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
+  const queryClient = useQueryClient(); // for cache invalidation
 
-  // const [isLoading, setIsLoading] = useState(false);
   const limit = 5; // posts per page
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState("all"); // must match backend
@@ -28,42 +25,24 @@ const BlogPosts = () => {
     data: null,
   });
 
-  // get all post
-  const { data, isLoading, refetch } = useQuery({
+  // Get all posts
+  const { data, isLoading } = useQuery({
     queryKey: ["posts", filterStatus, page, limit],
     queryFn: () =>
-      getMyPosts({
+      getAllPosts({
         status: filterStatus,
         page,
         limit,
       }),
-    keepPreviousData: true, // keeps old data while fetching new page
+    keepPreviousData: true,
   });
 
-  // console.log(data?.posts);
-
   const posts = data?.posts || [];
-  const counts = data?.counts || {};
   const totalPages = Math.ceil((data?.totalCount || 0) / limit);
 
-  const handlePageChange = (pageNumber) => {
-    setPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber) => setPage(pageNumber);
 
-  // Delete post
-  const deletePost = async (postId) => {
-    try {
-      await axiosInstance.delete(API_PATHS.POSTS.DELETE(postId));
-
-      toast.success("Post deleted successfully");
-      setOpenDeleteAlert({ open: false, data: null });
-
-      refetch(); // ✅ correct
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-  };
-
+  // Update tabs whenever counts change
   useEffect(() => {
     if (data?.counts) {
       const newTabs = [
@@ -73,7 +52,6 @@ const BlogPosts = () => {
         { label: "Pending", count: data.counts.pending || 0 },
       ];
 
-      // Only update if tabs actually changed
       setTabs((prevTabs) => {
         const isSame =
           prevTabs.length === newTabs.length &&
@@ -81,24 +59,26 @@ const BlogPosts = () => {
         return isSame ? prevTabs : newTabs;
       });
     }
-  }, [data?.counts]); // track counts safely
+  }, [data?.counts]);
+
+  // Approve post mutation
+  const approveMutation = useMutation({
+    mutationFn: (postId) => approvePost(postId),
+    onSuccess: () => {
+      toast.success("Post approved successfully");
+      queryClient.invalidateQueries(["posts"]); // refetch posts
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to approve post");
+      console.error(error);
+    },
+  });
 
   return (
-    <DashboardLayout activeMenu="Posts">
+    <DashboardLayout activeMenu="Manage Posts">
       <div className="w-auto sm:max-w-[900px] mx-auto">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold mt-5 mb-5">My Posts</h2>
-
-          <button
-            className="flex items-center gap-2 bg-blue-700 cursor-pointer text-white font-medium py-2 border px-4 rounded-lg hover:border-blue-700 hover:bg-white hover:text-blue-700 hover:font-extrabold active:scale-95 duration-200"
-            onClick={() => navigate("/admin/create")}
-          >
-            <LuPlus />
-            <h1 className="flex gap-1">
-              <p className="hidden md:block">Create</p>
-              <p>Post</p>
-            </h1>
-          </button>
+          <h2 className="text-2xl font-semibold mt-5 mb-5">Posts</h2>
         </div>
 
         <Tabs
@@ -123,14 +103,16 @@ const BlogPosts = () => {
                     ? moment(post.updatedAt).format("Do MMM YYYY")
                     : "-"
                 }
-                role={user.role}
                 status={post.status}
                 tags={post.tags}
+                role={user.role}
                 likes={post.likedBy?.length || 0}
                 views={post.views}
                 onClick={() => navigate(`/admin/edit/${post.slug}`)}
-                onDelete={() =>
-                  setOpenDeleteAlert({ open: true, data: post._id })
+                onApprove={() => approveMutation.mutate(post._id)}
+                isApproving={
+                  approveMutation.isLoading &&
+                  approveMutation.variables === post._id
                 }
               />
             ))}
@@ -140,10 +122,8 @@ const BlogPosts = () => {
             <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">
               {Array.from({ length: totalPages }, (_, index) => {
                 const pageNumber = index + 1;
-
                 return (
                   <button
-                    type="button"
                     key={pageNumber}
                     onClick={() => handlePageChange(pageNumber)}
                     className={`py-1 rounded-lg duration-200 ${
@@ -163,9 +143,7 @@ const BlogPosts = () => {
 
       <Modal
         isOpen={openDeleteAlert?.open}
-        onClose={() => {
-          setOpenDeleteAlert({ open: false, data: null });
-        }}
+        onClose={() => setOpenDeleteAlert({ open: false, data: null })}
         title="Delete Alert"
       >
         <div className="w-[70vw] md:w-[30vw]">
@@ -179,4 +157,4 @@ const BlogPosts = () => {
   );
 };
 
-export default BlogPosts;
+export default ManagePosts;

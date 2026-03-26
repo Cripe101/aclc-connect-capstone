@@ -33,6 +33,8 @@ const Announcements = () => {
     queryFn: getPosts,
   });
 
+  console.log(announcementQuery.data);
+
   const getAnnouncements = () => {
     announcementQuery.data
       ? setAnnoData(announcementQuery.data.posts)

@@ -1,50 +1,52 @@
-export const BASE_URL = "https://aclc-connect-capstone.onrender.com";
+export const BASE_URL = "http://localhost:4000/api";
 // http://localhost:4000
 // https://aclc-connect-capstone.onrender.com
 
 export const API_PATHS = {
   AUTH: {
-    REGISTER: "/api/auth/register",
-    LOGIN: "/api/auth/login",
-    GET_PROFILE: "/api/auth/profile",
-    GET_ALL_USERS: "/api/auth/users",
-    DELETE_USER: (id) => `/api/auth/users/${id}`,
-    UPDATE_USER: (id) => `/api/auth/users/${id}`,
-    CHANGE_PASSWORD: "/api/auth/change-password",
+    REGISTER: "/auth/register",
+    LOGIN: "/auth/login",
+    GET_PROFILE: "/auth/profile",
+    GET_ALL_USERS: "/auth/users",
+    DELETE_USER: (id) => `/auth/users/${id}`,
+    UPDATE_USER: (id) => `/auth/users/${id}`,
+    CHANGE_PASSWORD: "/auth/change-password",
   },
 
   IMAGE: {
-    UPLOAD_IMAGE: "/api/auth/upload-image",
+    UPLOAD_IMAGE: "/auth/upload-image",
   },
 
   DASHBOARD: {
-    GET_DASHBOARD_DATA: "/api/dashboard-summary",
+    GET_DASHBOARD_DATA: "/dashboard-summary",
   },
 
   AI: {
-    GENERATE_BLOG_POST: "/api/ai/generate",
-    GENERATE_BLOG_POST_IDEAS: "/api/ai/generate-ideas",
-    GENERATE_COMMENT_REPLY: "/api/ai/generate-reply",
-    GENERATE_POST_SUMMARY: "/api/ai/generate-summary",
+    GENERATE_BLOG_POST: "/ai/generate",
+    GENERATE_BLOG_POST_IDEAS: "/ai/generate-ideas",
+    GENERATE_COMMENT_REPLY: "/ai/generate-reply",
+    GENERATE_POST_SUMMARY: "/ai/generate-summary",
   },
 
   POSTS: {
-    CREATE: "/api/posts",
-    GET_ALL: "/api/posts",
-    GET_TRENDING_POSTS: "/api/posts/trending",
-    GET_BY_SLUG: (slug) => `/api/posts/slug/${slug}`,
-    UPDATE: (id) => `/api/posts/${id}`,
-    DELETE: (id) => `/api/posts/${id}`,
-    GET_BY_TAG: (tag) => `/api/posts/tag/${tag}`,
-    SEARCH: "/api/posts/search",
-    INCREMENT_VIEW: (id) => `/api/posts/${id}/view`,
-    LIKE: (id) => `/api/posts/${id}/like`,
+    APPROVE_POST: `/posts/approve`,
+    CREATE: "/posts",
+    GET_ALL: "/posts",
+    GET_MY: "/posts/me",
+    GET_TRENDING_POSTS: "/posts/trending",
+    GET_BY_SLUG: (slug) => `/posts/slug/${slug}`,
+    UPDATE: (id) => `/posts/${id}`,
+    DELETE: (id) => `/posts/${id}`,
+    GET_BY_TAG: (tag) => `/posts/tag/${tag}`,
+    SEARCH: "/posts/search",
+    INCREMENT_VIEW: (id) => `/posts/${id}/view`,
+    LIKE: (id) => `/posts/${id}/like`,
   },
 
   COMMENTS: {
-    ADD: (postId) => `/api/comments/${postId}`,
-    GET_ALL: "/api/comments",
-    GET_ALL_BY_POST: (postId) => `/api/comments/${postId}`,
-    DELETE: (commentId) => `/api/comments/${commentId}`,
+    ADD: (postId) => `/comments/${postId}`,
+    GET_ALL: "/comments",
+    GET_ALL_BY_POST: (postId) => `/comments/${postId}`,
+    DELETE: (commentId) => `/comments/${commentId}`,
   },
 };

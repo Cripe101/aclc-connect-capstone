@@ -7,12 +7,26 @@ const {
   deleteUser,
   updateUser,
   changePassword,
+  approvePost,
+  rejectPost,
 } = require("../controllers/authController.js");
 const { protect } = require("../middlewares/authMiddleware.js");
 const {
   upload,
   uploadToCloudinary,
 } = require("../middlewares/uploadMiddleware.js");
+
+const adminOnly = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admin access only" });
+  }
+
+  next();
+};
 
 const router = express.Router();
 

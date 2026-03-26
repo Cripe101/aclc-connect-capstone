@@ -34,9 +34,13 @@ const BlogPostSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    isDraft: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    rejectionReason: {
+      type: String,
     },
     views: {
       type: Number,

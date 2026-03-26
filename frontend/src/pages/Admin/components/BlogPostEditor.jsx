@@ -335,7 +335,7 @@ const BlogPostEditor = ({ isEdit }) => {
                 <button
                   className="flex items-center gap-2.5 text-[13px] font-medium text-red-600 rounded-lg px-1.5 md:px-3 py-1 md:py-[3px] border border-red-500 cursor-pointer hover:text-white hover:bg-red-600 hover:scale-105 active:scale-95 duration-200"
                   disabled={loading}
-                  onClick={() => navigate("/admin/posts")}
+                  onClick={() => navigate(-1)}
                 >
                   <LuArrowLeft className="text-2xl md:text-lg" />{" "}
                   <span className="hidden md:block">Cancel</span>

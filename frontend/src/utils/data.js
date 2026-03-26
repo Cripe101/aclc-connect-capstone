@@ -3,7 +3,6 @@ import {
   LuGalleryVerticalEnd,
   LuMessageSquareQuote,
   LuLayoutTemplate,
-  LuTag,
   LuBookA,
   LuUser,
   LuCalendar,
@@ -17,12 +16,14 @@ export const SIDE_MENU_DATA = [
     label: "Dashboard",
     icon: LuLayoutDashboard,
     path: "/admin/dashboard",
+    roles: ["offices", "admin"],
   },
   {
     id: "04",
     label: "Users",
     icon: LuUser,
     path: "/admin/users",
+    roles: ["admin"],
   },
 
   {
@@ -30,6 +31,14 @@ export const SIDE_MENU_DATA = [
     label: "Posts",
     icon: LuGalleryVerticalEnd,
     path: "/admin/posts",
+    roles: ["offices"],
+  },
+  {
+    id: "05",
+    label: "Manage Posts",
+    icon: LuGalleryVerticalEnd,
+    path: "/admin/manage-posts",
+    roles: ["admin"],
   },
 
   {
@@ -37,6 +46,7 @@ export const SIDE_MENU_DATA = [
     label: "Comments",
     icon: LuMessageSquareQuote,
     path: "/admin/comments",
+    roles: ["offices"],
   },
 ];
 

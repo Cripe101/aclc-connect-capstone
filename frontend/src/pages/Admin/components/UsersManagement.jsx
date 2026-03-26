@@ -71,8 +71,8 @@ const UsersManagement = () => {
     } else {
       const filtered = users.filter(
         (user) =>
-          user.name.toLowerCase().includes(query.toLowerCase()) ||
-          user.email.toLowerCase().includes(query.toLowerCase()),
+          user?.name.toLowerCase().includes(query.toLowerCase()) ||
+          user?.email.toLowerCase().includes(query.toLowerCase()),
       );
       setFilteredUsers(filtered);
     }
@@ -83,7 +83,7 @@ const UsersManagement = () => {
     setSelectedUser(user);
     setFormData({
       name: user.name,
-      email: user.email,
+      email: user?.email,
       bio: user.bio || "",
       role: user.role,
     });
@@ -163,6 +163,8 @@ const UsersManagement = () => {
       toast.success("User created successfully");
       setIsAddModalOpen(false);
       getAllUsers();
+
+      return response.data;
     } catch (error) {
       toast.error("Failed to create user");
     } finally {
@@ -173,6 +175,27 @@ const UsersManagement = () => {
   useEffect(() => {
     getAllUsers();
   }, []);
+
+  // const createUserMutation = useMutation({
+  //   mutationFn: createUser,
+  //   onSuccess: () => {
+  //     toast.success("User Successfully Created");
+  //   },
+  //   onError: (error) => {
+  //     toast.error(error.message);
+  //   },
+  // });
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const payload = {
+  //     name: addForm.name,
+  //     username: addForm.username,
+  //     password: addForm.password,
+  //     role: addForm.role,
+  //   };
+  //   createUserMutation.mutate(payload);
+  // };
 
   return (
     <DashboardLayout activeMenu="Users">
@@ -232,7 +255,7 @@ const UsersManagement = () => {
                       className={`bg-blue-50 rounded-lg hover:bg-blue-800 hover:text-white duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]`}
                     >
                       <p className="py-3 px-4">{user.name}</p>
-                      <p className="py-3 px-4">{user.email}</p>
+                      <p className="py-3 px-4">{user?.email}</p>
                       <p className="py-3 px-4">
                         <span
                           className={`py-1 rounded-full bg-white text-xs font-display ${
@@ -400,6 +423,7 @@ const UsersManagement = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
               <option value="admin">Admin</option>
+              <option value="offices">Offices</option>
               <option value="student">Student</option>
               <option value="faculty">Faculty</option>
             </select>
@@ -505,6 +529,7 @@ const UsersManagement = () => {
                 Select...
               </option>
               <option value="admin">Admin</option>
+              <option value="offices">Offices</option>
               <option value="student">Student</option>
               <option value="faculty">Faculty</option>
             </select>
@@ -523,7 +548,7 @@ const UsersManagement = () => {
               onClick={() => {
                 addForm.name == ""
                   ? toast.error("Enter Name")
-                  : addForm.email == ""
+                  : addForm.username == ""
                     ? toast.error("Enter Username")
                     : addForm.password == ""
                       ? toast.error("Enter Password")

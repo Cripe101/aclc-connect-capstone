@@ -1,25 +1,36 @@
 const BlogPost = require("../models/blogPostModel.js");
 const Comment = require("../models/commentModel.js");
 
-// Dashboard Summary
 const getDashboardSummary = async (req, res) => {
   try {
-    // Basic counts
-    const [totalPosts, drafts, published, totalCommments, aiGenerated] =
+    const [totalPosts, published, pending, drafts, totalComments, aiGenerated] =
       await Promise.all([
         BlogPost.countDocuments(),
-        BlogPost.countDocuments({ isDraft: true }),
-        BlogPost.countDocuments({ isDraft: false }),
-        BlogPost.countDocuments(),
+
+        // ✅ Only approved = published
+        BlogPost.countDocuments({ status: "approved" }),
+        BlogPost.countDocuments({ status: "pending" }),
+
+        // ✅ Draft = actual draft + rejected
+        BlogPost.countDocuments({
+          status: { $in: ["draft", "rejected"] },
+        }),
+
+        Comment.countDocuments(),
+
+        // ✅ AI generated posts
         BlogPost.countDocuments({ generatedByAI: true }),
       ]);
 
     const User = require("../models/userModel.js");
     const totalUsers = await User.countDocuments();
 
+    // Views
     const totalViewsAgg = await BlogPost.aggregate([
       { $group: { _id: null, total: { $sum: "$views" } } },
     ]);
+
+    // Likes
     const totalLikesAgg = await BlogPost.aggregate([
       {
         $project: {
@@ -30,12 +41,13 @@ const getDashboardSummary = async (req, res) => {
       },
       { $group: { _id: null, total: { $sum: "$likeCount" } } },
     ]);
+
     const totalViews = totalViewsAgg[0]?.total || 0;
     const totalLikes = totalLikesAgg[0]?.total || 0;
 
-    // Top Performing Posts
+    // ✅ Top Performing Posts (ONLY approved)
     const topPosts = await BlogPost.aggregate([
-      { $match: { isDraft: false } },
+      { $match: { status: "approved" } },
       {
         $addFields: {
           likes: {
@@ -63,8 +75,9 @@ const getDashboardSummary = async (req, res) => {
       .populate("author", "name profileImageUrl")
       .populate("post", "title coverImageUrl");
 
-    // Tag usage aggregation
+    // Tag usage (only approved posts for cleaner analytics)
     const tagUsage = await BlogPost.aggregate([
+      { $match: { status: "approved" } },
       { $unwind: "$tags" },
       { $group: { _id: "$tags", count: { $sum: 1 } } },
       { $project: { tag: "$_id", count: 1, _id: 0 } },
@@ -74,11 +87,12 @@ const getDashboardSummary = async (req, res) => {
     res.json({
       stats: {
         totalPosts,
-        drafts,
         published,
+        drafts, // includes rejected
+        pending,
         totalViews,
         totalLikes,
-        totalCommments,
+        totalComments,
         aiGenerated,
         totalUsers,
       },
@@ -87,12 +101,10 @@ const getDashboardSummary = async (req, res) => {
       tagUsage,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Failed to fetch dashboard summary",
-        error: error.message,
-      });
+    res.status(500).json({
+      message: "Failed to fetch dashboard summary",
+      error: error.message,
+    });
   }
 };
 

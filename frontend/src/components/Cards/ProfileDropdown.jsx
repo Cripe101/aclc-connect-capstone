@@ -185,31 +185,38 @@ const ProfileDropdown = () => {
             <div className="py-2">
               <button
                 onClick={() => {
-                  navigate(user.role === "admin" ? "/admin/dashboard" : "/");
+                  navigate(
+                    user.role === "admin" || "offices"
+                      ? "/admin/dashboard"
+                      : "/",
+                  );
                   setIsOpen(false);
                 }}
                 className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
               >
                 <LuUser className="text-gray-400 group-hover:text-sky-500 transition-colors" />
                 <span className="group-hover:text-sky-600 font-medium">
-                  {user.role === "admin" ? "Admin Dashboard" : "Home"}
+                  {user.role === "admin" || "offices"
+                    ? "Admin Dashboard"
+                    : "Home"}
                 </span>
               </button>
 
-              {user.role === "admin" && (
-                <button
-                  onClick={() => {
-                    navigate("/");
-                    setIsOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
-                >
-                  <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                  <span className="group-hover:text-sky-600 font-medium">
-                    Home
-                  </span>
-                </button>
-              )}
+              {user.role === "admin" ||
+                ("offices" && (
+                  <button
+                    onClick={() => {
+                      navigate("/");
+                      setIsOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+                  >
+                    <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
+                    <span className="group-hover:text-sky-600 font-medium">
+                      Home
+                    </span>
+                  </button>
+                ))}
 
               {user.role !== "admin" && (
                 <button

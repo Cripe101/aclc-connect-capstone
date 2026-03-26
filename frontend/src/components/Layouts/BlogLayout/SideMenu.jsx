@@ -21,6 +21,12 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
     navigate(route);
   };
 
+  const userRole = user?.role; // from auth context or redux
+
+  const filteredMenu = SIDE_MENU_DATA.filter((item) =>
+    item.roles.includes(userRole),
+  );
+
   return (
     <div className="h-full bg-white border-r border-gray-200/50 p-5 sticky top-[61px] z-20">
       {user && (
@@ -55,8 +61,11 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
         </div>
       )}
 
-      {(isBlogMenu ? BLOG_NAVBAR_DATA : SIDE_MENU_DATA).map((item, index) => (
-        <div className="relative hover:bg-blue-100 rounded-full group">
+      {(isBlogMenu ? BLOG_NAVBAR_DATA : filteredMenu).map((item, index) => (
+        <div
+          className="relative hover:bg-blue-100 rounded-full group"
+          key={index}
+        >
           <button
             key={`menu_${index}`}
             className={`w-full flex items-center gap-4 text-[15px] ${

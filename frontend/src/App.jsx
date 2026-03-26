@@ -25,6 +25,7 @@ import Courses from "./pages/Blog/components/courses/Courses";
 import Events from "./pages/Events";
 import UsersManagement from "./pages/Admin/components/UsersManagement";
 import SeniorHighInfo from "./components/coursesOffered/SeniorHighInfo";
+import ManagePosts from "./pages/Admin/components/ManagePosts";
 
 const App = () => {
   return (
@@ -90,9 +91,12 @@ const App = () => {
             <Route path="/admin-login" element={<AdminLogin />} />
 
             {/* Admin Routes - Protected */}
-            <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+            <Route
+              element={<PrivateRoute allowedRoles={["admin", "offices"]} />}
+            >
               <Route path="/admin/dashboard" element={<Dashboard />} />
               <Route path="/admin/posts" element={<BlogPosts />} />
+              <Route path="/admin/manage-posts" element={<ManagePosts />} />
               <Route path="/admin/create" element={<BlogPostEditor />} />
               <Route path="/admin/users" element={<UsersManagement />} />
               <Route

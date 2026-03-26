@@ -12,6 +12,7 @@ import {
   LuEye,
   LuEyeClosed,
 } from "react-icons/lu";
+import toast from "react-hot-toast";
 
 const Login = ({ setCurrentPage, isAdmin = false }) => {
   const [email, setEmail] = useState("");
@@ -57,7 +58,7 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
         updateUser(response.data);
 
         // Redirect based on role
-        if (role === "admin") {
+        if (role === "admin" || "offices") {
           setOpenAuthForm(false);
           navigate("/admin/dashboard");
           return;
@@ -73,6 +74,8 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
       } else {
         setError("Something went wrong. Please try again.");
       }
+
+      toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -140,11 +143,11 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
           </div>
 
           {/* Error Message */}
-          {error && (
+          {/* {error && (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-700 text-sm font-medium">{error}</p>
             </div>
-          )}
+          )} */}
 
           {/* Login Button */}
           <button
