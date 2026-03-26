@@ -233,10 +233,13 @@ const getPostBySlug = async (req, res) => {
 // Get blog posts by tag
 const getPostsByTag = async (req, res) => {
   try {
+    const tag = req.params.tag;
+
     const posts = await BlogPost.find({
-      tags: req.params.tag,
-      isDraft: false,
+      tags: { $regex: `^${tag}$`, $options: "i" },
+      status: "approved",
     }).populate("author", "name profileImageUrl");
+
     res.json(posts);
   } catch (error) {
     res.status(500).json({ message: "Server Error", error: error.message });

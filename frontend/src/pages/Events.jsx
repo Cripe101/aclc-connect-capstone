@@ -60,7 +60,7 @@ const Events = () => {
   return (
     <BlogLayout>
       <div className="p-5">
-        <section className="flex justify-between p-1 rounded-lg text-white w-full sticky top-22">
+        <section className="flex justify-between p-1 rounded-lg text-white w-full">
           <h1 className="bg-blue-50/50 backdrop-blur-md text-center px-4 py-2 rounded-lg text-blue-900 font-bold">
             <p>Events</p>
           </h1>

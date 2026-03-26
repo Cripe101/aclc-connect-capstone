@@ -14,14 +14,22 @@ const PostByTags = () => {
 
   // Fetch posts by tag
   const getPostByTag = async () => {
+    if (!tagName) return; // prevent unnecessary request
+
     try {
       const response = await axiosInstance.get(
         API_PATHS.POSTS.GET_BY_TAG(tagName),
       );
 
-      setBlogPostList(response.data?.length > 0 ? response.data : []);
+      setBlogPostList(Array.isArray(response.data) ? response.data : []);
+
+      console.log("Fetched posts:", response.data);
+      console.log("Tag:", tagName);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error(
+        "Error fetching posts by tag:",
+        error.response?.data || error.message,
+      );
     }
   };
 
