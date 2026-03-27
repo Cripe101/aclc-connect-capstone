@@ -8,10 +8,13 @@ const authRoutes = require("./routes/authRoutes.js");
 const blogPostRoutes = require("./routes/blogPostRoutes.js");
 const commentRoutes = require("./routes/commentRoutes.js");
 const dashboardRoutes = require("./routes/dashboardRoutes.js");
+const notificationRoutes = require("./routes/notificationRoutes.js");
 
 const aiRoutes = require("./routes/aiRoutes.js");
 
 const app = express();
+
+// allowedOrigins = ["http://localhost:5173", "http://192.168.1.27:5173"];
 
 // Middleware to handle CORS
 app.use(
@@ -31,6 +34,7 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", blogPostRoutes);
+app.use("api/notification", notificationRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/dashboard-summary", dashboardRoutes);
 

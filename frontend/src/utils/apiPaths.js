@@ -1,5 +1,6 @@
 export const BASE_URL = "https://aclc-connect-capstone.onrender.com/api";
 // http://localhost:4000
+// http://192.168.1.27:4000
 // https://aclc-connect-capstone.onrender.com
 
 export const API_PATHS = {

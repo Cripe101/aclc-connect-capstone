@@ -51,11 +51,11 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
         password,
       });
 
-      const { token, role } = response.data;
+      const { token, role } = response?.data;
 
       if (token) {
         localStorage.setItem("token", token);
-        updateUser(response.data);
+        updateUser(response?.data);
 
         // Redirect based on role
         if (role === "admin" || "offices") {
@@ -69,13 +69,13 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
         setOpenAuthForm(false);
       }
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message);
+      if (error.response && error.response?.data.message) {
+        setError(error.response?.data.message);
       } else {
         setError("Something went wrong. Please try again.");
       }
 
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data.message);
     } finally {
       setIsLoading(false);
     }

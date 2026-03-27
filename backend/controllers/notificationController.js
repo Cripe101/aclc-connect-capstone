@@ -1,42 +1,34 @@
-const Notification = require("../models/Notification");
+const Notification = require("../models/notificationModel");
 
 // get notifications of user
 const getNotifications = async (req, res) => {
   try {
-    const data = await Notification.find({
-      userId: req.user.id,
+    const { userId } = req.params;
+
+    const notif = await Notification.find({
+      userId: userId,
     }).sort({ createdAt: -1 });
 
-    res.json(data);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
-
-// create notification (you call this manually)
-const createNotification = async (req, res) => {
-  try {
-    const notif = await Notification.create(req.body);
     res.json(notif);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
 // mark as read
 const markAsRead = async (req, res) => {
   try {
-    await Notification.findByIdAndUpdate(req.params.id, {
-      isRead: true,
-    });
-    res.json({ message: "Read" });
+    const { id } = req.params;
+
+    await Notification.findByIdAndUpdate(id, { isRead: true });
+
+    res.json({ message: "Notification marked as read" });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
 module.exports = {
   getNotifications,
-  createNotification,
   markAsRead,
 };

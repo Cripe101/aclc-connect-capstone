@@ -235,16 +235,6 @@ const BlogPostEditor = ({ isEdit }) => {
     }
   };
 
-  // const customImageCommand = {
-  //   name: "image",
-  //   keyCommand: "image",
-  //   buttonProps: { "aria-label": "Insert image" },
-  //   icon: <ImageIcon size={18} />,
-  //   execute: () => {
-  //     fileInputRef.current.click();
-  //   },
-  // };
-
   const addTag = (tag) => {
     if (!postData.tags.includes(tag)) {
       handleValueChange("tags", [...postData.tags, tag]);
@@ -554,7 +544,7 @@ const BlogPostEditor = ({ isEdit }) => {
         }}
         title="Delete Alert"
       >
-        <div className="w-[30vw]">
+        <div className="">
           <DeleteAlertContent
             content="Are you sure you want to delete this post?"
             onDelete={() => deletePost()}

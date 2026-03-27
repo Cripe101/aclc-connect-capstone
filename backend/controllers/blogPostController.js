@@ -1,4 +1,6 @@
 const BlogPost = require("../models/blogPostModel.js");
+const User = require("../models/userModel.js");
+const Notification = require("../models/notificationModel.js");
 
 // Create a new blog post
 const createPost = async (req, res) => {
@@ -20,6 +22,13 @@ const createPost = async (req, res) => {
     }
 
     const isAdmin = req.user.role?.toLowerCase() === "admin";
+
+    const findAdmin = await User.findOne({ role: "admin" });
+
+    await Notification.create({
+      userId: findAdmin._id,
+      message: "New post need approval",
+    });
 
     const newPost = new BlogPost({
       title,
@@ -91,6 +100,13 @@ const updatePost = async (req, res) => {
 
       updatedData.slug = slug;
     }
+
+    const findAdmin = await User.findOne({ role: "admin" });
+
+    await Notification.create({
+      userId: findAdmin._id,
+      message: "New post need approval",
+    });
 
     // 5️⃣ Update the post
     const updatedPost = await BlogPost.findByIdAndUpdate(
@@ -361,6 +377,11 @@ const approvePost = async (req, res) => {
         .status(404)
         .json({ message: "Post not found or already approved" });
     }
+    // Notify the user
+    await Notification.create({
+      userId: post.author,
+      message: "Your post was approved",
+    });
 
     res.json({
       message: "Post approved successfully",
@@ -396,6 +417,12 @@ const rejectPost = async (req, res) => {
         .status(404)
         .json({ message: "Post not found or already rejected" });
     }
+
+    // Notify the user
+    await Notification.create({
+      userId: post.author,
+      message: "Your post was rejected",
+    });
 
     res.json({
       message: "Post rejected",
