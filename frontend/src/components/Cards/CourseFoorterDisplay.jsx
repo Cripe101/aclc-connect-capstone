@@ -9,7 +9,7 @@ const CourseFoorterDisplay = ({ title, data, nav }) => {
         <button
           onClick={() => navigate(nav + course.slug)}
           key={course.slug}
-          className="font-display text-justify font-light hover:cursor-pointer active:font-extralight hover:font-medium duration-200"
+          className="font-display text-start font-light hover:cursor-pointer active:font-extralight hover:font-medium duration-200"
         >
           {course.course}
         </button>

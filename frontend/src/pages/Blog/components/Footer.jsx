@@ -23,21 +23,21 @@ const Footer = () => {
         </section>
         <section className="">
           <h1 className="font-diplay font-bold text-lg text-center">
-            Courses Offered
+            Programs Offered
           </h1>
           <section className="grid lg:grid-cols-3 gap-1">
             <CourseFoorterDisplay
-              title={"Degree"}
+              title={"Degree Programs"}
               nav={"/courses-offered/bachelors/"}
               data={CollegeCourseData}
             />
             <CourseFoorterDisplay
-              title={"Diploma"}
+              title={"Diploma Programs"}
               nav={"/courses-offered/tesda/"}
               data={TesdaCourseData}
             />
             <CourseFoorterDisplay
-              title={"Senior High"}
+              title={"Senior High School"}
               nav={"/courses-offered/seniorhigh/"}
               data={SeniorHighCourseData}
             />

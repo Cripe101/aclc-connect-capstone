@@ -42,6 +42,7 @@ const TrendingPostsSection = () => {
             <PostCard
               key={item._id}
               title={item.title}
+              images={item.images}
               coverImageUrl={item.coverImageUrl}
               tags={item.tags}
               onClick={() => handleClick(item)}
@@ -66,7 +67,7 @@ const TrendingPostsSection = () => {
 
 export default TrendingPostsSection;
 
-const PostCard = ({ title, coverImageUrl, tags, onClick }) => {
+const PostCard = ({ title, images, coverImageUrl, tags, onClick }) => {
   return (
     <div className="cursor-pointer mb-3" onClick={onClick}>
       <h6 className="text-[10px] font-semibold text-sky-500">
@@ -75,7 +76,7 @@ const PostCard = ({ title, coverImageUrl, tags, onClick }) => {
 
       <div className="flex items-center gap-4 mt-2">
         <img
-          src={coverImageUrl}
+          src={coverImageUrl === "" ? images[0] : coverImageUrl}
           alt={title}
           className="w-18 h-18 object-cover rounded"
         />

@@ -106,7 +106,7 @@ const BlogLandingPage = () => {
 
   return (
     <BlogLayout>
-      <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-blue-900">
+      <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400">
         <img src={logo} alt="" className="w-60 p-2 bg-white rounded-lg" />
         <p className="text-white text-justify font-serif w-60">
           {" "}

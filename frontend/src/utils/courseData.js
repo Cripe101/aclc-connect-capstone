@@ -57,8 +57,8 @@ export const CollegeCourseData = [
     ],
   },
   {
-    course: "Bachelor of Science in Business Administration",
-    slug: "bsba",
+    course: "Bachelor of Science in Business Management",
+    slug: "bsbm",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/BA_ailudo.jpg",
     description: `A four-year degree that provides students with a strong foundation in core business principles like accounting, finance, marketing, and management. Unlike a BBA (Bachelor of Business Administration), a BSBA degree emphasizes quantitative skills, analysis, and the technical aspects of business, making it suitable for students who want to pursue specialized, data-driven roles. `,
@@ -122,33 +122,137 @@ export const CollegeCourseData = [
       "Lodging Manager",
     ],
   },
+  {
+    course: "Bachelor of Science in Entreprenuership",
+    slug: "bse",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/f_auto,q_auto/CS_g3jipp",
+    description: `A degree program focused on the practical application of technology to solve problems for individuals and organizations. The curriculum covers core areas like software, hardware, networking, and databases, preparing graduates for roles that involve installing, customizing, managing, and maintaining information technology infrastructure. `,
+    skillsToLearn: [
+      "Mobile and Web Development",
+      "Data Science and Analytics",
+      "Cloud Computing",
+      "User Experience (UX) Design",
+      "Software Development",
+      "Information Management",
+    ],
+    careerOpportunities: [
+      "Application Developer",
+      "Network Engineer",
+      "Client Support Specialist",
+      "Cybersecurity Specialist",
+      "IT Project Manager",
+      "Systems Analyst",
+      "Software Quality Assurance Specialist",
+      "Software Developer",
+      "Web Developer",
+    ],
+  },
+  {
+    course: "Bachelor of Science in Tourism Management",
+    slug: "bstm",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/f_auto,q_auto/CS_g3jipp",
+    description: `A degree program focused on the practical application of technology to solve problems for individuals and organizations. The curriculum covers core areas like software, hardware, networking, and databases, preparing graduates for roles that involve installing, customizing, managing, and maintaining information technology infrastructure. `,
+    skillsToLearn: [
+      "Mobile and Web Development",
+      "Data Science and Analytics",
+      "Cloud Computing",
+      "User Experience (UX) Design",
+      "Software Development",
+      "Information Management",
+    ],
+    careerOpportunities: [
+      "Application Developer",
+      "Network Engineer",
+      "Client Support Specialist",
+      "Cybersecurity Specialist",
+      "IT Project Manager",
+      "Systems Analyst",
+      "Software Quality Assurance Specialist",
+      "Software Developer",
+      "Web Developer",
+    ],
+  },
+  {
+    course: "Bachelor of Science in Industrial Security Management",
+    slug: "bsism",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/f_auto,q_auto/CS_g3jipp",
+    description: `A degree program focused on the practical application of technology to solve problems for individuals and organizations. The curriculum covers core areas like software, hardware, networking, and databases, preparing graduates for roles that involve installing, customizing, managing, and maintaining information technology infrastructure. `,
+    skillsToLearn: [
+      "Mobile and Web Development",
+      "Data Science and Analytics",
+      "Cloud Computing",
+      "User Experience (UX) Design",
+      "Software Development",
+      "Information Management",
+    ],
+    careerOpportunities: [
+      "Application Developer",
+      "Network Engineer",
+      "Client Support Specialist",
+      "Cybersecurity Specialist",
+      "IT Project Manager",
+      "Systems Analyst",
+      "Software Quality Assurance Specialist",
+      "Software Developer",
+      "Web Developer",
+    ],
+  },
+  {
+    course: "Bachelor of Science in Criminology",
+    slug: "bsc",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/f_auto,q_auto/CS_g3jipp",
+    description: `A degree program focused on the practical application of technology to solve problems for individuals and organizations. The curriculum covers core areas like software, hardware, networking, and databases, preparing graduates for roles that involve installing, customizing, managing, and maintaining information technology infrastructure. `,
+    skillsToLearn: [
+      "Mobile and Web Development",
+      "Data Science and Analytics",
+      "Cloud Computing",
+      "User Experience (UX) Design",
+      "Software Development",
+      "Information Management",
+    ],
+    careerOpportunities: [
+      "Application Developer",
+      "Network Engineer",
+      "Client Support Specialist",
+      "Cybersecurity Specialist",
+      "IT Project Manager",
+      "Systems Analyst",
+      "Software Quality Assurance Specialist",
+      "Software Developer",
+      "Web Developer",
+    ],
+  },
 ];
 
 export const TesdaCourseData = [
   {
-    course: "Web Application Development",
-    slug: "wad",
+    course: "Diploma in Web Application Development Technology",
+    slug: "wadt",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/f_auto,q_auto/CS_g3jipp",
     description: `is an academic or technical program focused on teaching the end-to-end process of designing, building, testing, and deploying interactive, browser-based software applications. Unlike general web design, which focuses on visual aesthetics, a WAD course emphasizes the technical, functional, and backend logic required to make web pages dynamic and interactive.`,
   },
   {
-    course: "Office Management Technology",
+    course: "Diploma in Office Management Technology",
     slug: "omt",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/BA_ailudo.jpg",
     description: `often offered as a Diploma program (DOMT) or a 2-year bundled services course, is a TESDA-aligned curriculum designed to prepare students for careers in office administration, secretarial work, and specialized legal or medical office management.`,
   },
   {
-    course: "Office Administration Technology",
+    course: "Diploma in Office Administration Technology",
     slug: "oat",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/BA_ailudo.jpg",
     description: `Office Administration Technology is typically not a single standalone course title but is instead represented through several specific National Certificate (NC) programs or integrated "Diploma" levels. These courses are designed to equip students with the skills needed to manage office operations using modern technology.`,
   },
   {
-    course: "Hotel and Restaurant Technology",
-    slug: "hrt",
+    course: "Diploma in Hospitality Technology",
+    slug: "ht",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/HM_ghxeku.jpg",
     description: `Hotel and Restaurant Technology (HRT) is a comprehensive 3-year diploma program designed to equip students with the technical and managerial skills required for the hospitality industry. 
@@ -158,35 +262,48 @@ export const TesdaCourseData = [
 
 export const SeniorHighCourseData = [
   {
-    course: "Accountancy, Business and Management",
-    slug: "abm",
+    course: "Business and Entreprenuership",
+    slug: "be",
+    track: "academic track",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
       "Focuses on fundamentals of accounting, business management, and entrepreneurship — prepares students for business-related tertiary programs.",
   },
   {
-    course: "Science, Technology, Engineering and Mathematics",
+    course: "Science Technology Engineering and Mathematics",
     slug: "stem",
+    track: "academic track",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
-      "Emphasizes advanced math and science subjects for students aiming to pursue engineering, IT, or pure sciences in college.",
+      "Focuses on fundamentals of accounting, business management, and entrepreneurship — prepares students for business-related tertiary programs.",
   },
   {
-    course: "Humanities and Social Sciences",
-    slug: "humss",
+    course: "Arts Social Sciences and Humanities",
+    slug: "assh",
+    track: "academic track",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
-      "Designed for students interested in social sciences, communication, and education pathways.",
+      "Focuses on fundamentals of accounting, business management, and entrepreneurship — prepares students for business-related tertiary programs.",
   },
   {
-    course: "Technical-Vocational-Livelihood",
-    slug: "tvl",
+    course: "Information Communication Technology",
+    slug: "ict",
+    track: "technical professional",
     image:
       "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
     description:
-      "A practical track offering hands-on training in trades and technical skills with opportunities for certification.",
+      "Focuses on fundamentals of accounting, business management, and entrepreneurship — prepares students for business-related tertiary programs.",
+  },
+  {
+    course: "Family Consumer Science",
+    slug: "fcm",
+    track: "technical professional",
+    image:
+      "https://res.cloudinary.com/dpaviate6/image/upload/v1773962841/SeniorHigh_ryqus7.jpg",
+    description:
+      "Focuses on fundamentals of accounting, business management, and entrepreneurship — prepares students for business-related tertiary programs.",
   },
 ];
