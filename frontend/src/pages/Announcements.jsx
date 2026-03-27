@@ -46,17 +46,20 @@ const Announcements = () => {
     const fac = user?.role?.toLowerCase() === "faculty";
 
     return [...(annoData || [])]
-      .filter((item) =>
-        item?.tags?.some((tag) => {
-          const t = tag?.toLowerCase();
+      .filter((item) => {
+        const tags = item?.tags?.map((tag) => tag?.toLowerCase()) || [];
+        const isFacultyPost = tags.includes("faculty");
 
-          return (
-            t === "announcement" ||
-            t === "announcements" ||
-            (fac && t === "faculty")
-          );
-        }),
-      )
+        // Block faculty posts if not faculty
+        if (!fac && isFacultyPost) return false;
+
+        // Allow announcements
+        return (
+          tags.includes("announcement") ||
+          tags.includes("announcements") ||
+          (fac && isFacultyPost)
+        );
+      })
       .filter((item) => {
         if (!memo) return true;
 
