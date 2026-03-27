@@ -15,8 +15,6 @@ const NotificationBell = () => {
     try {
       const res = await axiosInstance.get(`/notifications/${userId}`);
       setNotifications(res.data);
-
-      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -26,15 +24,12 @@ const NotificationBell = () => {
     try {
       await axiosInstance.patch(`/notifications/update/${id}`);
 
-      // update UI instantly
       setNotifications((prev) =>
         prev.map((n) => (n._id === id ? { ...n, isRead: true } : n)),
       );
 
-      // 3️⃣ Delete the notification after marking as read
       await axiosInstance.delete(`/notifications/delete/${id}`);
 
-      // 4️⃣ Remove it from UI
       setNotifications((prev) => prev.filter((n) => n._id !== id));
     } catch (err) {
       console.error(err);
@@ -42,7 +37,15 @@ const NotificationBell = () => {
   };
 
   useEffect(() => {
-    if (userId) fetchNotifications();
+    if (!userId) return;
+
+    // Initial load
+    fetchNotifications();
+
+    // Poll every 10 seconds for new notifications
+    const interval = setInterval(fetchNotifications, 8000);
+
+    return () => clearInterval(interval); // cleanup
   }, [userId]);
 
   return (
