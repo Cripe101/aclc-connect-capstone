@@ -138,7 +138,7 @@ const BlogPostEditor = ({ isEdit }) => {
         coverImageUrl,
         images: imgSample,
         tags: postData.tags,
-        isDraft: isDraft ? true : false,
+        // isDraft: isDraft ? true : false,
         generatedByAI: true,
       };
 

@@ -51,13 +51,15 @@ const createPost = async (req, res) => {
 // Update an existing blog post
 const updatePost = async (req, res) => {
   try {
+    // 1️⃣ Find the post by ID
     const post = await BlogPost.findById(req.params.id);
     if (!post) return res.status(404).json({ message: "Post not found" });
 
+    // 2️⃣ Check authorization
     const isAuthor = post.author.toString() === req.user._id.toString();
     const isAdmin = req.user.role?.toLowerCase() === "admin";
 
-    if (!isAuthor) {
+    if (!isAuthor && !isAdmin) {
       return res
         .status(403)
         .json({ message: "Not authorized to update this post" });
@@ -65,25 +67,44 @@ const updatePost = async (req, res) => {
 
     let updatedData = { ...req.body };
 
+    // 3️⃣ Set status
     if (isAdmin) {
       updatedData.status = "approved";
-    } else updatedData.status = "pending";
+    } else {
+      updatedData.status = "pending";
+    }
 
-    if (updatedData.title) {
-      updatedData.slug = updatedData.title
+    // 4️⃣ Handle slug generation safely
+    if (updatedData.title && updatedData.title !== post.title) {
+      let slugBase = updatedData.title
         .toLowerCase()
         .replace(/ /g, "-")
         .replace(/[^\w-]+/g, "");
+
+      let slug = slugBase;
+      let count = 1;
+
+      // Check for duplicates in other posts
+      while (await BlogPost.findOne({ slug, _id: { $ne: req.params.id } })) {
+        slug = `${slugBase}-${count++}`;
+      }
+
+      updatedData.slug = slug;
     }
 
+    // 5️⃣ Update the post
     const updatedPost = await BlogPost.findByIdAndUpdate(
       req.params.id,
       updatedData,
-      { new: true },
+      { new: true, runValidators: true },
     );
 
     res.json(updatedPost);
   } catch (error) {
+    // 6️⃣ Handle duplicate slug error gracefully (just in case)
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "Slug already exists" });
+    }
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
