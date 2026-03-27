@@ -83,7 +83,7 @@ const PostPreview = () => {
         >
           <LuX size={30} />
         </button>
-        <section className="flex px-3 md:p-10 items-center gap-3">
+        <section className="flex px-3 md:p-10 items-center">
           {blogPostData?.images?.length === 0 ? (
             <img
               src={blogPostData?.coverImageUrl}
@@ -91,12 +91,17 @@ const PostPreview = () => {
               className="md:w-full md:h-full rounded-lg"
             />
           ) : (
-            <section className="flex md:p-10 items-center justify-center gap-3">
+            <section className="flex md:p-10 items-center justify-center md:gap-3">
               <button
+                disabled={
+                  blogPostData?.images?.length -
+                    blogPostData?.images?.length ===
+                  photo - 1
+                }
                 onClick={() => {
                   photo === 1 ? "" : setPhoto(photo - 1);
                 }}
-                className="md:p-10 active:text-blue-700 rounded-l-lg cursor-pointer duration-200"
+                className="md:p-10 active:text-blue-700 rounded-l-lg disabled:opacity-50 cursor-pointer duration-200"
               >
                 <FaArrowLeft size={25} />
               </button>
@@ -108,12 +113,13 @@ const PostPreview = () => {
                 />
               ))}
               <button
+                disabled={blogPostData?.images?.length === photo}
                 onClick={() => {
                   photo === blogPostData?.images?.length
                     ? ""
                     : setPhoto(photo + 1);
                 }}
-                className="md:p-10 active:text-blue-700 rounded-r-lg cursor-pointer duration-200"
+                className="md:p-10 disabled:opacity-50 active:text-blue-700 rounded-r-lg cursor-pointer duration-200"
               >
                 <FaArrowRight size={25} />
               </button>

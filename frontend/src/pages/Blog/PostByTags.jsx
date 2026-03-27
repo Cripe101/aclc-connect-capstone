@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import BlogLayout from "../../components/Layouts/BlogLayout/BlogLayout";
 import { useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
@@ -6,11 +6,13 @@ import { API_PATHS } from "../../utils/apiPaths";
 import BlogPostSummary from "./components/BlogPostSummary";
 import moment from "moment";
 import TrendingPostsSection from "./components/TrendingPostsSection";
+import { UserContext } from "../../context/userContext";
 
 const PostByTags = () => {
   const { tagName } = useParams();
   const navigate = useNavigate();
   const [blogPostList, setBlogPostList] = useState([]);
+  const { user } = useContext(UserContext);
 
   // Fetch posts by tag
   const getPostByTag = async () => {
@@ -23,8 +25,8 @@ const PostByTags = () => {
 
       setBlogPostList(Array.isArray(response.data) ? response.data : []);
 
-      console.log("Fetched posts:", response.data);
-      console.log("Tag:", tagName);
+      // console.log("Fetched posts:", response.data);
+      // console.log("Tag:", tagName);
     } catch (error) {
       console.error(
         "Error fetching posts by tag:",
@@ -32,6 +34,21 @@ const PostByTags = () => {
       );
     }
   };
+
+  const filteredData = useMemo(() => {
+    const fac = user?.role?.toLowerCase() === "faculty";
+
+    return [...(blogPostList || [])]
+      .filter((item) => {
+        const tags = item?.tags?.map((tag) => tag?.toLowerCase()) || [];
+        const isFacultyPost = tags.includes("faculty");
+
+        if (!fac && isFacultyPost) return false;
+
+        return tags.includes(tagName.toLowerCase()) || (fac && isFacultyPost);
+      })
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  }, [blogPostList, user]);
 
   // Handle post click
   const handleClick = (post) => {
@@ -54,16 +71,16 @@ const PostByTags = () => {
                   #{tagName}
                 </h3>
                 <p className="text-sm font-medium text-gray-700 mt-1">
-                  Showing {blogPostList.length}{" "}
-                  {blogPostList.length > 1 ? "posts" : "post"} tagged with #
+                  Showing {filteredData.length}{" "}
+                  {filteredData.length > 1 ? "posts" : "post"} tagged with #
                   {tagName}
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-              {blogPostList.length > 0 &&
-                blogPostList.map((item) => (
+              {filteredData.length > 0 &&
+                filteredData.map((item) => (
                   <BlogPostSummary
                     key={item._id}
                     title={item.title}
