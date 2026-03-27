@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { LuDot } from "react-icons/lu";
+import { LuDot, LuX } from "react-icons/lu";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../context/userContext";
 import axiosInstance from "../../../utils/axiosInstance";
@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { MdApproval, MdCancel } from "react-icons/md";
 import { approvePost, rejectPost } from "../../../utils/api";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const PostPreview = () => {
   const { slug } = useParams();
@@ -70,7 +71,56 @@ const PostPreview = () => {
   }, [slug]);
 
   return (
-    <div className="flex flex-col gap-5 p-5 md:px-80">
+    <div className="flex flex-col gap-5 p-5 md:px-80 relative">
+      <div
+        className={`${showPhotos ? "flex" : "hidden"} justify-center fixed z-50 top-0 left-0 w-screen h-screen bg-slate-50/60 backdrop-blur-md`}
+      >
+        <button
+          onClick={() => {
+            setShowPhotos(false);
+          }}
+          className="absolute right-0 md:right-10 top-5 text-black text-lg font-bold cursor-pointer px-3 py-1 rounded-lg hover:text-red-600 active:scale-90 duration-200"
+        >
+          <LuX size={30} />
+        </button>
+        <section className="flex px-3 md:p-10 items-center gap-3">
+          {blogPostData?.images?.length === 0 ? (
+            <img
+              src={blogPostData?.coverImageUrl}
+              alt="No Photo"
+              className="md:w-full md:h-full rounded-lg"
+            />
+          ) : (
+            <section className="flex md:p-10 items-center justify-center gap-3">
+              <button
+                onClick={() => {
+                  photo === 1 ? "" : setPhoto(photo - 1);
+                }}
+                className="md:p-10 active:text-blue-700 rounded-l-lg cursor-pointer duration-200"
+              >
+                <FaArrowLeft size={25} />
+              </button>
+              {blogPostData?.images?.slice(photo - 1, photo).map((img) => (
+                <img
+                  src={img}
+                  alt="No Photo"
+                  className="w-80 md:w-full max-h-180 rounded-lg"
+                />
+              ))}
+              <button
+                onClick={() => {
+                  photo === blogPostData?.images?.length
+                    ? ""
+                    : setPhoto(photo + 1);
+                }}
+                className="md:p-10 active:text-blue-700 rounded-r-lg cursor-pointer duration-200"
+              >
+                <FaArrowRight size={25} />
+              </button>
+            </section>
+          )}
+        </section>
+      </div>
       <div className="flex justify-between">
         <button
           onClick={() => navigate(-1)}
@@ -84,7 +134,7 @@ const PostPreview = () => {
               className="flex text-xs bg-green-50 py-1 px-2.5 rounded-lg text-green-600 font-medium border border-green-600 flex-row items-center gap-1 hover:bg-green-700 hover:text-white group-hover:flex cursor-pointer duration-200"
               onClick={(e) => {
                 e.stopPropagation();
-                approveMutation.mutate(blogPostData._id);
+                approveMutation.mutate(blogPostData?._id);
               }}
             >
               <MdApproval size={15} />
