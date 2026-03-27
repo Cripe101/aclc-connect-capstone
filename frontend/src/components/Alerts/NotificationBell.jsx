@@ -29,6 +29,12 @@ const NotificationBell = () => {
       setNotifications((prev) =>
         prev.map((n) => (n._id === id ? { ...n, isRead: true } : n)),
       );
+
+      // 3️⃣ Delete the notification after marking as read
+      await axiosInstance.delete(`/notifications/delete/${id}`);
+
+      // 4️⃣ Remove it from UI
+      setNotifications((prev) => prev.filter((n) => n._id !== id));
     } catch (err) {
       console.error(err);
     }
@@ -51,7 +57,7 @@ const NotificationBell = () => {
       <section
         className={`${show ? "flex" : "hidden"} flex-col fixed right-10 bg-blue-50 w-full text-xs max-w-[200px]`}
       >
-        {notifications?.slice(0, 3).map((notif) => (
+        {notifications?.slice(0, 4).map((notif) => (
           <div
             className="flex flex-col gap-1"
             key={notif._id}
@@ -66,7 +72,10 @@ const NotificationBell = () => {
             {!notif.isRead && (
               <button
                 className="px-2 py-0.5 bg-blue-300 rounded-lg"
-                onClick={() => markAsRead(notif._id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  markAsRead(notif._id);
+                }}
               >
                 Read
               </button>
