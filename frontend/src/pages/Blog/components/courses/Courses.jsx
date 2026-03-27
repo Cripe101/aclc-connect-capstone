@@ -30,7 +30,7 @@ const Courses = ({ title, data, side, nav }) => {
           {side}
         </h1>
         <span className="grid md:grid-cols-3 gap-10 md:gap-5">
-          {data.slice(0, 6).map((course) => (
+          {data.map((course) => (
             <section
               onClick={() => navigate(nav + course.slug)}
               key={course.course}

@@ -34,7 +34,7 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", blogPostRoutes);
-app.use("api/notification", notificationRoutes);
+app.use("api/notifications", notificationRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/dashboard-summary", dashboardRoutes);
 
