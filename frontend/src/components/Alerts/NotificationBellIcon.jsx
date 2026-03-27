@@ -1,6 +1,7 @@
 import { Bell } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
+import axiosInstance from "../../utils/axiosInstance";
 
 const NotificationBellIcon = () => {
   const [count, setCount] = useState(0);
@@ -9,7 +10,7 @@ const NotificationBellIcon = () => {
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const res = await API.get(`/notifications/${userId}`);
+      const res = await axiosInstance.get(`/notifications/${userId}`);
 
       const unread = res.data.filter((n) => !n.is_read);
       setCount(unread.length);
