@@ -31,6 +31,7 @@ const NotificationBell = () => {
       await axiosInstance.delete(`/notifications/delete/${id}`);
 
       setNotifications((prev) => prev.filter((n) => n._id !== id));
+      fetchNotifications();
     } catch (err) {
       console.error(err);
     }
@@ -39,13 +40,11 @@ const NotificationBell = () => {
   useEffect(() => {
     if (!userId) return;
 
-    // Initial load
     fetchNotifications();
 
-    // Poll every 10 seconds for new notifications
-    const interval = setInterval(fetchNotifications, 8000);
+    const interval = setInterval(fetchNotifications, 5000);
 
-    return () => clearInterval(interval); // cleanup
+    return () => clearInterval(interval);
   }, [userId]);
 
   return (
