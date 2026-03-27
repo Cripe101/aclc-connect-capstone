@@ -8,6 +8,6 @@ const {
 
 router.get("/:userId", getNotifications);
 router.patch("/update/:id", markAsRead);
-router.patch("/delete/:id", deleteNotification);
+router.delete("/delete/:id", deleteNotification);
 
 module.exports = router;

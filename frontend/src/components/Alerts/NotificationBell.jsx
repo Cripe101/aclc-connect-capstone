@@ -15,6 +15,7 @@ const NotificationBell = () => {
     try {
       const res = await axiosInstance.get(`/notifications/${userId}`);
       setNotifications(res.data);
+
       console.log(res.data);
     } catch (err) {
       console.error(err);
@@ -57,7 +58,7 @@ const NotificationBell = () => {
       <section
         className={`${show ? "flex" : "hidden"} flex-col fixed right-10 bg-blue-50 w-full text-xs max-w-[200px]`}
       >
-        {notifications?.slice(0, 4).map((notif) => (
+        {notifications?.slice(0, 6).map((notif) => (
           <div
             className="flex flex-col gap-1"
             key={notif._id}
