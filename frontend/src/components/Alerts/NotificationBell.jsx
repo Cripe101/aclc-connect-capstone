@@ -15,6 +15,7 @@ const NotificationBell = () => {
     try {
       const res = await axiosInstance.get(`/notifications/${userId}`);
       setNotifications(res.data);
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
@@ -22,11 +23,11 @@ const NotificationBell = () => {
 
   const markAsRead = async (id) => {
     try {
-      await axiosInstance.patch(`/notifications/${id}`);
+      await axiosInstance.patch(`/notifications/update/${id}`);
 
       // update UI instantly
       setNotifications((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, is_read: true } : n)),
+        prev.map((n) => (n._id === id ? { ...n, isRead: true } : n)),
       );
     } catch (err) {
       console.error(err);
@@ -34,11 +35,11 @@ const NotificationBell = () => {
   };
 
   useEffect(() => {
-    fetchNotifications();
-  }, []);
+    if (userId) fetchNotifications();
+  }, [userId]);
 
   return (
-    <div>
+    <div className="relative">
       <h1
         onClick={() => {
           setShow(!show);
@@ -48,22 +49,26 @@ const NotificationBell = () => {
         <NotificationBellIcon />
       </h1>
       <section
-        className={`${show ? "flex" : "hidden"} bg-blue-50 w-full max-w-[300px]`}
+        className={`${show ? "flex" : "hidden"} flex-col fixed right-10 bg-blue-50 w-full text-xs max-w-[200px]`}
       >
-        {notifications?.map((notif) => (
+        {notifications?.slice(0, 3).map((notif) => (
           <div
+            className="flex flex-col gap-1"
             key={notif._id}
             style={{
-              background: notif.is_read ? "#eee" : "#cce5ff",
+              background: notif.isRead ? "#eee" : "#cce5ff",
               margin: "5px",
               padding: "10px",
             }}
           >
             <p>{notif.message}</p>
 
-            {!notif.is_read && (
-              <button onClick={() => markAsRead(notif._id)}>
-                Mark as read
+            {!notif.isRead && (
+              <button
+                className="px-2 py-0.5 bg-blue-300 rounded-lg"
+                onClick={() => markAsRead(notif._id)}
+              >
+                Read
               </button>
             )}
           </div>

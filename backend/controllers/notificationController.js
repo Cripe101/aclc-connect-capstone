@@ -20,9 +20,17 @@ const markAsRead = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await Notification.findByIdAndUpdate(id, { isRead: true });
+    const notification = await Notification.findByIdAndUpdate(
+      id,
+      { isRead: true },
+      { new: true }, // returns updated document
+    );
 
-    res.json({ message: "Notification marked as read" });
+    if (!notification) {
+      return res.status(404).json({ message: "Notification not found" });
+    }
+
+    res.json({ message: "Notification marked as read", notification });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
