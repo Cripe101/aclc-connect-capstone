@@ -6,6 +6,7 @@ import {
   TesdaCourseData,
 } from "../../../utils/courseData";
 import CourseFoorterDisplay from "../../../components/Cards/CourseFoorterDisplay";
+import SeniorHighFooterDisplay from "../../../components/Cards/SeniorHighFooterDisplay";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Footer = () => {
               nav={"/courses-offered/tesda/"}
               data={TesdaCourseData}
             />
-            <CourseFoorterDisplay
+            <SeniorHighFooterDisplay
               title={"Senior High School"}
               nav={"/courses-offered/seniorhigh/"}
               data={SeniorHighCourseData}
