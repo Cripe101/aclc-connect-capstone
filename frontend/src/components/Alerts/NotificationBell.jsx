@@ -20,8 +20,8 @@ const NotificationBell = () => {
     fetchNotifications();
 
     // optional: auto refresh every 5s
-    // const interval = setInterval(fetchNotifications, 5000);
-    // return () => clearInterval(interval);
+    const interval = setInterval(fetchNotifications, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   // 🔢 unread count

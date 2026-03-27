@@ -4,6 +4,7 @@ import SideMenu from "./SideMenu.jsx";
 import ProfileDropdown from "../../Cards/ProfileDropdown.jsx";
 
 import Logo from "../../../assets/aclc-logo-ormoc.png";
+import NotificationBell from "../../Alerts/NotificationBell.jsx";
 
 const Navbar = ({ activeMenu }) => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
@@ -28,7 +29,8 @@ const Navbar = ({ activeMenu }) => {
         <h1 className="font-display font-semibold">ACLC Connect</h1>
       </div>
 
-      <div>
+      <div className="flex items-center gap-2">
+        <NotificationBell />
         <ProfileDropdown />
       </div>
 
