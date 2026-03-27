@@ -8,6 +8,7 @@ import { UserContext } from "../../../context/userContext.jsx";
 import ProfileDropdown from "../../Cards/ProfileDropdown.jsx";
 import AuthModel from "../../Auth/AuthModel.jsx";
 import SearchBarPopup from "../../../pages/Blog/components/SearchBarPopup.jsx";
+import NotificationBell from "../../Alerts/NotificationBell.jsx";
 
 const BlogNavbar = ({ activeMenu }) => {
   const { user, setOpenAuthForm } = useContext(UserContext);
@@ -104,6 +105,9 @@ const BlogNavbar = ({ activeMenu }) => {
             >
               <LuSearch className="text-[22px]" />
             </button> */}
+            <section>
+              <NotificationBell />
+            </section>
 
             {!user ? (
               <button
