@@ -14,8 +14,6 @@ const aiRoutes = require("./routes/aiRoutes.js");
 
 const app = express();
 
-// allowedOrigins = ["http://localhost:5173", "http://192.168.1.27:5173"];
-
 // Middleware to handle CORS
 app.use(
   cors({
