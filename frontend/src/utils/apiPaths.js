@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:4000/api";
+export const BASE_URL = "https://aclc-connect-capstone.onrender.com/api";
 // http://localhost:4000
 // https://aclc-connect-capstone.onrender.com
 
