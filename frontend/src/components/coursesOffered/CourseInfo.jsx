@@ -65,7 +65,7 @@ const CourseInfo = ({ data }) => {
           </div>
           {course.skillsToLearn?.length > 0 ||
           course.careerOpportunities?.length > 0 ? (
-            <div className="md:p-10 m-5 grid md:grid-cols-2 gap-5">
+            <div className="md:p-10 grid md:grid-cols-2 gap-5 mb-5">
               <section className="border p-5 rounded-lg border-slate-300">
                 <h1 className="font-bold text-2xl">Skills To Learn :</h1>
                 <h1 className="flex flex-col gap-2 mt-3 text-lg">
@@ -91,7 +91,7 @@ const CourseInfo = ({ data }) => {
             ""
           )}
 
-          <section className="mx-10 flex justify-center">
+          <section className="md:mx-10 flex justify-center">
             <AdmisionRequirements />
           </section>
         </div>

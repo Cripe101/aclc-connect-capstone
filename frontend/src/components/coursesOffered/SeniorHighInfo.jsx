@@ -84,7 +84,9 @@ const SeniorHighInfo = ({ data }) => {
             ""
           )}
         </div>
-        <AdmisionRequirementsSeniorHigh />
+        <section className="md:mx-10 px-5">
+          <AdmisionRequirementsSeniorHigh />
+        </section>
       </div>
     </BlogLayout>
   );
