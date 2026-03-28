@@ -16,6 +16,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import LogoutAlert from "../Alerts/LogoutAlert";
 import CoverImageSelector from "../Inputs/CoverImageSelector";
+import uploadImage from "../../utils/uploadImage";
 
 const ProfileDropdown = () => {
   const { user } = useContext(UserContext);
@@ -153,10 +154,10 @@ const ProfileDropdown = () => {
     try {
       setIsLoading(true);
 
-      let imageUrl = prevPhoto;
+      let imageUrl;
 
-      if (photo instanceof File) {
-        const imgUploadRes = await uploadImage(photo);
+      if (photo?.photo instanceof File) {
+        const imgUploadRes = await uploadImage(photo?.photo);
         imageUrl = imgUploadRes.imageUrl || "";
       }
 
@@ -167,8 +168,7 @@ const ProfileDropdown = () => {
       toast.success("Profile updated successfully");
       setShowPhoto(false);
     } catch (error) {
-      console.error("Error updating profile:", error);
-      console.log(error.response?.data); // 👈 VERY IMPORTANT DEBUG LINE
+      console.error("Cloudinary FULL error:", error.response?.data);
       toast.error("Failed to update profile");
     } finally {
       setIsLoading(false);
