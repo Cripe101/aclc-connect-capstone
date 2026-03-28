@@ -17,9 +17,9 @@ const BlogNavbar = ({ activeMenu }) => {
 
   return (
     <>
-      <div className="bg-white border border-b border-gray-400/50 backdrop-blur-[2px] py-2 px-7 sticky top-0 z-30">
+      <div className="bg-white border border-b border-gray-400/50 backdrop-blur-[2px] py-2 px-3 md:px-7 sticky top-0 z-30">
         <div className="container mx-auto flex items-center justify-between gap-5">
-          <div className="flex gap-5">
+          <div className="flex">
             <button
               className="block lg:hidden text-black -mt-1"
               onClick={() => {
@@ -34,8 +34,10 @@ const BlogNavbar = ({ activeMenu }) => {
             </button>
 
             <Link className="flex gap-3 items-center justify-center" to="/">
-              <img className="h-16 pl-5" src={Logo} alt="" />
-              <h1 className="font-display font-semibold">ACLC Connect</h1>
+              <img className="h-16 pl-2 md:pl-5" src={Logo} alt="" />
+              <h1 className="font-display font-semibold text-sm md:text-base">
+                ACLC Connect
+              </h1>
             </Link>
           </div>
 

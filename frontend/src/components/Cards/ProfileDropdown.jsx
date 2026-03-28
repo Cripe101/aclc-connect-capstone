@@ -152,8 +152,9 @@ const ProfileDropdown = () => {
           </div>
           <img
             src={
-              user?.profileImageUrl ||
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
+              user?.profileImageUrl === ""
+                ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
+                : user?.profileImageUrl
             }
             alt={user?.name}
             className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
@@ -168,8 +169,9 @@ const ProfileDropdown = () => {
               <div className="flex items-center gap-4">
                 <img
                   src={
-                    user.profileImageUrl ||
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
+                    user?.profileImageUrl === ""
+                      ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
+                      : user.profileImageUrl
                   }
                   // alt={user.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"

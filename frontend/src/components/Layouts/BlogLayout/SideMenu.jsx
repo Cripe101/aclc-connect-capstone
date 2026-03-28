@@ -35,8 +35,9 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
             <img
               className="w-20 h-20 bg-slate-400 rounded-full"
               src={
-                user?.profileImageUrl ||
-                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                user?.profileImageUrl === ""
+                  ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
+                  : user.profileImageUrl
               }
               alt="Profile Image"
             />
