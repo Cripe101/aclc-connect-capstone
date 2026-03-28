@@ -70,11 +70,11 @@ const NotificationBell = () => {
       >
         {notifications?.slice(0, 6).map((notif) => (
           <div
-            className={`${notif.isRead ? "bg-green-600" : "bg-linear-to-r from-blue-200 via-blue-300 to-blue-400"} rounded-lg justify-center items-center font-semibold flex flex-col gap-1 p-2 m-2`}
+            className={`${notif.isRead ? "bg-green-600 text-green-500" : "bg-linear-to-r from-blue-200 via-blue-300 to-blue-400"} rounded-lg justify-center items-center font-semibold flex flex-col gap-1 p-2 m-2`}
             key={notif._id}
           >
             <p
-              className={`${notif.message.toLowerCase() === "your post was rejected" ? "text-red-600" : "text-green-500"}`}
+              className={`${notif.message.toLowerCase() === "your post was rejected" ? "text-red-700" : notif.message.toLowerCase() === "new post need approval" ? "text-black" : "text-green-700"}`}
             >
               {notif.message}
             </p>
