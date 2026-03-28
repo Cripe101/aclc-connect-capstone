@@ -98,6 +98,7 @@ const ProfileDropdown = () => {
 
   const handleOpenProf = () => {
     setShowPhoto(true);
+    setIsOpen(false);
   };
 
   const handleCancel = () => {
@@ -181,7 +182,7 @@ const ProfileDropdown = () => {
         {/* Profile Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+          className="flex items-center gap-3 hover:opacity-80 cursor-pointer duration-200"
         >
           <div className="text-right hidden sm:block">
             <p className="text-sm font-semibold text-gray-900 leading-tight">
@@ -190,40 +191,64 @@ const ProfileDropdown = () => {
             <p className="text-xs text-gray-500 capitalize">{user.role}</p>
           </div>
           <img
-            src={
-              user?.profileImageUrl === ""
-                ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
-                : user?.profileImageUrl
-            }
+            src={user?.profileImageUrl}
             alt={user?.name}
-            className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
+            className="w-12 h-12 rounded-full object-cover object-center"
           />
         </button>
 
         {/* Dropdown Menu */}
         {isOpen && (
-          <div className="absolute right-0 mt-2 w-52 md:w-72 bg-white rounded-2xl border border-gray-100 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="absolute md:-right-5 -right-2 mt-2 w-52 md:w-72 bg-blue-50 rounded-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-200">
             {/* User Info Header */}
-            <div className="bg-linear-to-r from-sky-50 to-cyan-50 px-6 py-4 border-b border-gray-100">
+            <div className="bg-linear-to-r from-blue-300 via-blue-400 to-blue-500 px-6 py-4 ">
               <div className="flex items-center gap-4">
                 <img
-                  src={
-                    user?.profileImageUrl === ""
-                      ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
-                      : user.profileImageUrl
-                  }
+                  src={user?.profileImageUrl}
                   // alt={user.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-blue-800"
+                  className="w-12 h-12 rounded-full object-cover object-center"
                 />
                 <div>
-                  <p className="text-sm font-bold text-gray-900">{user.name}</p>
-                  <p className="text-xs text-gray-600">{user.email}</p>
+                  <p className="text-sm font-bold text-white">{user.name}</p>
+                  <p className="text-xs text-center text-gray-300 capitalize">
+                    {user.role}
+                  </p>
                 </div>
               </div>
             </div>
 
             {/* Menu Items */}
-            <div className="py-2">
+            <div className="p-2">
+              {user.role === "admin" ? (
+                <button
+                  onClick={() => {
+                    navigate("/");
+                    setIsOpen(false);
+                  }}
+                  className="w-full rounded-lg flex items-center group font-medium gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-blue-100 active:bg-blue-100 group duration-200"
+                >
+                  <LuMail className="text-gray-400 group-active:scale-110 group-active:text-blue-700 group-hover:text-blue-700 group-hover:scale-110 duration-200" />
+                  <span className="group-hover:text-blue-700 group-active:text-blue-700 duration-200">
+                    Home
+                  </span>
+                </button>
+              ) : user.role === "offices" ? (
+                <button
+                  onClick={() => {
+                    navigate("/");
+                    setIsOpen(false);
+                  }}
+                  className="w-full rounded-lg flex items-center group font-medium gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-blue-100 active:bg-blue-100 group duration-200"
+                >
+                  <LuMail className="text-gray-400 group-active:scale-110 group-active:text-blue-700 group-hover:text-blue-700 group-hover:scale-110 duration-200" />
+                  <span className="group-hover:text-blue-700 group-active:text-blue-700 duration-200">
+                    Home
+                  </span>
+                </button>
+              ) : (
+                ""
+              )}
+
               <button
                 onClick={() => {
                   navigate(
@@ -235,10 +260,10 @@ const ProfileDropdown = () => {
                   );
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+                className="w-full rounded-lg flex items-center group font-medium gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-blue-100 active:bg-blue-100 group duration-200"
               >
-                <LuUser className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                <span className="group-hover:text-sky-600 font-medium">
+                <LuUser className="text-gray-400 group-active:scale-110 group-active:text-blue-700 group-hover:text-blue-700 group-hover:scale-110 duration-200" />
+                <span className="group-hover:text-blue-700 group-active:text-blue-700 duration-200">
                   {user.role === "admin"
                     ? "Admin Dashboard"
                     : user.role === "offices"
@@ -247,90 +272,43 @@ const ProfileDropdown = () => {
                 </span>
               </button>
 
-              {user.role === "admin" ? (
-                <button
-                  onClick={() => {
-                    navigate("/");
-                    setIsOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
-                >
-                  <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                  <span className="group-hover:text-sky-600 font-medium">
-                    Home
-                  </span>
-                </button>
-              ) : user.role === "offices" ? (
-                <button
-                  onClick={() => {
-                    navigate("/");
-                    setIsOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
-                >
-                  <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                  <span className="group-hover:text-sky-600 font-medium">
-                    Home
-                  </span>
-                </button>
-              ) : (
-                ""
-              )}
-
-              {user.role !== ("admin" || "offices") ? (
-                ""
-              ) : (
-                <button
-                  onClick={() => {
-                    navigate("/about");
-                    setIsOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
-                >
-                  <LuMail className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                  <span className="group-hover:text-sky-600 font-medium">
-                    About
-                  </span>
-                </button>
-              )}
-
               <button
                 onClick={handleOpenPwd}
-                className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+                className="w-full rounded-lg flex items-center group font-medium gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-blue-100 active:bg-blue-100 group duration-200"
               >
-                <LuKey className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                <span className="group-hover:text-sky-600 font-medium">
+                <LuKey className="text-gray-400 group-active:scale-110 group-active:text-blue-700 group-hover:text-blue-700 group-hover:scale-110 duration-200" />
+                <span className="group-hover:text-blue-700 group-active:text-blue-700 duration-200">
                   Update Password
                 </span>
               </button>
               <button
                 onClick={handleOpenProf}
-                className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+                className="w-full rounded-lg flex items-center group font-medium gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-blue-100 active:bg-blue-100 group duration-200"
               >
-                <LuPencil className="text-gray-400 group-hover:text-sky-500 transition-colors" />
-                <span className="group-hover:text-sky-600 font-medium">
+                <LuPencil className="text-gray-400 group-active:scale-110 group-active:text-blue-700 group-hover:text-blue-700 group-hover:scale-110 duration-200" />
+                <span className="group-hover:text-blue-700 group-active:text-blue-700 duration-200">
                   Update Image
                 </span>
               </button>
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-gray-100" />
+            <div className="h-px bg-blue-200" />
 
             {/* Logout Button */}
             <div className="p-2">
               <button
                 onClick={handleLogoutClick}
-                className="w-full flex items-center gap-3 px-6 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 rounded-lg transition-colors group"
+                className="w-full flex items-center gap-3 px-6 py-3 text-sm font-semibold text-red-600 active:bg-red-100 hover:bg-red-100 rounded-lg group duration-200"
               >
-                <LuLogOut className="group-hover:scale-110 transition-transform" />
+                <LuLogOut className="group-hover:scale-110 group-active:scale-110 duration-200" />
                 <span>Sign Out</span>
               </button>
             </div>
 
             {/* Footer */}
-            <div className="bg-gray-50 px-6 py-3 border-t border-gray-100">
-              <p className="text-xs text-gray-500 text-center">
+            <div className="px-6 py-3 bg-linear-to-r from-blue-300 via-blue-400 to-blue-500">
+              <p className="text-xs text-gray-200 text-center">
                 ACLC Connect © 2025
               </p>
             </div>

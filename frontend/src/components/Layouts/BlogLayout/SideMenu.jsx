@@ -7,7 +7,7 @@ import { UserContext } from "../../../context/userContext.jsx";
 import LogoutAlert from "../../Alerts/LogoutAlert.jsx";
 
 const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
-  const { user, setUser, clearUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
   const [tap, setTap] = useState(false);
@@ -33,12 +33,8 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
         <div className="flex flex-col items-center justify-center gap-1 mt-3 mb-7">
           {user?.profileImageUrl ? (
             <img
-              className="w-20 h-20 bg-slate-400 rounded-full"
-              src={
-                user?.profileImageUrl === ""
-                  ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s"
-                  : user.profileImageUrl
-              }
+              className="w-20 h-20 object-cover object-center rounded-full"
+              src={user?.profileImageUrl}
               alt="Profile Image"
             />
           ) : (

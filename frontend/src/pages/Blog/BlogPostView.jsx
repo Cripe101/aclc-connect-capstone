@@ -253,7 +253,7 @@ const BlogPostView = () => {
                   <img
                     onClick={() => setShowPhotos(true)}
                     src={blogPostData.coverImageUrl}
-                    className="w-full max-w-[400px] rounded-lg object-fill"
+                    className="w-full max-w-[400px] rounded-lg object-cover object-top"
                   />
                 )}
                 {blogPostData.images?.length === 1 && (
@@ -271,27 +271,29 @@ const BlogPostView = () => {
                         onClick={() => setShowPhotos(true)}
                         key={i}
                         src={img}
-                        className="w-full h-[300px] md:h-[400px] border border-slate-300 object-cover object-top rounded-lg"
+                        className="w-full h-[300px] md:h-[400px] object-cover object-top rounded-lg"
                       />
                     ))}
                   </div>
                 )}
 
                 {blogPostData.images?.length === 3 && (
-                  <div className="grid md:grid-cols-2 gap-2">
+                  <div className="grid md:grid-rows-2 gap-2">
                     <img
                       onClick={() => setShowPhotos(true)}
                       src={blogPostData.images[0]}
-                      className="w-full h-[400px] object-cover object-top rounded-lg col-span-2"
+                      className="w-full h-[400px] object-cover object-top rounded-lg"
                     />
-                    {blogPostData.images.slice(1, 3).map((img, i) => (
-                      <img
-                        onClick={() => setShowPhotos(true)}
-                        key={i}
-                        src={img}
-                        className="w-full h-[400px] object-cover object-top rounded-lg"
-                      />
-                    ))}
+                    <section className="grid md:grid-cols-2 gap-2">
+                      {blogPostData.images.slice(1, 3).map((img, i) => (
+                        <img
+                          onClick={() => setShowPhotos(true)}
+                          key={i}
+                          src={img}
+                          className="w-full h-[400px] object-cover object-top rounded-lg"
+                        />
+                      ))}
+                    </section>
                   </div>
                 )}
 

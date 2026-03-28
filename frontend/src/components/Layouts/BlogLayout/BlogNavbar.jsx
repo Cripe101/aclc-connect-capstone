@@ -100,7 +100,7 @@ const BlogNavbar = ({ activeMenu }) => {
             })}
           </nav>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3">
             {/* <button
               className="hover:text-sky-500 cursor-pointer"
               onClick={() => setOpenSearchBar(true)}

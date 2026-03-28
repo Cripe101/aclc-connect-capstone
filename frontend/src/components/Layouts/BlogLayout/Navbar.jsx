@@ -10,7 +10,7 @@ const Navbar = ({ activeMenu }) => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
 
   return (
-    <div className="flex gap-5 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-7 sticky top-0 z-30 justify-between items-center">
+    <div className="flex gap-5 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] py-4 px-3 md:px-7 sticky top-0 z-30 justify-between items-center">
       <div className="flex items-center gap-5">
         <button
           className="block lg:hidden text-black -mt-1"
@@ -29,7 +29,7 @@ const Navbar = ({ activeMenu }) => {
         <h1 className="font-display font-semibold">ACLC Connect</h1>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <NotificationBell />
         <ProfileDropdown />
       </div>
