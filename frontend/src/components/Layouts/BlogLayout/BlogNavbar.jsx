@@ -56,15 +56,17 @@ const BlogNavbar = ({ activeMenu }) => {
                   end
                 >
                   {({ isActive }) => (
-                    <li className="text-[15px] text-black font-medium list-none relative group cursor-pointer">
+                    <li
+                      className={`${isActive && item.label.toLowerCase() !== "courses offered" ? "text-white" : "text-black"} font-medium list-none relative group cursor-pointer`}
+                    >
                       {item.label}
                       <span
                         className={
                           item.label.toLowerCase() === "courses offered"
                             ? ""
-                            : `absolute inset-x-0 bottom-0 h-[2.5px] rounded-full mt-0.5 bg-blue-600 transition-all duration-200 origin-left ${
+                            : `-z-10 absolute inset-x-0 bottom-0 ${item.label.toLowerCase() === "announcements" ? "w-[120%] -left-3" : "w-[130%] -left-1.5"} rounded-lg mt-0.5 origin-left bg-blue-700 duration-200 ${
                                 isActive ? "scale-x-100" : "scale-x-0"
-                              } group-hover:scale-x-100`
+                              } ${isActive ? "h-full" : "h-1"} group-hover:scale-x-100`
                         }
                       ></span>
                       <section
@@ -137,7 +139,7 @@ const BlogNavbar = ({ activeMenu }) => {
         </div>
       </div>
       <AuthModel />
-      <SearchBarPopup isOpen={openSearchBar} setIsOpen={setOpenSearchBar} />
+      {/* <SearchBarPopup isOpen={openSearchBar} setIsOpen={setOpenSearchBar} /> */}
     </>
   );
 };

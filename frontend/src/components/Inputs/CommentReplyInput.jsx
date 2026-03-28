@@ -20,15 +20,15 @@ const CommentReplyInput = ({
   type = "reply",
 }) => {
   return (
-    <div className="mt-2 ml-10 relative">
+    <div className="mt-2 p-1 relative">
       <div className="flex items-start gap-3">
         <img
           src={user.profileImageUrl}
           alt={user.name}
-          className="w-10 h-10 rounded-full"
+          className="w-10 h-10 object-cover object-center rounded-full"
         />
 
-        <div className="flex-1">
+        <div className="grid w-full">
           <Input
             value={replyText}
             onChange={({ target }) => setReplyText(target.value)}
@@ -39,7 +39,7 @@ const CommentReplyInput = ({
 
           <div className="flex items-center justify-end gap-4">
             <button
-              className="flex items-center gap-1.5 text-[14px] font-medium text-white bg-red-700 px-4 py-0.5 rounded-full hover:bg-red-800 hover:text-white cursor-pointer"
+              className="flex font-bold items-center gap-1.5 shadow-md text-sm text-white bg-red-600 px-4 py-1 rounded-lg cursor-pointer hover:bg-red-800 active:bg-red-800 active:scale-90 duraton-200"
               disabled={isLoading}
               onClick={handleCancelReply}
             >
@@ -47,7 +47,7 @@ const CommentReplyInput = ({
             </button>
 
             <button
-              className={`flex items-center gap-1.5 text-[14px] font-medium px-4 py-0.5 rounded-full text-sky-600 bg-sky-50 hover:bg-sky-500 hover:text-white cursor-pointer disabled:opacity-50`}
+              className={`flex items-center gap-1.5 shadow-md text-sm font-bold px-4 py-1 rounded-lg text-white bg-blue-500 hover:bg-blue-700 active:scale-90 active:bg-blue-700 cursor-pointer disabled:opacity-50 duration-200`}
               disabled={replyText?.length == 0 || isLoading}
               onClick={handleAddReply}
             >

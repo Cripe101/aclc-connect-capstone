@@ -65,7 +65,7 @@ const LikeCommentButton = ({
 
   return (
     <div className="flex justify-center items-center">
-      <div className="fixed bottom-8 right-8 px-6 py-3 bg-black text-white rounded-full shadow-lg flex items-center justify-center">
+      <div className="fixed bottom-8 right-8 px-6 py-3 bg-black text-white rounded-lg shadow-lg flex items-center justify-center">
         <button
           className={clsx(
             "flex items-end gap-2 cursor-pointer transition-colors",

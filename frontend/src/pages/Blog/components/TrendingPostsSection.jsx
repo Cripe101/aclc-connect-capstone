@@ -33,7 +33,7 @@ const TrendingPostsSection = () => {
 
   return (
     <div>
-      <h4 className="text-base text-black font-medium mb-3">Recent Posts</h4>
+      <h4 className="text-lg text-black font-medium mb-3">Recent Posts</h4>
 
       {postList.length > 0 ? (
         postList
@@ -69,21 +69,19 @@ export default TrendingPostsSection;
 
 const PostCard = ({ title, images, coverImageUrl, tags, onClick }) => {
   return (
-    <div className="cursor-pointer mb-3" onClick={onClick}>
-      <h6 className="text-[10px] font-semibold text-sky-500">
-        {(tags[0] || "POST").toUpperCase()}
+    <div className="cursor-pointer mb-2" onClick={onClick}>
+      <h6 className="text-xs font-semibold text-blue-500">
+        {tags[0] || "POST"}
       </h6>
 
-      <div className="flex items-center gap-4 mt-2">
+      <div className="flex items-center gap-4 mt-1">
         <img
           src={coverImageUrl === "" ? images[0] : coverImageUrl}
           alt={title}
-          className="w-18 h-18 object-cover rounded"
+          className="w-18 h-18 object-cover rounded-lg"
         />
 
-        <h2 className="text-sm md:text-sm font-medium mb-2 line-clamp-3">
-          {title}
-        </h2>
+        <h2 className="text-sm font-medium mb-2 line-clamp-1">{title}</h2>
       </div>
     </div>
   );

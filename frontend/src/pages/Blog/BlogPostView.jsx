@@ -23,6 +23,7 @@ import CommentInfo from "./components/CommentInfo";
 import Drawer from "../../components/Drawer";
 import LikeCommentButton from "./components/LikeCommentButton";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import AuthModel from "../../components/Auth/AuthModel";
 
 const BlogPostView = () => {
   const { slug } = useParams();
@@ -76,39 +77,7 @@ const BlogPostView = () => {
     }
   };
 
-  // Generate Post Summary
-  // const generatePostSummary = async () => {
-  //   try {
-  //     setErrorMsg("");
-  //     setSummaryContent(null);
-
-  //     console.log("blogPostData:", blogPostData);
-  //     console.log("blogPostData.content:", blogPostData.content);
-  //     console.log("Type of content:", typeof blogPostData.content);
-
-  //     setIsLoading(true);
-  //     setOpenSummarizeDrawer(true);
-
-  //     const response = await axiosInstance.post(
-  //       API_PATHS.AI.GENERATE_POST_SUMMARY,
-  //       {
-  //         content: blogPostData.content || "",
-  //       },
-  //     );
-
-  //     if (response.data) {
-  //       setSummaryContent(response.data);
-  //     }
-  //   } catch (error) {
-  //     setSummaryContent(null);
-  //     setErrorMsg("Failed to generate summary. Try again later.");
-  //     console.log("Error:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // Increment views
+  // Add views
   const incrementViews = async (postId) => {
     if (!postId) return;
 
@@ -160,7 +129,7 @@ const BlogPostView = () => {
   const [showPhotos, setShowPhotos] = useState(false);
   const [photo, setPhoto] = useState(1);
   return (
-    <BlogLayout>
+    <div>
       {blogPostData ? (
         <div className="p-5 md:p-10 w-full relative">
           <div
@@ -218,9 +187,18 @@ const BlogPostView = () => {
           <meta property="og:image" content={blogPostData.coverImageUrl} />
           <meta property="og:type" content="article" />
 
+          {/* Post Data */}
+          <section className="p-2">
+            <button
+              onClick={() => navigate(-1)}
+              className="mb-2 border-2 shadow-md border-blue-600 px-3 py-1.5 font-bold rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white active:text-white active:bg-blue-600 active:scale-90 duration-150"
+            >
+              Go Back
+            </button>
+          </section>
           <div className="grid md:p-2 p-0.5 md:grid-cols-[4fr_1fr] md:gap-10 relative">
             <div className="relative">
-              <h1 className="text-lg md:text-3xl w-full justify-center font-extrabold mb-5 text-white bg-blue-800 py-2 md:p-3 pl-5 md:pl-10 rounded-full">
+              <h1 className="bg-linear-to-r from-blue-800 via-blue-600 to-blue-400 text-xl md:text-3xl w-full justify-center font-extrabold mb-5 text-white py-2 md:p-3 pl-5 md:pl-10 rounded-full">
                 {blogPostData.title}
               </h1>
 
@@ -231,7 +209,7 @@ const BlogPostView = () => {
                     {blogPostData.tags.slice(0, 3).map((tag, index) => (
                       <button
                         key={index}
-                        className="bg-blue-300/50 text-blue-800 text-xs md:text-sm font-medium px-3 py-1 rounded-full text-nowrap cursor-pointer"
+                        className="bg-sky-200 shadow-sm text-blue-800 text-xs md:text-sm font-bold px-3 py-1 rounded-lg text-nowrap cursor-pointer duration-200"
                         onClick={(e) => {
                           e.stopPropagation();
                           navigate(`/tag/${tag}`);
@@ -253,14 +231,14 @@ const BlogPostView = () => {
                   <img
                     onClick={() => setShowPhotos(true)}
                     src={blogPostData.coverImageUrl}
-                    className="w-full max-w-[400px] rounded-lg object-cover object-top"
+                    className="w-full max-w-[500px] rounded-lg object-cover object-top"
                   />
                 )}
                 {blogPostData.images?.length === 1 && (
                   <img
                     onClick={() => setShowPhotos(true)}
                     src={blogPostData.images[0]}
-                    className="w-full max-h-[400px] object-cover object-top rounded-lg"
+                    className="w-full max-w-[500px] object-cover object-top rounded-lg"
                   />
                 )}
 
@@ -271,7 +249,7 @@ const BlogPostView = () => {
                         onClick={() => setShowPhotos(true)}
                         key={i}
                         src={img}
-                        className="w-full h-[300px] md:h-[400px] object-cover object-top rounded-lg"
+                        className="w-full h-[300px] md:max-w-[500px] object-cover object-top rounded-lg"
                       />
                     ))}
                   </div>
@@ -282,7 +260,7 @@ const BlogPostView = () => {
                     <img
                       onClick={() => setShowPhotos(true)}
                       src={blogPostData.images[0]}
-                      className="w-full h-[400px] object-cover object-top rounded-lg"
+                      className="w-full max-h-[500px] object-cover object-top rounded-lg"
                     />
                     <section className="grid md:grid-cols-2 gap-2">
                       {blogPostData.images.slice(1, 3).map((img, i) => (
@@ -290,7 +268,7 @@ const BlogPostView = () => {
                           onClick={() => setShowPhotos(true)}
                           key={i}
                           src={img}
-                          className="w-full h-[400px] object-cover object-top rounded-lg"
+                          className="w-full max-w-[500px] object-cover object-top rounded-lg"
                         />
                       ))}
                     </section>
@@ -304,7 +282,7 @@ const BlogPostView = () => {
                         <img
                           onClick={() => setShowPhotos(true)}
                           src={img}
-                          className="w-full h-[400px] object-cover rounded-lg object-top"
+                          className="w-full max-w-[500px] object-cover rounded-lg object-top"
                         />
 
                         {/* Overlay for extra images */}
@@ -328,20 +306,20 @@ const BlogPostView = () => {
               />
 
               <div className="grid">
-                <SharePost title={blogPostData.title} />
+                <SharePost title={blogPostData?.title} />
 
-                <div className="bg-gray-50 rounded-lg py-2 px-4">
+                <div className="bg-gray-50 rounded-lg py-2">
                   <div className="flex items-center justify-between px-3 my-4">
                     <h4 className="text-lg font-semibold">Comments</h4>
 
                     <button
-                      className="flex items-center justify-center gap-3 bg-linear-to-r from-blue-600 to-blue-500 text-xs font-semibold text-white px-5 py-2 rounded-full hover:to-blue-700 cursor-pointer"
+                      className="flex items-center justify-center gap-3 bg-blue-700 text-sm font-bold shadow-md text-white px-5 py-2 rounded-lg cursor-pointer hover:bg-blue-800 active:bg-blue-800 active:scale-90 duration-200"
                       onClick={() => {
                         if (!user) {
                           setOpenAuthForm(true);
                           return;
                         }
-                        setShowReplyForm(true);
+                        setShowReplyForm(!showReplyForm);
                       }}
                     >
                       Add Comment
@@ -349,7 +327,7 @@ const BlogPostView = () => {
                   </div>
 
                   {showReplyForm && (
-                    <div className="bg-white rounded-lg mb-8 p-2">
+                    <div className="bg-white rounded-lg mb-4 p-2">
                       <CommentReplyInput
                         user={user}
                         authorName={user.name}
@@ -364,32 +342,34 @@ const BlogPostView = () => {
                     </div>
                   )}
 
-                  {comments?.length > 0 &&
-                    comments.map((comment) => (
-                      <CommentInfo
-                        key={comment._id}
-                        commentId={comment._id || null}
-                        authorName={comment.author.name}
-                        authorPhoto={comment.author.profileImageUrl}
-                        content={comment.content}
-                        updatedOn={
-                          comment.updatedAt
-                            ? moment(comment.updatedAt).format("Do MMM YYYY")
-                            : "-"
-                        }
-                        post={comment.post}
-                        replies={comment.replies || []}
-                        getAllComments={() =>
-                          fetchCommentByPostId(blogPostData._id)
-                        }
-                        onDelete={(commentId) =>
-                          setOpenDeleteAlert({
-                            open: true,
-                            data: commentId || comment._id,
-                          })
-                        }
-                      />
-                    ))}
+                  <section className="bg-white rounded-lg p-1">
+                    {comments?.length > 0 &&
+                      comments.map((comment) => (
+                        <CommentInfo
+                          key={comment._id}
+                          commentId={comment._id || null}
+                          authorName={comment.author.name}
+                          authorPhoto={comment.author.profileImageUrl}
+                          content={comment.content}
+                          updatedOn={
+                            comment.updatedAt
+                              ? moment(comment.updatedAt).format("Do MMM YYYY")
+                              : "-"
+                          }
+                          post={comment.post}
+                          replies={comment.replies || []}
+                          getAllComments={() =>
+                            fetchCommentByPostId(blogPostData._id)
+                          }
+                          onDelete={(commentId) =>
+                            setOpenDeleteAlert({
+                              open: true,
+                              data: commentId || comment._id,
+                            })
+                          }
+                        />
+                      ))}
+                  </section>
                 </div>
               </div>
 
@@ -406,7 +386,6 @@ const BlogPostView = () => {
               <TrendingPostsSection />
             </div>
           </div>
-
           <Drawer
             isOpen={openSummarizeDrawer}
             onClose={() => setOpenSummarizeDrawer(false)}
@@ -454,7 +433,8 @@ const BlogPostView = () => {
           </span>
         </div>
       )}
-    </BlogLayout>
+      <AuthModel />
+    </div>
   );
 };
 
