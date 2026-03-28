@@ -28,7 +28,7 @@ const NotificationBellIcon = () => {
         <Bell />
       </p>
       {count > 0 && (
-        <span className="fixed top-4 font-semibold right-41.5 text-xs bg-blue-600 rounded-full py-.5 px-1.5 text-blue-200">
+        <span className="absolute -top-2 font-semibold -right-1 text-xs bg-blue-600 rounded-full py-.5 px-1.5 text-blue-200">
           {count}
         </span>
       )}
