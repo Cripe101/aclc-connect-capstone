@@ -66,7 +66,7 @@ const NotificationBell = () => {
         <NotificationBellIcon />
       </h1>
       <section
-        className={`${show ? "flex" : "hidden"} flex-col fixed right-15 top-15 bg-blue-100 rounded-lg w-full text-xs max-w-[200px]`}
+        className={`${show ? "flex" : "hidden"} flex-col fixed right-1 md:right-15 top-15 bg-blue-100 rounded-lg w-full text-xs max-w-[200px]`}
       >
         {notifications?.slice(0, 6).map((notif) => (
           <div
