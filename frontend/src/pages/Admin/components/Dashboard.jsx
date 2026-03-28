@@ -82,100 +82,120 @@ const Dashboard = () => {
             </div>
 
             {user.role === "admin" ? (
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
-                <DashboardSummaryCard
-                  icon={<LuGalleryVerticalEnd />}
-                  label="Total Posts"
-                  value={dashboardData?.stats?.totalPosts || 0}
-                  bgColor="bg-sky-100/60"
-                  color="text-sky-500"
-                />
+              <div>
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
+                  <DashboardSummaryCard
+                    icon={<LuGalleryVerticalEnd />}
+                    label="Total Posts"
+                    value={dashboardData?.stats?.totalPosts || 0}
+                    bgColor="bg-sky-100/60"
+                    color="text-sky-500"
+                  />
 
-                <DashboardSummaryCard
-                  icon={<LuCheckCheck />}
-                  label="Published"
-                  value={dashboardData?.stats?.published || 0}
-                  bgColor="bg-green-100/60"
-                  color="text-green-600"
-                />
+                  <DashboardSummaryCard
+                    icon={<LuCheckCheck />}
+                    label="Published"
+                    value={dashboardData?.stats?.published || 0}
+                    bgColor="bg-green-100/60"
+                    color="text-green-600"
+                  />
 
-                {/* 🔥 NEW: Drafts (includes rejected) */}
-                <DashboardSummaryCard
-                  icon={<LuBookA />}
-                  label="Rejected"
-                  value={dashboardData?.stats?.drafts || 0}
-                  bgColor="bg-yellow-100/60"
-                  color="text-yellow-600"
-                />
+                  {/* 🔥 NEW: Drafts (includes rejected) */}
+                  <DashboardSummaryCard
+                    icon={<LuBookA />}
+                    label="Rejected"
+                    value={dashboardData?.stats?.drafts || 0}
+                    bgColor="bg-yellow-100/60"
+                    color="text-yellow-600"
+                  />
 
-                {/* 🔥 OPTIONAL: Pending */}
-                <DashboardSummaryCard
-                  icon={<LuChartLine />}
-                  label="Pending"
-                  value={dashboardData?.stats?.pending || 0}
-                  bgColor="bg-purple-100/60"
-                  color="text-purple-600"
-                />
+                  {/* 🔥 OPTIONAL: Pending */}
+                  <DashboardSummaryCard
+                    icon={<LuChartLine />}
+                    label="Pending"
+                    value={dashboardData?.stats?.pending || 0}
+                    bgColor="bg-purple-100/60"
+                    color="text-purple-600"
+                  />
 
-                <DashboardSummaryCard
-                  icon={<LuChartLine />}
-                  label="Total Views"
-                  value={dashboardData?.stats?.totalViews || 0}
-                  bgColor="bg-sky-100/60"
-                  color="text-sky-500"
-                />
+                  <DashboardSummaryCard
+                    icon={<LuChartLine />}
+                    label="Total Views"
+                    value={dashboardData?.stats?.totalViews || 0}
+                    bgColor="bg-sky-100/60"
+                    color="text-sky-500"
+                  />
 
-                <DashboardSummaryCard
-                  icon={<LuHeart />}
-                  label="Total Likes"
-                  value={dashboardData?.stats?.totalLikes || 0}
-                  bgColor="bg-pink-100/60"
-                  color="text-pink-500"
-                />
+                  <DashboardSummaryCard
+                    icon={<LuHeart />}
+                    label="Total Likes"
+                    value={dashboardData?.stats?.totalLikes || 0}
+                    bgColor="bg-pink-100/60"
+                    color="text-pink-500"
+                  />
 
-                <DashboardSummaryCard
-                  icon={<LuUsers />}
-                  label="Total Users"
-                  value={dashboardData?.stats?.totalUsers || 0}
-                  bgColor="bg-indigo-100/60"
-                  color="text-indigo-500"
-                />
+                  <DashboardSummaryCard
+                    icon={<LuUsers />}
+                    label="Total Users"
+                    value={dashboardData?.stats?.totalUsers || 0}
+                    bgColor="bg-indigo-100/60"
+                    color="text-indigo-500"
+                  />
+                </div>
+                <div className="col-span-12 bg-white mt-10 p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+                  <div className="flex items-center justify-between">
+                    <h5 className="font-medium">Recent Comments</h5>
+                  </div>
+                  <RecentCommentsList
+                    comments={dashboardData.recentComments || []}
+                  />
+                </div>
               </div>
             ) : (
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
-                <DashboardSummaryCard
-                  icon={<LuGalleryVerticalEnd />}
-                  label="Total Posts"
-                  value={officeDashboardData.data.counts?.all || 0}
-                  bgColor="bg-sky-100/60"
-                  color="text-sky-500"
-                />
+              <div>
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
+                  <DashboardSummaryCard
+                    icon={<LuGalleryVerticalEnd />}
+                    label="Total Posts"
+                    value={officeDashboardData.data.counts?.all || 0}
+                    bgColor="bg-sky-100/60"
+                    color="text-sky-500"
+                  />
 
-                <DashboardSummaryCard
-                  icon={<LuCheckCheck />}
-                  label="Published"
-                  value={officeDashboardData.data.counts?.approved || 0}
-                  bgColor="bg-green-100/60"
-                  color="text-green-600"
-                />
+                  <DashboardSummaryCard
+                    icon={<LuCheckCheck />}
+                    label="Published"
+                    value={officeDashboardData.data.counts?.approved || 0}
+                    bgColor="bg-green-100/60"
+                    color="text-green-600"
+                  />
 
-                {/* 🔥 NEW: Drafts (includes rejected) */}
-                <DashboardSummaryCard
-                  icon={<LuBookA />}
-                  label="Rejected"
-                  value={officeDashboardData.data.counts?.rejected || 0}
-                  bgColor="bg-yellow-100/60"
-                  color="text-yellow-600"
-                />
+                  {/* 🔥 NEW: Drafts (includes rejected) */}
+                  <DashboardSummaryCard
+                    icon={<LuBookA />}
+                    label="Rejected"
+                    value={officeDashboardData.data.counts?.rejected || 0}
+                    bgColor="bg-yellow-100/60"
+                    color="text-yellow-600"
+                  />
 
-                {/* 🔥 OPTIONAL: Pending */}
-                <DashboardSummaryCard
-                  icon={<LuChartLine />}
-                  label="Pending"
-                  value={officeDashboardData.data.counts?.pending || 0}
-                  bgColor="bg-purple-100/60"
-                  color="text-purple-600"
-                />
+                  {/* 🔥 OPTIONAL: Pending */}
+                  <DashboardSummaryCard
+                    icon={<LuChartLine />}
+                    label="Pending"
+                    value={officeDashboardData.data.counts?.pending || 0}
+                    bgColor="bg-purple-100/60"
+                    color="text-purple-600"
+                  />
+                </div>
+                <div className="col-span-12 bg-white mt-10 p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+                  <div className="flex items-center justify-between">
+                    <h5 className="font-medium">Recent Comments</h5>
+                  </div>
+                  <RecentCommentsList
+                    comments={dashboardData.recentComments || []}
+                  />
+                </div>
               </div>
             )}
 
@@ -206,15 +226,6 @@ const Dashboard = () => {
                 />
               ))}
             </div> */}
-
-            <div className="col-span-12 bg-white mt-10 p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
-              <div className="flex items-center justify-between">
-                <h5 className="font-medium">Recent Comments</h5>
-              </div>
-              <RecentCommentsList
-                comments={dashboardData.recentComments || []}
-              />
-            </div>
           </div>
         </>
       )}

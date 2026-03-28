@@ -7,30 +7,25 @@ const getDashboardSummary = async (req, res) => {
       await Promise.all([
         BlogPost.countDocuments(),
 
-        // ✅ Only approved = published
         BlogPost.countDocuments({ status: "approved" }),
         BlogPost.countDocuments({ status: "pending" }),
 
-        // ✅ Draft = actual draft + rejected
         BlogPost.countDocuments({
           status: { $in: ["draft", "rejected"] },
         }),
 
         Comment.countDocuments(),
 
-        // ✅ AI generated posts
         BlogPost.countDocuments({ generatedByAI: true }),
       ]);
 
     const User = require("../models/userModel.js");
     const totalUsers = await User.countDocuments();
 
-    // Views
     const totalViewsAgg = await BlogPost.aggregate([
       { $group: { _id: null, total: { $sum: "$views" } } },
     ]);
 
-    // Likes
     const totalLikesAgg = await BlogPost.aggregate([
       {
         $project: {
@@ -45,7 +40,6 @@ const getDashboardSummary = async (req, res) => {
     const totalViews = totalViewsAgg[0]?.total || 0;
     const totalLikes = totalLikesAgg[0]?.total || 0;
 
-    // ✅ Top Performing Posts (ONLY approved)
     const topPosts = await BlogPost.aggregate([
       { $match: { status: "approved" } },
       {
@@ -68,14 +62,19 @@ const getDashboardSummary = async (req, res) => {
       { $limit: 5 },
     ]);
 
-    // Recent comments
-    const recentComments = await Comment.find()
+    // Step 1: get all posts of the logged-in user
+    const userPosts = await Post.find({ author: req.user._id }).select("_id");
+
+    // Extract post IDs
+    const postIds = userPosts.map((post) => post._id);
+
+    // Step 2: get comments on those posts
+    const recentComments = await Comment.find({ post: { $in: postIds } })
       .sort({ createdAt: -1 })
       .limit(5)
       .populate("author", "name profileImageUrl")
       .populate("post", "title coverImageUrl");
 
-    // Tag usage (only approved posts for cleaner analytics)
     const tagUsage = await BlogPost.aggregate([
       { $match: { status: "approved" } },
       { $unwind: "$tags" },
@@ -88,7 +87,7 @@ const getDashboardSummary = async (req, res) => {
       stats: {
         totalPosts,
         published,
-        drafts, // includes rejected
+        drafts,
         pending,
         totalViews,
         totalLikes,

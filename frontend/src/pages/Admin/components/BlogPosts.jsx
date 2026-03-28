@@ -40,7 +40,7 @@ const BlogPosts = () => {
   });
 
   const posts = data?.posts || [];
-  const counts = data?.counts || {};
+  // const counts = data?.counts || {};
   const totalPages = Math.ceil((data?.totalCount || 0) / limit);
 
   const handlePageChange = (pageNumber) => {
@@ -79,6 +79,10 @@ const BlogPosts = () => {
       });
     }
   }, [data?.counts]); // track counts safely
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+
+  const paginatedPosts = posts.slice(startIndex, endIndex);
 
   return (
     <DashboardLayout activeMenu="Posts">
@@ -111,7 +115,7 @@ const BlogPosts = () => {
             </div>
           ) : (
             <section className="grid grid-cols-1 gap-2">
-              {posts?.map((post) => (
+              {paginatedPosts?.map((post) => (
                 <BlogPostSummaryCard
                   key={post._id}
                   title={post.title}
