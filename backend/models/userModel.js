@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema(
     profileImageUrl: {
       type: String,
       default:
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAA+Vhttps://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8AJM9wkP__z2M-hovSAWcTb_9XJ6smy3NKw&s",
     },
     bio: {
       type: Object,
