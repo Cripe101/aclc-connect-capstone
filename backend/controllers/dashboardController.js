@@ -62,8 +62,9 @@ const getDashboardSummary = async (req, res) => {
       { $limit: 5 },
     ]);
 
-    // Step 1: get all posts of the logged-in user
-    const userPosts = await Post.find({ author: req.user._id }).select("_id");
+    const userPosts = await BlogPost.find({ author: req.user._id }).select(
+      "_id",
+    );
 
     // Extract post IDs
     const postIds = userPosts.map((post) => post._id);
