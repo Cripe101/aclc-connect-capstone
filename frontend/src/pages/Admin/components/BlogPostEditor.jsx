@@ -60,28 +60,6 @@ const BlogPostEditor = ({ isEdit }) => {
     setPostData((prevData) => ({ ...prevData, [key]: value }));
   };
 
-  // Generate Blog Post Ideas using AI
-  const generatePostIdeas = async () => {
-    setIdeaLoading(true);
-    try {
-      const aiResponse = await axiosInstance.post(
-        API_PATHS.AI.GENERATE_BLOG_POST_IDEAS,
-        {
-          topics:
-            "Registration, Scholarships, Programming, Campus Events, Health & Safety, Library/IT Notices",
-        },
-      );
-      const generatedIdeas = aiResponse.data;
-      if (generatedIdeas?.length > 0) {
-        setPostIdeas(generatedIdeas);
-      }
-    } catch (error) {
-      console.log("Something went wrong. Please try again.", error);
-    } finally {
-      setIdeaLoading(false);
-    }
-  };
-
   // Handle Blog Post Publish
   const handlePublish = async (isDraft) => {
     let coverImageUrl = "";

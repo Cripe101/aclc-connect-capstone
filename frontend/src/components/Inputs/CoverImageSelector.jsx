@@ -7,6 +7,7 @@ const CoverImageSelector = ({
   preview,
   setPreview,
   onError,
+  isUpdateProfile,
 }) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -62,7 +63,7 @@ const CoverImageSelector = ({
 
       {!image && !preview ? (
         <div
-          className="w-full h-56 flex flex-col items-center justify-center gap-2 bg-gray-50/50 rounded-md border border-dashed border-gray-300 cursor-pointer relative"
+          className="w-full h-56 p-5 flex flex-col items-center justify-center gap-2 bg-gray-50/50 rounded-md border border-dashed border-gray-300 cursor-pointer relative"
           onClick={onChooseFile}
         >
           <div className="w-14 h-14 flex items-center justify-center bg-sky-50 rounded-full">
@@ -79,13 +80,17 @@ const CoverImageSelector = ({
             alt="Cover"
             className="w-full h-full object-cover rounded-md"
           />
-          <button
-            type="button"
-            onClick={handleRemoveImage}
-            className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full shadow-md cursor-pointer"
-          >
-            <LuTrash />
-          </button>
+          {isUpdateProfile ? (
+            <button
+              type="button"
+              onClick={handleRemoveImage}
+              className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full shadow-md cursor-pointer"
+            >
+              <LuTrash />
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       )}
     </div>

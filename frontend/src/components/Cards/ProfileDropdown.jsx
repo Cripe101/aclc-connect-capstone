@@ -8,12 +8,14 @@ import {
   LuKey,
   LuEye,
   LuEyeOff,
+  LuPencil,
 } from "react-icons/lu";
 import Modal from "../Modal";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import LogoutAlert from "../Alerts/LogoutAlert";
+import CoverImageSelector from "../Inputs/CoverImageSelector";
 
 const ProfileDropdown = () => {
   const { user } = useContext(UserContext);
@@ -33,6 +35,9 @@ const ProfileDropdown = () => {
     confirm: false,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [showPhoto, setShowPhoto] = useState(false);
+  const [photo, setPhoto] = useState("");
+  const [prevPhoto, setPrevPhoto] = useState("");
 
   // Password strength validator
   const validatePasswordStrength = (pwd) => {
@@ -90,12 +95,20 @@ const ProfileDropdown = () => {
     setIsOpen(false);
   };
 
+  const handleOpenProf = () => {
+    setShowPhoto(true);
+  };
+
   const handleCancel = () => {
     setPwdForm({
       oldPassword: "",
       password: "",
       confirm: "",
     });
+  };
+
+  const handleValueChange = (key, value) => {
+    setPhoto((prevData) => ({ ...prevData, [key]: value }));
   };
 
   const handleUpdatePassword = async () => {
@@ -131,6 +144,32 @@ const ProfileDropdown = () => {
     } catch (err) {
       console.error(err);
       toast.error(err?.response?.data?.message || "Failed to update password");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateProfile = async () => {
+    try {
+      setIsLoading(true);
+
+      let imageUrl = prevPhoto;
+
+      if (photo instanceof File) {
+        const imgUploadRes = await uploadImage(photo);
+        imageUrl = imgUploadRes.imageUrl || "";
+      }
+
+      await axiosInstance.put(API_PATHS.AUTH.UPDATE_USER(user._id), {
+        profileImageUrl: imageUrl,
+      });
+
+      toast.success("Profile updated successfully");
+      setShowPhoto(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      console.log(error.response?.data); // 👈 VERY IMPORTANT DEBUG LINE
+      toast.error("Failed to update profile");
     } finally {
       setIsLoading(false);
     }
@@ -264,6 +303,15 @@ const ProfileDropdown = () => {
                   Update Password
                 </span>
               </button>
+              <button
+                onClick={handleOpenProf}
+                className="w-full flex items-center gap-3 px-6 py-3 text-sm text-gray-700 hover:bg-sky-50 transition-colors group"
+              >
+                <LuPencil className="text-gray-400 group-hover:text-sky-500 transition-colors" />
+                <span className="group-hover:text-sky-600 font-medium">
+                  Update Image
+                </span>
+              </button>
             </div>
 
             {/* Divider */}
@@ -292,6 +340,43 @@ const ProfileDropdown = () => {
 
       {/* Logout Alert */}
       <LogoutAlert isOpen={showLogoutAlert} setIsOpen={setShowLogoutAlert} />
+
+      {/* Update Profile */}
+      <Modal
+        isOpen={showPhoto}
+        onClose={() => {
+          setShowPhoto(false);
+        }}
+        title="Update Profile"
+      >
+        <div className="p-5">
+          <CoverImageSelector
+            image={photo}
+            isUpdateProfile={true}
+            setImage={(value) => handleValueChange("photo", value)}
+            preview={prevPhoto}
+            setPreview={(value) => handleValueChange("prevPhoto", value)}
+          />
+          <div className="flex gap-3 justify-end pt-2">
+            <button
+              onClick={() => {
+                setShowPhoto(false);
+              }}
+              className="px-4 py-2 border border-red-600 cursor-pointer text-red-600 rounded-lg hover:bg-red-600 hover:text-white duration-200"
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => updateProfile(photo)}
+              className="px-4 py-2 bg-blue-700 cursor-pointer text-white rounded-lg hover:bg-blue-800 transition disabled:bg-blue-200"
+              disabled={isLoading}
+            >
+              {isLoading ? "Updating..." : "Update"}
+            </button>
+          </div>
+        </div>
+      </Modal>
 
       {/* Update Password Modal */}
       <Modal
