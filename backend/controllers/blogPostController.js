@@ -386,6 +386,7 @@ const approvePost = async (req, res) => {
     // Notify the user
     await Notification.create({
       userId: post.author,
+      postSlug: post.slug,
       message: "Your post was approved",
     });
 
@@ -428,6 +429,7 @@ const rejectPost = async (req, res) => {
     await Notification.create({
       userId: post.author,
       message: "Your post was rejected",
+      postSlug: post.slug,
     });
 
     res.json({
