@@ -2,11 +2,10 @@ import moment from "moment";
 import { LuDot } from "react-icons/lu";
 
 const RecentCommentsList = ({ comments }) => {
-  console.log(comments);
   return (
     <div className="mt-4">
-      <ul className="space-y-4">
-        {comments?.slice(0, 10)?.map((comment) => (
+      <ul className="grid md:grid-cols-3">
+        {comments?.map((comment) => (
           <li
             key={comment._id}
             className="flex gap-4 border-b border-gray-100 pb-4 last:border-none"
