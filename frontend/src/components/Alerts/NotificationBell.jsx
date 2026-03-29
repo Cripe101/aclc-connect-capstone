@@ -15,6 +15,7 @@ const NotificationBell = () => {
     try {
       const res = await axiosInstance.get(`/notifications/${userId}`);
       setNotifications(res.data);
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }

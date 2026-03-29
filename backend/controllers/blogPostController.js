@@ -104,11 +104,13 @@ const updatePost = async (req, res) => {
       updatedData.slug = slug;
     }
 
+    const finalSlug = slug || post.slug;
+
     const findAdmin = await User.findOne({ role: "admin" });
 
     await Notification.create({
       userId: findAdmin._id,
-      postSlug: slug,
+      postSlug: finalSlug,
       message: "New post need approval",
     });
 
