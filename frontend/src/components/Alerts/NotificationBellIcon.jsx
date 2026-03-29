@@ -8,14 +8,13 @@ const NotificationBellIcon = () => {
   const { user } = useContext(UserContext);
   const userId = user?._id;
 
+  const fetchNotifications = async () => {
+    const res = await axiosInstance.get(`/notifications/${userId}`);
+    const unread = res.data.filter((notif) => !notif.isRead);
+    setCount(unread.length);
+  };
+
   useEffect(() => {
-    const fetchNotifications = async () => {
-      const res = await axiosInstance.get(`/notifications/${userId}`);
-
-      const unread = res.data.filter((n) => !n.is_read);
-      setCount(unread.length);
-    };
-
     fetchNotifications();
 
     const interval = setInterval(fetchNotifications, 5000);
