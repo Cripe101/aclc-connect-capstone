@@ -1,6 +1,6 @@
 const Tabs = ({ tabs, activeTab, setActiveTab }) => {
   return (
-    <div className="my-2">
+    <div className="">
       <div className="flex gap-2">
         {tabs.map((tab) => (
           <button

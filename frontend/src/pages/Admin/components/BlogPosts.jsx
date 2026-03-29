@@ -18,7 +18,7 @@ const BlogPosts = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
-  const limit = 5;
+  const limit = 6;
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState("all"); // must match backend
   const [tabs, setTabs] = useState([]);
@@ -79,10 +79,15 @@ const BlogPosts = () => {
       });
     }
   }, [data?.counts]); // track counts safely
+
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
 
   const paginatedPosts = posts.slice(startIndex, endIndex);
+
+  useEffect(() => {
+    setPage(1);
+  }, [filterStatus]);
 
   return (
     <DashboardLayout activeMenu="Posts">
@@ -114,7 +119,7 @@ const BlogPosts = () => {
               <h1>No Posts Available</h1>
             </div>
           ) : (
-            <section className="grid grid-cols-1 gap-2">
+            <section className="grid md:grid-cols-2 gap-2">
               {paginatedPosts?.map((post) => (
                 <BlogPostSummaryCard
                   key={post._id}
@@ -124,10 +129,15 @@ const BlogPosts = () => {
                       ? post?.images[0]
                       : post?.coverImageUrl
                   }
+                  createdAt={
+                    post.createdAt
+                      ? moment(post?.createdAt).format("Do MMM YYYY, h:mm A")
+                      : ""
+                  }
                   updatedOn={
                     post.updatedAt
-                      ? moment(post.updatedAt).format("Do MMM YYYY")
-                      : "-"
+                      ? moment(post?.updatedAt).format("Do MMM YYYY, h:mm A")
+                      : ""
                   }
                   isLoading={isLoading}
                   role={user.role}

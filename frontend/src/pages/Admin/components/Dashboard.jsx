@@ -88,7 +88,7 @@ const Dashboard = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mt-5">
                   <DashboardSummaryCard
                     icon={<LuGalleryVerticalEnd />}
-                    label="Total Posts"
+                    label="Posts"
                     value={dashboardData?.stats?.totalPosts || 0}
                     highlight={true}
                     color="text-blue-700"
@@ -131,14 +131,14 @@ const Dashboard = () => {
 
                   <DashboardSummaryCard
                     icon={<FaCommentDots />}
-                    label="Total Comments"
+                    label="Comments"
                     value={dashboardData?.stats?.totalComments || 0}
                     color="text-blue-500"
                   />
 
                   <DashboardSummaryCard
                     icon={<LuUsers />}
-                    label="Total Users"
+                    label="Users"
                     value={dashboardData?.stats?.totalUsers || 0}
                     color="text-indigo-500"
                   />

@@ -16,7 +16,7 @@ const ManagePosts = () => {
   const { user } = useContext(UserContext);
   const queryClient = useQueryClient(); // for cache invalidation
 
-  const limit = 5; // posts per page
+  const limit = 6; // posts per page
   const [page, setPage] = useState(1);
   const [filterStatus, setFilterStatus] = useState("all"); // must match backend
   const [tabs, setTabs] = useState([]);
@@ -99,7 +99,7 @@ const ManagePosts = () => {
     <DashboardLayout activeMenu="Manage Posts">
       <div className="w-auto sm:max-w-[900px] mx-auto">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold mt-5 mb-5">Posts</h2>
+          <h2 className="text-2xl font-semibold mt-3">Posts</h2>
         </div>
 
         <Tabs
@@ -108,13 +108,13 @@ const ManagePosts = () => {
           setActiveTab={setFilterStatus}
         />
 
-        <div className="mt-5">
+        <div className="mt-3">
           {posts.length === 0 ? (
             <div className="flex justify-center mt-20">
               <h1>No Posts Available</h1>
             </div>
           ) : (
-            <section className="grid grid-cols-1 gap-2">
+            <section className="grid md:grid-cols-2 gap-2">
               {paginatedPosts?.map((post) => (
                 <BlogPostSummaryCard
                   key={post._id}
@@ -126,9 +126,14 @@ const ManagePosts = () => {
                   }
                   updatedOn={
                     post.updatedAt
-                      ? moment(post.updatedAt).format("Do MMM YYYY")
+                      ? moment(post?.updatedAt).format("Do MMM YYYY, h:mm A")
                       : "-"
                   }
+                  // createdAt={
+                  //   post.createdAt
+                  //     ? moment(post.createdAt).format("Do MMM YYYY")
+                  //     : "-"
+                  // }
                   author={post.author.name}
                   status={post.status}
                   tags={post.tags}

@@ -3,7 +3,9 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
 import {
+  LuArrowBigLeftDash,
   LuCircleAlert,
+  LuCornerUpLeft,
   LuCross,
   LuCrosshair,
   LuDot,
@@ -191,9 +193,9 @@ const BlogPostView = () => {
           <section className="p-2">
             <button
               onClick={() => navigate(-1)}
-              className="mb-2 border-2 shadow-md border-blue-600 px-3 py-1.5 font-bold rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white active:text-white active:bg-blue-600 active:scale-90 duration-150"
+              className="mb-2 border-2 text-xl shadow-md border-blue-600 px-3 py-1.5 font-bold rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white active:text-white active:bg-blue-600 active:scale-90 duration-150"
             >
-              Go Back
+              <LuCornerUpLeft size={25} />
             </button>
           </section>
           <div className="grid md:p-2 p-0.5 md:grid-cols-[4fr_1fr] md:gap-10 relative">

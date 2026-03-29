@@ -207,7 +207,7 @@ const BlogLandingPage = () => {
                         ? moment(sortedPosts[0]?.updatedAt).format(
                             "Do MMM YYYY, h:mm A",
                           )
-                        : "-"
+                        : ""
                     }
                     authorName={item.author?.name || "Unknown"}
                     authProfileImg={item.author?.profileImageUrl || ""}
