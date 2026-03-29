@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { BLOG_NAVBAR_DATA, SIDE_MENU_DATA } from "../../../utils/data.js";
 import { LuLogOut } from "react-icons/lu";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import CharAvatar from "../../Cards/CharAvatar.jsx";
 import { UserContext } from "../../../context/userContext.jsx";
 import LogoutAlert from "../../Alerts/LogoutAlert.jsx";
@@ -11,6 +11,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
   const navigate = useNavigate();
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
   const [tap, setTap] = useState(false);
+  const location = useLocation();
 
   const handleClick = (route) => {
     if (route === "logout") {
@@ -28,31 +29,31 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
   );
 
   return (
-    <div className="h-full bg-white border-r border-gray-200/50 p-5 sticky top-[61px] z-20">
+    <div className="h-full sticky top-0 z-10 rounded-lg md:rounded-none md:border-r md:border-r-gray-300">
       {user && (
-        <div className="flex flex-col items-center justify-center gap-1 mt-3 mb-7">
+        <div className="flex flex-col items-center justify-center gap-1 py-3 rounded-t-lg md:rounded-t-none bg-linear-to-r from-blue-500 via-blue-400 to-blue-300">
           {user?.profileImageUrl ? (
             <img
-              className="w-20 h-20 object-cover object-center rounded-full"
+              className="w-16 h-16 object-cover object-center rounded-full"
               src={user?.profileImageUrl}
               alt="Profile Image"
             />
           ) : (
             <CharAvatar
               fullName={user?.name || ""}
-              width="w-20"
-              height="h-20"
+              width="w-16"
+              height="h-16"
               style="text-xl"
             />
           )}
 
           <div>
-            <h5 className="text-gray-950 font-semibold text-center leading-6 mt-1">
+            <h5 className="text-white text-sm font-semibold text-center leading-6 mt-1">
               {user?.name || ""}
             </h5>
 
-            <p className="text-[13px] font-medium text-gray-800 text-center">
-              {user?.email || ""}
+            <p className="text-xs font-medium text-gray-300 text-center">
+              {user?.role || ""}
             </p>
           </div>
         </div>
@@ -60,13 +61,15 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
 
       {(isBlogMenu ? BLOG_NAVBAR_DATA : filteredMenu).map((item, index) => (
         <div
-          className="relative hover:bg-blue-100 rounded-full group"
+          className="relative hover:bg-blue-100 mx-2 my-2 active:bg-blue-100 rounded-full group duration-200"
           key={index}
         >
           <button
             key={`menu_${index}`}
-            className={`w-full flex items-center gap-4 text-[15px] ${
-              activeMenu == item.label ? "text-white bg-blue-800" : ""
+            className={`w-full flex items-center gap-4 text-sm ${
+              location.pathname == item.path
+                ? "text-white bg-blue-700 shadow-sm"
+                : ""
             } py-3 px-6 rounded-full mb-3 cursor-pointer`}
             onClick={() => {
               item.label.toLowerCase() === "courses offered"
@@ -77,9 +80,6 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
                       : item.path,
                   );
               tap ? setTap(false) : setTap(true);
-              // handleClick(
-              //   item.label.toLowerCase() === "courses offered" ? "" : item.path,
-              // );
             }}
           >
             <item.icon className="text-xl" />
@@ -118,13 +118,15 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
       ))}
 
       {user && (
-        <button
-          className={`w-full flex items-center gap-4 text-[15px] py-3 px-6 rounded-lg mb-3 cursor-pointer text-red-600 hover:bg-red-50 transition-colors`}
-          onClick={() => handleClick("logout")}
-        >
-          <LuLogOut className="text-xl" />
-          Sign Out
-        </button>
+        <div className="p-2 flex">
+          <button
+            className={`w-full flex items-center mb-2 gap-3 text-base py-3 px-6 rounded-full cursor-pointer text-red-600 hover:bg-red-100 active:bg-red-100 active:scale-90 duration-200`}
+            onClick={() => handleClick("logout")}
+          >
+            <LuLogOut className="text-xl" />
+            Sign Out
+          </button>
+        </div>
       )}
 
       <LogoutAlert isOpen={showLogoutAlert} setIsOpen={setShowLogoutAlert} />

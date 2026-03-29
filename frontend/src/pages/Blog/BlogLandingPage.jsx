@@ -102,18 +102,20 @@ const BlogLandingPage = () => {
     }
   }, [location]);
 
-  // console.log(aclcVid);
-
   return (
     <BlogLayout>
-      <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-10 px-5 lg:px-20 bg-linear-to-r from-blue-800 via-blue-600 to-blue-400">
-        <img src={logo} alt="" className="w-60 p-2 bg-white rounded-lg" />
+      <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-6 md:py-10 lg:px-20 bg-linear-to-r from-blue-800 via-blue-600 to-blue-400">
+        <img
+          src={logo}
+          alt=""
+          className="w-60 md:w-50 p-2 bg-white rounded-lg"
+        />
         <p className="text-white text-justify font-serif w-60">
           {" "}
           ACLC College of Ormoc is a member of the AMA Education System.
         </p>
       </div>
-      <div className="flex px-5 md:px-5 justify-center">
+      <div className="flex md:px-5 justify-center">
         <video
           src={aclcVid}
           loop={true}
@@ -123,7 +125,7 @@ const BlogLandingPage = () => {
           className="mt-5 rounded-lg w-[90%] md:w-[97%]"
         ></video>
       </div>
-      <div className="grid md:grid-cols-[5fr_1fr] gap-5 p-5">
+      <div className="grid md:grid-cols-[5fr_1fr] gap-5 md:p-5">
         <div className="grid grid-cols-1 p-5">
           {queryGetPosts.isLoading ? (
             <div className="animate-pulse p-5 gap-5 grid grid-cols-[2fr_3fr] rounded-lg bg-gray-200 dark:bg-gray-500 w-full h-96">
@@ -151,7 +153,9 @@ const BlogLandingPage = () => {
               images={sortedPosts[0]?.images}
               updatedOn={
                 sortedPosts[0]?.updatedAt
-                  ? moment(sortedPosts[0]?.updatedAt).format("Do MMM YYYY")
+                  ? moment(sortedPosts[0]?.updatedAt).format(
+                      "Do MMM YYYY, h:mm A",
+                    )
                   : "-"
               }
               authorName={sortedPosts[0]?.author?.name || "Unknown"}
@@ -199,8 +203,10 @@ const BlogLandingPage = () => {
                     description={item.content}
                     tags={item.tags}
                     updatedOn={
-                      item.updatedAt
-                        ? moment(item.updatedAt).format("Do MMM YYYY")
+                      item?.updatedAt
+                        ? moment(sortedPosts[0]?.updatedAt).format(
+                            "Do MMM YYYY, h:mm A",
+                          )
                         : "-"
                     }
                     authorName={item.author?.name || "Unknown"}
@@ -229,7 +235,7 @@ const BlogLandingPage = () => {
             </div>
           )}
         </div>
-        <div className="">
+        <div className="p-5 md:p-0">
           <TrendingPostsSection />
         </div>
       </div>

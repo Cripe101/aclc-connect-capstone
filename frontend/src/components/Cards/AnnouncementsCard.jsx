@@ -1,40 +1,29 @@
 import { useNavigate } from "react-router-dom";
+import BlogPostSummary from "../../pages/Blog/components/BlogPostSummary";
+import moment from "moment";
 
 const AnnouncementsCard = ({ data }) => {
   const navigate = useNavigate();
   return (
-    <div className="grid lg:grid-cols-2 gap-5 mt-5">
-      {data.map((anno) => (
-        <section
-          key={anno._id}
-          className="rounded-lg bg-blue-50 grid md:grid-cols-[1fr_2fr] gap-3 cursor-pointer hover:scale-[101%] active:scale-[99%] duration-200"
-          onClick={() => navigate("/" + anno.slug)}
-        >
-          <img
-            src={
-              anno?.coverImageUrl === "" ? anno?.images[0] : anno?.coverImageUrl
-            }
-            className="border border-blue-50 rounded-lg w-full h-60 md:h-50 object-cover object-top"
-          />
-          <section className="w-full font-display py-2 px-5">
-            <h1 className="text-xl font-bold text-blue-800">{anno.title}</h1>
-            <h1 className="flex gap-2 text-sm font-light">
-              <p>Posted on</p>
-              <p className="font-medium text-blue-700">
-                {new Date(anno.createdAt).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-            </h1>
-            <h1 className="flex gap-2 text-sm font-light">
-              <p>Posted By:</p>
-              <p className="font-medium">{anno.author.name}</p>
-            </h1>
-            <h1 className="line-clamp-3 mt-3">{anno.content}</h1>
-          </section>
-        </section>
+    <div className="grid lg:grid-cols-2 gap-5 mt-5 p-2">
+      {data.map((item) => (
+        <BlogPostSummary
+          key={item._id}
+          title={item.title}
+          coverImageUrl={
+            item.coverImageUrl === "" ? item.images[0] : item.coverImageUrl
+          }
+          description={item.content}
+          tags={item.tags}
+          updatedOn={
+            item?.updatedAt
+              ? moment(item?.updatedAt).format("Do MMM YYYY, h:mm A")
+              : "-"
+          }
+          authorName={item.author?.name || "Unknown"}
+          authProfileImg={item.author?.profileImageUrl || ""}
+          onClick={() => navigate(`/${item.slug}`)}
+        />
       ))}
     </div>
   );

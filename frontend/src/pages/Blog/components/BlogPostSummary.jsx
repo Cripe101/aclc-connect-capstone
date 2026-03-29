@@ -15,22 +15,22 @@ const BlogPostSummary = ({
 
   return (
     <div
-      className="grid md:grid-cols-[2fr_3fr] bg-blue-50 rounded-lg overflow-hidden cursor-pointer hover:scale-[100.5%] active:scale-[99%] duration-200"
+      className="grid md:grid-cols-[2fr_3fr] overflow-hidden cursor-pointer hover:scale-101 active:scale-98 duration-200"
       onClick={onClick}
     >
       <section>
         <img
           src={coverImageUrl}
           alt={title}
-          className="w-full h-80 aspect-square rounded-lg object-cover"
+          className="w-full h-60 rounded-t-lg md:rounded-l-lg md:rounded-r-none object-top object-cover"
         />
       </section>
 
-      <div className="p-4 md:p-6">
-        <h2 className="text-base text-blue-800 md:text-lg font-bold mb-2 line-clamp-2">
+      <div className="p-4 md:p-6 bg-linear-to-b md:bg-linear-to-r from-blue-600 via-blue-500 to-blue-400 rounded-b-lg md:rounded-r-lg md:rounded-l-none">
+        <h2 className="text-white text-xl md:text-2xl font-bold mb-2 line-clamp-1">
           {title}
         </h2>
-        <span className="text-gray-700 text-xs mb-4 line-clamp-2">
+        <span className="text-gray-300 text-xs mb-4 line-clamp-2">
           <MarkdownContent content={description} />
         </span>
 
@@ -38,7 +38,7 @@ const BlogPostSummary = ({
           {tags.slice(0, 3).map((tag, index) => (
             <button
               key={index}
-              className="bg-sky-200/50 text-sky-800/80 text-xs font-medium px-3 py-0.5 rounded-full text-nowrap cursor-pointer"
+              className="bg-sky-200 text-blue-700 text-xs font-medium px-3 py-0.5 rounded-full text-nowrap cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 navigate(`/tag/${tag}`);
@@ -54,7 +54,7 @@ const BlogPostSummary = ({
             <img
               src={authProfileImg}
               alt={authorName}
-              className="w-8 h-8 rounded-full mr-2"
+              className="w-8 h-8 rounded-full object-top object-cover mr-3"
             />
           ) : (
             <section className="w-8 h-8 rounded-full mr-2 bg-gray-300 flex items-center justify-center text-xs text-gray-600">
@@ -62,8 +62,8 @@ const BlogPostSummary = ({
             </section>
           )}
           <section>
-            <p className="text-gray-600 text-sm">{authorName}</p>
-            <p className="text-gray-500 text-xs">{updatedOn}</p>
+            <p className="text-gray-200 text-sm">{authorName}</p>
+            <p className="text-gray-300 text-xs">{updatedOn}</p>
           </section>
         </span>
       </div>

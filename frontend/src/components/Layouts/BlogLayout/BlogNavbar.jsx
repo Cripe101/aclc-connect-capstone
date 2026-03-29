@@ -7,19 +7,17 @@ import SideMenu from "./SideMenu.jsx";
 import { UserContext } from "../../../context/userContext.jsx";
 import ProfileDropdown from "../../Cards/ProfileDropdown.jsx";
 import AuthModel from "../../Auth/AuthModel.jsx";
-import SearchBarPopup from "../../../pages/Blog/components/SearchBarPopup.jsx";
 import NotificationBell from "../../Alerts/NotificationBell.jsx";
 
 const BlogNavbar = ({ activeMenu }) => {
   const { user, setOpenAuthForm } = useContext(UserContext);
   const [openSideMenu, setOpenSideMenu] = useState(false);
-  const [openSearchBar, setOpenSearchBar] = useState(false);
 
   return (
     <>
       <div className="bg-white border border-b border-gray-400/50 backdrop-blur-[2px] py-2 px-3 md:px-7 sticky top-0 z-30">
         <div className="container mx-auto flex items-center justify-between gap-5">
-          <div className="flex">
+          <div className="flex gap-3">
             <button
               className="block lg:hidden text-black -mt-1"
               onClick={() => {
@@ -128,10 +126,10 @@ const BlogNavbar = ({ activeMenu }) => {
           </div>
 
           {openSideMenu && (
-            <div className="fixed top-[61px] -ml-4 bg-white ">
+            <div className="w-[220px] fixed top-20 left-1 rounded-lg bg-blue-50">
               <SideMenu
                 activeMenu={activeMenu}
-                isBlogMenu
+                isBlogMenu={true}
                 setOpenSideMenu={setOpenSideMenu}
               />
             </div>

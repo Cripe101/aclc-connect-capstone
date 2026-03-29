@@ -97,8 +97,8 @@ const Announcements = () => {
               onChange={(e) => setMemo(e.target.value)}
               className="rounded-full border-gray-300 px-2 py-2 outline-none border"
             >
-              <option value="">Select...</option>
-              <option value="memorandum">Memorandum</option>
+              <option value="">All</option>
+              <option value="faculty">Faculty</option>
               <option value="college">College</option>
               <option value="seniorhig">Senior High</option>
             </select>
