@@ -84,6 +84,8 @@ const updatePost = async (req, res) => {
       updatedData.status = "pending";
     }
 
+    let slug;
+
     // 4️⃣ Handle slug generation safely
     if (updatedData.title && updatedData.title !== post.title) {
       let slugBase = updatedData.title
@@ -91,7 +93,7 @@ const updatePost = async (req, res) => {
         .replace(/ /g, "-")
         .replace(/[^\w-]+/g, "");
 
-      let slug = slugBase;
+      slug = slugBase;
       let count = 1;
 
       // Check for duplicates in other posts
