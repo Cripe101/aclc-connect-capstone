@@ -29,7 +29,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
   );
 
   return (
-    <div className="h-full sticky top-0 z-10 rounded-lg md:rounded-none md:border-r md:border-r-gray-300">
+    <div className="md:w-65 h-full sticky top-0 z-10 rounded-lg md:rounded-none md:border-r md:border-r-gray-300">
       {user && (
         <div className="flex flex-col items-center justify-center gap-1 py-3 rounded-t-lg md:rounded-t-none bg-linear-to-r from-blue-500 via-blue-400 to-blue-300">
           {user?.profileImageUrl ? (
@@ -61,7 +61,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
 
       {(isBlogMenu ? BLOG_NAVBAR_DATA : filteredMenu).map((item, index) => (
         <div
-          className="relative hover:bg-blue-100 mx-2 my-2 active:bg-blue-100 rounded-full group duration-200"
+          className="relative hover:bg-blue-100 mx-2 my-2 md:mt-5 active:bg-blue-100 rounded-full group duration-200"
           key={index}
         >
           <button

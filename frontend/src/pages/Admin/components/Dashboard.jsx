@@ -22,6 +22,7 @@ import BlogPostSummary from "../../Blog/components/BlogPostSummary";
 import BlogPostSummaryCard from "../../../components/Cards/BlogPostSummaryCard";
 import { getMyPosts } from "../../../utils/api";
 import { FaComment, FaCommentDots } from "react-icons/fa6";
+import { MdAppBlocking } from "react-icons/md";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -101,7 +102,7 @@ const Dashboard = () => {
                   />
 
                   <DashboardSummaryCard
-                    icon={<LuBookA />}
+                    icon={<MdAppBlocking />}
                     label="Rejected"
                     value={dashboardData?.stats?.drafts || 0}
                     color="text-red-700"
@@ -139,7 +140,6 @@ const Dashboard = () => {
                     icon={<LuUsers />}
                     label="Total Users"
                     value={dashboardData?.stats?.totalUsers || 0}
-                    bgColor="bg-indigo-100/60"
                     color="text-indigo-500"
                   />
                 </div>
@@ -159,8 +159,8 @@ const Dashboard = () => {
                     icon={<LuGalleryVerticalEnd />}
                     label="Total Posts"
                     value={officeDashboardData.data.counts?.all || 0}
-                    bgColor="bg-sky-100/60"
-                    color="text-sky-500"
+                    highlight={true}
+                    color="text-blue-700"
                   />
 
                   <DashboardSummaryCard
@@ -171,16 +171,14 @@ const Dashboard = () => {
                     color="text-green-600"
                   />
 
-                  {/* 🔥 NEW: Drafts (includes rejected) */}
                   <DashboardSummaryCard
-                    icon={<LuBookA />}
+                    icon={<MdAppBlocking />}
                     label="Rejected"
                     value={officeDashboardData.data.counts?.rejected || 0}
                     bgColor="bg-yellow-100/60"
                     color="text-yellow-600"
                   />
 
-                  {/* 🔥 OPTIONAL: Pending */}
                   <DashboardSummaryCard
                     icon={<LuChartLine />}
                     label="Pending"
