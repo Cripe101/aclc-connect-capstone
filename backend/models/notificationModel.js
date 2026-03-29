@@ -6,6 +6,10 @@ const notificationSchema = new mongoose.Schema(
       type: String,
       ref: "User",
     },
+    postSlug: {
+      type: String,
+      ref: "Post",
+    },
     message: String,
     isRead: {
       type: Boolean,

@@ -27,6 +27,7 @@ const createPost = async (req, res) => {
 
     await Notification.create({
       userId: findAdmin._id,
+      postSlug: slug,
       message: "New post need approval",
     });
 
@@ -105,6 +106,7 @@ const updatePost = async (req, res) => {
 
     await Notification.create({
       userId: findAdmin._id,
+      postSlug: slug,
       message: "New post need approval",
     });
 
