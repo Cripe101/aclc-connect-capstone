@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { Bell } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance";
 import { UserContext } from "../../context/userContext";
 import NotificationBellIcon from "./NotificationBellIcon";
@@ -42,7 +41,9 @@ const NotificationBell = () => {
   };
 
   const handleClick = ({ slug, notifId }) => {
-    navigate("/preview/" + slug);
+    user.role !== "admin"
+      ? navigate("/admin/edit/" + slug)
+      : navigate("/preview/" + slug);
     markAsRead(notifId);
     setShow(false);
   };

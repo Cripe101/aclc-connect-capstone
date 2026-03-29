@@ -74,7 +74,7 @@ const getDashboardSummary = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(5)
       .populate("author", "name profileImageUrl")
-      .populate("post", "title coverImageUrl");
+      .populate("post", "title coverImageUrl images");
 
     const tagUsage = await BlogPost.aggregate([
       { $match: { status: "approved" } },

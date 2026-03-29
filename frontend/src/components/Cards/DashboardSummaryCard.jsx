@@ -1,18 +1,23 @@
-const DashboardSummaryCard = ({ icon, label, value, bgColor, color }) => {
+const DashboardSummaryCard = ({ icon, label, value, color, highlight }) => {
   return (
-    <div className="flex items-center gap-3">
-      <div
-        className={`w-10 md:w-8 h-10 md:h-8 flex items-center justify-center ${color} ${bgColor} rounded-sm `}
+    <div
+      className={`p-3 flex flex-col gap-3 ${highlight ? "bg-blue-500" : "bg-blue-50"} rounded-lg`}
+    >
+      <section className="w-full flex items-center justify-between">
+        <h1 className={`${highlight ? "text-white" : ""} font-medium`}>
+          {label}
+        </h1>
+        <div
+          className={`w-10 h-10 flex text-lg bg-white items-center justify-center ${color} rounded-full `}
+        >
+          {icon}
+        </div>
+      </section>
+      <span
+        className={`text-start text-5xl ${highlight ? "text-white" : color} font-semibold`}
       >
-        {icon}
-      </div>
-
-      <p className="text-xs md:text-[14px] text-gray-500">
-        <span className="text-sm md:text-[15px] text-black font-semibold">
-          {value}
-        </span>{" "}
-        {label}
-      </p>
+        {value}
+      </span>{" "}
     </div>
   );
 };

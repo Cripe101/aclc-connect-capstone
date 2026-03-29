@@ -19,10 +19,6 @@ const DashboardLayout = ({ children, activeMenu }) => {
           <div className="grow mx-2 md:mx-5 relative">{children}</div>
         </div>
       )}
-
-      <footer className="text-center text-sm text-gray-500 py-8">
-        <span>© {new Date().getFullYear()} ACLC — All rights reserved.</span>
-      </footer>
     </div>
   );
 };

@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import BlogPostSummary from "../../Blog/components/BlogPostSummary";
 import BlogPostSummaryCard from "../../../components/Cards/BlogPostSummaryCard";
 import { getMyPosts } from "../../../utils/api";
+import { FaComment, FaCommentDots } from "react-icons/fa6";
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -69,7 +70,7 @@ const Dashboard = () => {
     <DashboardLayout activeMenu="Dashboard">
       {dashboardData && (
         <>
-          <div className="bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50 mt-5">
+          <div className="bg-white p-3 md:p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50 mt-5">
             <div>
               <div className="col-span-3">
                 <h2 className="text-xl md:text-2xl font-medium">
@@ -82,47 +83,41 @@ const Dashboard = () => {
             </div>
 
             {user.role === "admin" ? (
-              <div>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
+              <div className="flex flex-col gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mt-5">
                   <DashboardSummaryCard
                     icon={<LuGalleryVerticalEnd />}
                     label="Total Posts"
                     value={dashboardData?.stats?.totalPosts || 0}
-                    bgColor="bg-sky-100/60"
-                    color="text-sky-500"
+                    highlight={true}
+                    color="text-blue-700"
                   />
 
                   <DashboardSummaryCard
                     icon={<LuCheckCheck />}
                     label="Published"
                     value={dashboardData?.stats?.published || 0}
-                    bgColor="bg-green-100/60"
                     color="text-green-600"
                   />
 
-                  {/* 🔥 NEW: Drafts (includes rejected) */}
                   <DashboardSummaryCard
                     icon={<LuBookA />}
                     label="Rejected"
                     value={dashboardData?.stats?.drafts || 0}
-                    bgColor="bg-yellow-100/60"
-                    color="text-yellow-600"
+                    color="text-red-700"
                   />
 
-                  {/* 🔥 OPTIONAL: Pending */}
                   <DashboardSummaryCard
                     icon={<LuChartLine />}
                     label="Pending"
                     value={dashboardData?.stats?.pending || 0}
-                    bgColor="bg-purple-100/60"
-                    color="text-purple-600"
+                    color="text-yellow-500"
                   />
 
                   <DashboardSummaryCard
                     icon={<LuChartLine />}
                     label="Total Views"
                     value={dashboardData?.stats?.totalViews || 0}
-                    bgColor="bg-sky-100/60"
                     color="text-sky-500"
                   />
 
@@ -130,8 +125,14 @@ const Dashboard = () => {
                     icon={<LuHeart />}
                     label="Total Likes"
                     value={dashboardData?.stats?.totalLikes || 0}
-                    bgColor="bg-pink-100/60"
-                    color="text-pink-500"
+                    color="text-blue-800"
+                  />
+
+                  <DashboardSummaryCard
+                    icon={<FaCommentDots />}
+                    label="Total Comments"
+                    value={dashboardData?.stats?.totalComments || 0}
+                    color="text-blue-500"
                   />
 
                   <DashboardSummaryCard
@@ -142,7 +143,7 @@ const Dashboard = () => {
                     color="text-indigo-500"
                   />
                 </div>
-                <div className="col-span-12 bg-white mt-10 p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+                <div className="col-span-12 p-6 rounded-lg bg-blue-50">
                   <div className="flex items-center justify-between">
                     <h5 className="font-medium">Recent Comments</h5>
                   </div>
@@ -153,7 +154,7 @@ const Dashboard = () => {
               </div>
             ) : (
               <div>
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 mt-5">
                   <DashboardSummaryCard
                     icon={<LuGalleryVerticalEnd />}
                     label="Total Posts"
@@ -188,7 +189,7 @@ const Dashboard = () => {
                     color="text-purple-600"
                   />
                 </div>
-                <div className="col-span-12 bg-white mt-10 p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+                <div className="col-span-12 p-6 rounded-lg bg-blue-50 mt-5">
                   <div className="flex items-center justify-between">
                     <h5 className="font-medium">Recent Comments</h5>
                   </div>
