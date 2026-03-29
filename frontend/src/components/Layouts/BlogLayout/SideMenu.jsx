@@ -29,7 +29,7 @@ const SideMenu = ({ activeMenu, isBlogMenu, setOpenSideMenu }) => {
   );
 
   return (
-    <div className="md:w-65 h-full sticky top-0 z-10 rounded-lg md:rounded-none md:border-r md:border-r-gray-300">
+    <div className="bg-white md:w-65 h-full sticky top-0 z-10 rounded-lg md:rounded-none md:border-r md:border-r-gray-300">
       {user && (
         <div className="flex flex-col items-center justify-center gap-1 py-3 rounded-t-lg md:rounded-t-none bg-linear-to-r from-blue-500 via-blue-400 to-blue-300">
           {user?.profileImageUrl ? (

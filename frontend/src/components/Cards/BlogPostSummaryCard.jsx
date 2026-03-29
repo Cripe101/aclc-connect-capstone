@@ -47,13 +47,11 @@ const BlogPostSummaryCard = ({
         </section>
 
         <div className="flex items-center gap-2.5 mt-2 flex-wrap">
-          {author !== "" ? (
-            <div className="text-[11px] text-blue-900 font-bold bg-blue-50 px-2.5 py-1 rounded-lg">
-              {author}
-            </div>
-          ) : (
-            ""
-          )}
+          <div
+            className={`${role === "admin" ? "" : "hidden"} text-[11px] text-blue-900 font-bold bg-blue-50 px-2.5 py-1 rounded-lg`}
+          >
+            {author}
+          </div>
 
           <div className="text-[11px] text-blue-900 font-bold bg-blue-50 px-2.5 py-1 rounded-lg">
             Updated: {updatedOn}
