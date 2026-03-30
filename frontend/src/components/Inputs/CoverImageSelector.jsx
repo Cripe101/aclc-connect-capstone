@@ -74,13 +74,13 @@ const CoverImageSelector = ({
           </p>
         </div>
       ) : (
-        <div className="relative w-full h-56">
+        <div onClick={onChooseFile} className="relative w-full h-56">
           <img
             src={preview || previewUrl}
             alt="Cover"
             className="w-full h-full object-cover rounded-md"
           />
-          {isUpdateProfile ? (
+          {/* {isUpdateProfile ? (
             <button
               type="button"
               onClick={handleRemoveImage}
@@ -90,7 +90,7 @@ const CoverImageSelector = ({
             </button>
           ) : (
             ""
-          )}
+          )} */}
         </div>
       )}
     </div>
