@@ -2,7 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
-import { LuCircleAlert, LuCornerUpLeft, LuDot, LuX } from "react-icons/lu";
+import {
+  LuArrowLeft,
+  LuCircleAlert,
+  LuCornerUpLeft,
+  LuDot,
+  LuX,
+} from "react-icons/lu";
 import { UserContext } from "../../context/userContext";
 import CommentReplyInput from "../../components/Inputs/CommentReplyInput";
 import toast from "react-hot-toast";
@@ -18,12 +24,13 @@ import Drawer from "../../components/Drawer";
 import LikeCommentButton from "./components/LikeCommentButton";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import AuthModel from "../../components/Auth/AuthModel";
+import { useQuery } from "@tanstack/react-query";
+import { getPostBySlug } from "../../utils/api/postApi";
 
 const BlogPostView = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  const [blogPostData, setBlogPostData] = useState(null);
   const [comments, setComments] = useState(null);
 
   const { user, setOpenAuthForm } = useContext(UserContext);
@@ -34,26 +41,24 @@ const BlogPostView = () => {
   const [openSummarizeDrawer, setOpenSummarizeDrawer] = useState(false);
   const [summaryContent, setSummaryContent] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Get Post Data by Slug
-  const fetchPostDetailsBySlug = async () => {
-    try {
-      const response = await axiosInstance.get(
-        API_PATHS.POSTS.GET_BY_SLUG(slug),
-      );
+  const {
+    data: blogPostData,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["Post"],
+    queryFn: () => getPostBySlug(slug),
+  });
 
-      if (response.data) {
-        const data = response.data;
-        setBlogPostData(data);
-        fetchCommentByPostId(data._id);
-        incrementViews(data._id);
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  useEffect(() => {
+    if (blogPostData) {
+      const data = blogPostData;
+      fetchCommentByPostId(data?._id);
+      incrementViews(data?._id);
     }
-  };
+  }, [blogPostData, slug]);
 
   // Get Comment by Post Id
   const fetchCommentByPostId = async (postId) => {
@@ -95,7 +100,6 @@ const BlogPostView = () => {
   // Add Reply
   const handleAddReply = async () => {
     try {
-      setIsLoading(true);
       const response = await axiosInstance.post(
         API_PATHS.COMMENTS.ADD(blogPostData._id),
         {
@@ -111,14 +115,8 @@ const BlogPostView = () => {
     } catch (error) {
       console.error("Error replying to comment.", error);
     } finally {
-      setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchPostDetailsBySlug();
-    return () => {};
-  }, [slug]);
 
   const [showPhotos, setShowPhotos] = useState(false);
   const [photo, setPhoto] = useState(1);
@@ -154,8 +152,9 @@ const BlogPostView = () => {
                   >
                     <FaArrowLeft size={25} />
                   </button>
-                  {blogPostData.images.slice(photo - 1, photo).map((img) => (
+                  {blogPostData.images.slice(photo - 1, photo).map((img, i) => (
                     <img
+                      key={i}
                       src={img}
                       alt="No Photo"
                       className="w-80 md:w-full max-h-180 rounded-lg"
@@ -185,9 +184,9 @@ const BlogPostView = () => {
           <section className="p-2">
             <button
               onClick={() => navigate(-1)}
-              className="mb-2 border-2 text-xl shadow-md border-blue-600 px-3 py-1.5 font-bold rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white active:text-white active:bg-blue-600 active:scale-90 duration-150"
+              className="mb-2 text-xl px-3 py-1.5 font-bold rounded-lg cursor-pointer active:text-blue-700 active:scale-90 duration-150"
             >
-              <LuCornerUpLeft size={25} />
+              <LuArrowLeft size={25} />
             </button>
           </section>
           <div className="grid md:p-2 p-0.5 md:grid-cols-[4fr_1fr] md:gap-10 relative">
@@ -217,28 +216,28 @@ const BlogPostView = () => {
                 </section>
 
                 <span className="text-[13px] text-gray-500 font-medium pl-5 mb-2">
-                  {moment(blogPostData.updatedAt || "").format("Do MMM YYYY")}
+                  {moment(blogPostData?.updatedAt || "").format("Do MMM YYYY")}
                 </span>
               </div>
               <section className="mb-6 flex justify-center">
                 {blogPostData.images?.length === 0 && (
                   <img
                     onClick={() => setShowPhotos(true)}
-                    src={blogPostData.coverImageUrl}
+                    src={blogPostData?.coverImageUrl}
                     className="w-full max-w-[500px] rounded-lg object-cover object-top"
                   />
                 )}
                 {blogPostData.images?.length === 1 && (
                   <img
                     onClick={() => setShowPhotos(true)}
-                    src={blogPostData.images[0]}
+                    src={blogPostData?.images[0]}
                     className="w-full max-w-[500px] object-cover object-top rounded-lg"
                   />
                 )}
 
-                {blogPostData.images?.length === 2 && (
+                {blogPostData?.images?.length === 2 && (
                   <div className="grid md:grid-cols-2 gap-2">
-                    {blogPostData.images.slice(0, 2).map((img, i) => (
+                    {blogPostData?.images.slice(0, 2).map((img, i) => (
                       <img
                         onClick={() => setShowPhotos(true)}
                         key={i}
@@ -249,15 +248,15 @@ const BlogPostView = () => {
                   </div>
                 )}
 
-                {blogPostData.images?.length === 3 && (
+                {blogPostData?.images?.length === 3 && (
                   <div className="grid md:grid-rows-2 gap-2">
                     <img
                       onClick={() => setShowPhotos(true)}
-                      src={blogPostData.images[0]}
+                      src={blogPostData?.images[0]}
                       className="w-full max-h-[500px] object-cover object-top rounded-lg"
                     />
                     <section className="grid md:grid-cols-2 gap-2">
-                      {blogPostData.images.slice(1, 3).map((img, i) => (
+                      {blogPostData?.images.slice(1, 3).map((img, i) => (
                         <img
                           onClick={() => setShowPhotos(true)}
                           key={i}
@@ -271,7 +270,7 @@ const BlogPostView = () => {
 
                 {blogPostData.images?.length >= 4 && (
                   <div className="grid md:grid-cols-2 gap-2">
-                    {blogPostData.images.slice(0, 4).map((img, i) => (
+                    {blogPostData?.images.slice(0, 4).map((img, i) => (
                       <div key={i} className="relative">
                         <img
                           onClick={() => setShowPhotos(true)}
@@ -280,13 +279,13 @@ const BlogPostView = () => {
                         />
 
                         {/* Overlay for extra images */}
-                        {i === 3 && blogPostData.images.length > 4 && (
+                        {i === 3 && blogPostData?.images?.length > 4 && (
                           <div
                             onClick={() => setShowPhotos(true)}
                             className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-lg"
                           >
                             <span className="text-white text-xl font-semibold">
-                              +{blogPostData.images.length - 4}
+                              +{blogPostData?.images?.length - 4}
                             </span>
                           </div>
                         )}
@@ -324,7 +323,7 @@ const BlogPostView = () => {
                     <div className="bg-white rounded-lg mb-4 p-2">
                       <CommentReplyInput
                         user={user}
-                        authorName={user.name}
+                        authorName={user?.name}
                         replyText={replyText}
                         setReplyText={setReplyText}
                         handleAddReply={handleAddReply}
@@ -340,25 +339,25 @@ const BlogPostView = () => {
                     {comments?.length > 0 &&
                       comments.map((comment) => (
                         <CommentInfo
-                          key={comment._id}
-                          commentId={comment._id || null}
-                          authorName={comment.author.name}
-                          authorPhoto={comment.author.profileImageUrl}
-                          content={comment.content}
+                          key={comment?._id}
+                          commentId={comment?._id || null}
+                          authorName={comment?.author?.name}
+                          authorPhoto={comment?.author?.profileImageUrl}
+                          content={comment?.content}
                           updatedOn={
                             comment.updatedAt
-                              ? moment(comment.updatedAt).format("Do MMM YYYY")
+                              ? moment(comment?.updatedAt).format("Do MMM YYYY")
                               : "-"
                           }
-                          post={comment.post}
-                          replies={comment.replies || []}
+                          post={comment?.post}
+                          replies={comment?.replies || []}
                           getAllComments={() =>
-                            fetchCommentByPostId(blogPostData._id)
+                            fetchCommentByPostId(blogPostData?._id)
                           }
                           onDelete={(commentId) =>
                             setOpenDeleteAlert({
                               open: true,
-                              data: commentId || comment._id,
+                              data: commentId || comment?._id,
                             })
                           }
                         />
@@ -368,10 +367,10 @@ const BlogPostView = () => {
               </div>
 
               <LikeCommentButton
-                postId={blogPostData._id || ""}
-                likes={blogPostData.likedBy || []}
+                postId={blogPostData?._id || ""}
+                likes={blogPostData?.likedBy || []}
                 comments={comments?.length || 0}
-                onLikesChange={fetchPostDetailsBySlug}
+                onLikesChange={() => refetch()}
                 onClick
               />
             </div>
