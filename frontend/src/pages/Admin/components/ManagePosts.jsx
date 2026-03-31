@@ -26,7 +26,7 @@ const ManagePosts = () => {
   });
 
   // Get all posts
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["posts", filterStatus, page, limit],
     queryFn: () =>
       getAllPosts({
@@ -35,6 +35,7 @@ const ManagePosts = () => {
         limit,
       }),
     keepPreviousData: true,
+    refetchInterval: 5000,
   });
 
   const posts = data?.posts || [];

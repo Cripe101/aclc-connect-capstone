@@ -77,11 +77,11 @@ const NotificationBell = () => {
         <NotificationBellIcon />
       </h1>
       <section
-        className={`${show ? "flex" : "hidden"} z-10 flex-col fixed right-1 md:right-15 top-15 bg-blue-100 rounded-lg w-full text-xs max-w-[200px]`}
+        className={`${show ? "flex" : "hidden"} gap-2 p-3 z-10 flex-col fixed right-1 md:right-15 top-15 bg-blue-100 rounded-xl w-full text-xs max-w-[200px]`}
       >
         {notifications?.slice(0, 6).map((notif) => (
           <div
-            className={`${notif.isRead ? "" : "bg-linear-to-r from-blue-200 via-blue-300 to-blue-400"} cursor-pointer rounded-lg justify-center items-center font-semibold flex flex-col gap-1 p-2 m-2`}
+            className={`${notif.isRead ? "" : "bg-linear-to-r from-blue-300 via-blue-200 to-blue-100"} cursor-pointer rounded-xl justify-center items-center font-semibold flex flex-col gap-1 p-2`}
             key={notif._id}
             onClick={() =>
               handleClick({

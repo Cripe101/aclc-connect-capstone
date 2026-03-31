@@ -57,8 +57,9 @@ const BlogPostView = () => {
       const data = blogPostData;
       fetchCommentByPostId(data?._id);
       incrementViews(data?._id);
+      refetch;
     }
-  }, [blogPostData, slug]);
+  }, [slug]);
 
   // Get Comment by Post Id
   const fetchCommentByPostId = async (postId) => {
