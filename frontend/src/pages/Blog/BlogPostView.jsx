@@ -64,9 +64,7 @@ const BlogPostView = () => {
   // Get Comment by Post Id
   const fetchCommentByPostId = async (postId) => {
     try {
-      const response = await axiosInstance.get(
-        API_PATHS.COMMENTS.GET_ALL_BY_POST(postId),
-      );
+      const response = await axiosInstance.get("/comments/" + postId);
 
       if (response.data) {
         const data = response.data;
