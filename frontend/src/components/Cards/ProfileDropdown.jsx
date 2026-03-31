@@ -142,7 +142,7 @@ const ProfileDropdown = () => {
       setShowPwdVisibility({ old: false, new: false, confirm: false });
       // Clear token and redirect to login
       localStorage.removeItem("token");
-      setTimeout(() => navigate("/admin-login"), 1500);
+      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       console.error(err);
       toast.error(err?.response?.data?.message || "Failed to update password");

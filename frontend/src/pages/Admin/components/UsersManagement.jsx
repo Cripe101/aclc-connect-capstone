@@ -13,10 +13,12 @@ import {
 } from "react-icons/lu";
 import Modal from "../../../components/Modal";
 import toast from "react-hot-toast";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const UsersManagement = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredUsersM, setFilteredUsersM] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -37,34 +39,42 @@ const UsersManagement = () => {
   });
   const [showAddPwdVisibility, setShowAddPwdVisibility] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 6;
+  const [currentPageM, setCurrentPageM] = useState(1);
+  const usersPerPage = 16;
+  const usersPerPageM = 6;
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
-
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+  // For Mobile
+  const totalPagesM = Math.ceil(filteredUsersM.length / usersPerPageM);
+  const indexOfLastUserM = currentPageM * usersPerPageM;
+  const indexOfFirstUserM = indexOfLastUserM - usersPerPageM;
+  const currentUsersM = filteredUsersM.slice(
+    indexOfFirstUserM,
+    indexOfLastUserM,
+  );
 
   // Fetch all users
   const getAllUsers = async () => {
     try {
-      // setIsLoading(true);
       const response = await axiosInstance.get(API_PATHS.AUTH.GET_ALL_USERS);
       setUsers(response.data);
       setFilteredUsers(response.data);
+      setFilteredUsersM(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
       toast.error("Failed to fetch users");
     } finally {
-      // setIsLoading(false);
     }
   };
 
   // Search users
   const handleSearch = (query) => {
     setSearchQuery(query);
-    setCurrentPage(1); // reset page when searching
+    setCurrentPage(1);
 
     if (query.trim() === "") {
       setFilteredUsers(users);
@@ -153,7 +163,6 @@ const UsersManagement = () => {
         payload,
       );
 
-      // If admin role selected, call update to set role (backend requires protected update)
       if (addForm.role === "admin") {
         await axiosInstance.put(API_PATHS.AUTH.UPDATE_USER(response.data._id), {
           role: "admin",
@@ -200,10 +209,9 @@ const UsersManagement = () => {
   return (
     <DashboardLayout activeMenu="Users">
       <div className="bg-white p-3 rounded-lg border border-gray-200/50 mt-5">
-        {/* Header with Add button and Search */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-4 w-full md:w-auto">
-            <h2 className="text-xl md:text-2xl font-medium">User Management</h2>
+            <h2 className="text-2xl font-bold">User Management</h2>
           </div>
           <section className="flex flex-row-reverse gap-5">
             <div className="relative w-full md:w-64">
@@ -218,80 +226,140 @@ const UsersManagement = () => {
             </div>
             <button
               onClick={handleAddClick}
-              className="flex items-center gap-2 cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-800 duration-200"
+              className="flex items-center gap-2 cursor-pointer bg-blue-700 font-bold text-white px-4 py-2 rounded-xl active:bg-blue-800 active:scale-90 hover:bg-blue-800 duration-200"
             >
-              <LuPlus />
+              <p className="font-bold block md:hidden">
+                <LuPlus />
+              </p>
               <p className="hidden md:block">Add</p>
               User
             </button>
           </section>
         </div>
 
-        {/* Users Table */}
         {isLoading && filteredUsers.length === 0 ? (
           <div className="flex justify-center items-center py-10">
             <LuLoaderCircle className="animate-spin text-2xl text-sky-500" />
           </div>
         ) : filteredUsers.length > 0 ? (
           <div>
-            {/* Desktop View */}
-            <div className="hidden md:block overflow-x-auto">
-              <span className="w-full text-sm">
-                <section>
-                  <h1 className="grid grid-cols-[2fr_2fr_1fr_1fr] font-bold font-display border-b mb-3 border-gray-200">
-                    <p className="text-left py-3 px-4 text-gray-700">Name</p>
-                    <p className="text-left py-3 px-4 text-gray-700">
-                      Username
-                    </p>
-                    <p className="text-left py-3 px-4 text-gray-700">Role</p>
-
-                    <p className="text-left py-3 px-4 text-gray-700">Actions</p>
-                  </h1>
-                </section>
-                <span className="grid gap-1">
+            <div className="">
+              <span className="">
+                {/* Desktop */}
+                <span className="w-full md:grid hidden grid-cols-4 gap-2 md:gap-3">
                   {currentUsers.map((user) => (
                     <section
                       key={user._id}
-                      className={`bg-blue-50 rounded-lg hover:bg-blue-800 hover:text-white duration-200 grid grid-cols-[2fr_2fr_1fr_1fr]`}
+                      className={`flex flex-col py-3 bg-linear-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-100 rounded-xl transition-colors duration-600`}
                     >
-                      <p className="py-3 px-4">{user.name}</p>
-                      <p className="py-3 px-4">{user?.email}</p>
-                      <span className="py-3 px-4">
-                        <span
-                          className={`py-1 rounded-full bg-white text-xs font-display ${
-                            user.role === "admin"
-                              ? "px-2.5 text-blue-700 font-extrabold"
-                              : "px-2 text-blue-700"
-                          }`}
-                        >
-                          {user.role}
-                        </span>
-                      </span>
-
-                      <span className="py-3 px-4">
-                        <div className="flex gap-2">
+                      <h1 className="flex items-center justify-between w-full mb-5 pr-3 pl-2">
+                        <p className="flex gap-3">
                           <button
                             onClick={() => handleEditClick(user)}
-                            className="flex cursor-pointer items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 duration-200"
+                            className="flex cursor-pointer items-center gap-1 border border-blue-600 text-blue-600 px-3 py-1 rounded-xl hover:bg-blue-600 hover:text-white active:bg-blue-600 active:text-white active:scale-90 duration-300"
                             title="Edit User"
                           >
                             <LuPencil className="text-lg" />
                           </button>
                           <button
                             onClick={() => handleDeleteClick(user)}
-                            className="flex cursor-pointer items-center gap-1 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition"
+                            className="flex cursor-pointer items-center gap-1 border border-red-600 text-red-600 px-3 py-1 rounded-xl hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white active:scale-90 duration-300"
                             title="Delete User"
                           >
                             <LuTrash2 className="text-lg" />
                           </button>
-                        </div>
-                      </span>
+                        </p>
+                        <p
+                          className={`py-1 rounded-full text-xs font-bold font-display ${
+                            user.role === "admin"
+                              ? "px-2.5 bg-blue-50 text-blue-700"
+                              : user.role === "offices"
+                                ? "px-2.5 bg-purple-100 text-purple-700"
+                                : user.role === "faculty"
+                                  ? "px-2.5 bg-yellow-100 text-yellow-700"
+                                  : "px-2.5 bg-green-100 text-green-700"
+                          }`}
+                        >
+                          {user.role}
+                        </p>
+                      </h1>
+                      <section className="px-3">
+                        <span className="flex gap-3 items-center">
+                          <img
+                            src={user.profileImageUrl}
+                            className="w-10 h-10 rounded-full object-cover object-center"
+                          />
+                          <h1 className="">
+                            <p className="text-sm font-medium">{user.name}</p>
+                            <p className="text-xs text-slate-500">
+                              {user.email}
+                            </p>
+                          </h1>
+                        </span>
+                      </section>
                     </section>
                   ))}
                 </span>
-                {/* Pagination */}
+
+                {/* Mobile */}
+                <span className="w-full grid md:hidden gap-2">
+                  {currentUsersM.map((user) => (
+                    <section
+                      key={user._id}
+                      className={`flex flex-col py-3 bg-linear-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-100 rounded-xl transition-colors duration-600`}
+                    >
+                      <h1 className="flex items-center justify-between w-full mb-5 pr-3 pl-2">
+                        <p className="flex gap-3">
+                          <button
+                            onClick={() => handleEditClick(user)}
+                            className="flex cursor-pointer items-center gap-1 border border-blue-600 text-blue-600 px-3 py-1 rounded-xl hover:bg-blue-600 hover:text-white active:bg-blue-600 active:text-white active:scale-90 duration-300"
+                            title="Edit User"
+                          >
+                            <LuPencil className="text-xl" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(user)}
+                            className="flex cursor-pointer items-center gap-1 border border-red-600 text-red-600 px-3 py-1 rounded-xl hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white active:scale-90 duration-300"
+                            title="Delete User"
+                          >
+                            <LuTrash2 className="text-xl" />
+                          </button>
+                        </p>
+                        <p
+                          className={`py-1 rounded-full text-xs font-bold font-display ${
+                            user.role === "admin"
+                              ? "px-2.5 bg-blue-50 text-blue-700"
+                              : user.role === "offices"
+                                ? "px-2.5 bg-purple-100 text-purple-700"
+                                : user.role === "faculty"
+                                  ? "px-2.5 bg-yellow-100 text-yellow-700"
+                                  : "px-2.5 bg-green-100 text-green-700"
+                          }`}
+                        >
+                          {user.role}
+                        </p>
+                      </h1>
+                      <section className="px-3">
+                        <span className="flex gap-3 items-center">
+                          <img
+                            src={user.profileImageUrl}
+                            className="w-10 h-10 rounded-full object-cover object-center"
+                          />
+                          <h1 className="">
+                            <p className="text-sm font-medium">{user.name}</p>
+                            <p className="text-xs text-slate-500">
+                              {user.email}
+                            </p>
+                          </h1>
+                        </span>
+                      </section>
+                    </section>
+                  ))}
+                </span>
+
+                {/* Desktop */}
                 {totalPages > 1 && (
-                  <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
+                  <div className="md:flex hidden justify-center items-center gap-2 mt-5 flex-wrap">
                     {[...Array(totalPages)].map((_, index) => (
                       <button
                         key={index}
@@ -307,10 +375,29 @@ const UsersManagement = () => {
                     ))}
                   </div>
                 )}
+
+                {/* Mobile */}
+                {totalPagesM > 1 && (
+                  <div className="flex md:hidden justify-center items-center gap-2 my-5 flex-wrap">
+                    {[...Array(totalPagesM)].map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentPageM(index + 1)}
+                        className={`py-1 rounded-lg text-white text-xl font-medium cursor-pointer ${
+                          currentPageM === index + 1
+                            ? "bg-blue-800 px-3"
+                            : "bg-blue-400 px-2"
+                        } duration-200`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </span>
             </div>
             {/* Mobile view */}
-            <section className="md:hidden grid grid-cols-1 gap-3">
+            {/* <section className="md:hidden grid grid-cols-1 gap-3">
               {currentUsers.map((user) => (
                 <section
                   key={user._id}
@@ -347,7 +434,6 @@ const UsersManagement = () => {
                   </section>
                 </section>
               ))}
-              {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
                   {[...Array(totalPages)].map((_, index) => (
@@ -365,7 +451,7 @@ const UsersManagement = () => {
                   ))}
                 </div>
               )}
-            </section>
+            </section> */}
           </div>
         ) : (
           <div className="flex justify-center items-center py-10">

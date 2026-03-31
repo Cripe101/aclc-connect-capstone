@@ -151,7 +151,7 @@ const BlogPosts = () => {
             </section>
           )}
 
-          {posts?.length > 0 && (
+          {posts?.length > limit && (
             <div className="flex justify-center gap-2 mt-8 mb-10 flex-wrap">
               {Array.from({ length: totalPages }, (_, index) => {
                 const pageNumber = index + 1;

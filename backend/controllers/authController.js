@@ -130,9 +130,11 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, bio, profileImageUrl, role, password } = req.body;
+    const { name, email, username, bio, profileImageUrl, role, password } =
+      req.body;
+    username = email;
 
-    const updateFields = { name, email, bio, profileImageUrl, role };
+    const updateFields = { name, email, username, bio, profileImageUrl, role };
 
     if (password) {
       const salt = await bcrypt.genSalt(10);
