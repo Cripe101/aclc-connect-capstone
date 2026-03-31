@@ -199,7 +199,11 @@ const BlogLandingPage = () => {
                   <BlogPostSummary
                     key={item._id}
                     title={item.title}
-                    coverImageUrl={item.coverImageUrl}
+                    coverImageUrl={
+                      item?.coverImageUrl
+                        ? item?.coverImageUrl
+                        : item?.images[0]
+                    }
                     description={item.content}
                     tags={item.tags}
                     updatedOn={
