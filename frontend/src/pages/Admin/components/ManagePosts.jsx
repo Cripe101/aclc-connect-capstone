@@ -117,8 +117,8 @@ const ManagePosts = () => {
             <section className="grid md:grid-cols-2 gap-2">
               {paginatedPosts?.map((post) => (
                 <BlogPostSummaryCard
-                  key={post._id}
-                  title={post.title}
+                  key={post?._id}
+                  title={post?.title}
                   imgUrl={
                     post?.coverImageUrl === ""
                       ? post?.images[0]
@@ -134,19 +134,19 @@ const ManagePosts = () => {
                   //     ? moment(post.createdAt).format("Do MMM YYYY")
                   //     : "-"
                   // }
-                  author={post.author.name}
-                  status={post.status}
-                  tags={post.tags}
-                  role={user.role}
-                  likes={post.likedBy?.length || 0}
-                  views={post.views}
-                  onClick={() => navigate(`/preview/${post.slug}`)}
-                  onApprove={() => approveMutation.mutate(post._id)}
+                  author={post?.author?.name}
+                  status={post?.status}
+                  tags={post?.tags}
+                  role={user?.role}
+                  likes={post?.likedBy?.length || 0}
+                  views={post?.views}
+                  onClick={() => navigate(`/preview/${post?.slug}`)}
+                  onApprove={() => approveMutation.mutate(post?._id)}
                   isApproving={
                     approveMutation.isLoading &&
-                    approveMutation.variables === post._id
+                    approveMutation.variables === post?._id
                   }
-                  onReject={() => rejectMutation.mutate(post._id)}
+                  onReject={() => rejectMutation.mutate(post?._id)}
                 />
               ))}
             </section>
