@@ -34,7 +34,7 @@ const CommentInfoCard = ({
   // Add reply
   const handleAddReply = async () => {
     try {
-      console.log("post", post);
+      //   console.log("post", post);
 
       const response = await axiosInstance.post(
         API_PATHS.COMMENTS.ADD(post._id),
@@ -47,6 +47,8 @@ const CommentInfoCard = ({
       setReplyText("");
       setShowReplyForm(false);
       getAllComments();
+
+      return response.data;
     } catch (error) {
       console.error("Error replying to comment.", error);
     }

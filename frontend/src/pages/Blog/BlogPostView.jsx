@@ -2,15 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import moment from "moment";
-import {
-  LuArrowBigLeftDash,
-  LuCircleAlert,
-  LuCornerUpLeft,
-  LuCross,
-  LuCrosshair,
-  LuDot,
-  LuX,
-} from "react-icons/lu";
+import { LuCircleAlert, LuCornerUpLeft, LuDot, LuX } from "react-icons/lu";
 import { UserContext } from "../../context/userContext";
 import CommentReplyInput from "../../components/Inputs/CommentReplyInput";
 import toast from "react-hot-toast";

@@ -13,7 +13,8 @@ import {
 } from "react-icons/lu";
 import Modal from "../../../components/Modal";
 import toast from "react-hot-toast";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { useQuery } from "@tanstack/react-query";
+import { getUsers } from "../../../utils/api/userApi";
 
 const UsersManagement = () => {
   const [users, setUsers] = useState([]);
@@ -58,18 +59,18 @@ const UsersManagement = () => {
   );
 
   // Fetch all users
-  const getAllUsers = async () => {
-    try {
-      const response = await axiosInstance.get(API_PATHS.AUTH.GET_ALL_USERS);
-      setUsers(response.data);
-      setFilteredUsers(response.data);
-      setFilteredUsersM(response.data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      toast.error("Failed to fetch users");
-    } finally {
-    }
-  };
+  // const getAllUsers = async () => {
+  //   try {
+  //     const response = await axiosInstance.get(API_PATHS.AUTH.GET_ALL_USERS);
+  //     setUsers(response.data);
+  //     setFilteredUsers(response.data);
+  //     setFilteredUsersM(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching users:", error);
+  //     toast.error("Failed to fetch users");
+  //   } finally {
+  //   }
+  // };
 
   // Search users
   const handleSearch = (query) => {
@@ -122,7 +123,7 @@ const UsersManagement = () => {
       );
       toast.success("User updated successfully");
       setIsEditModalOpen(false);
-      getAllUsers();
+      userQuery.refetch();
     } catch (error) {
       console.error("Error updating user:", error);
       toast.error("Failed to update user");
@@ -138,7 +139,7 @@ const UsersManagement = () => {
       await axiosInstance.delete(API_PATHS.AUTH.DELETE_USER(selectedUser._id));
       toast.success("User deleted successfully");
       setIsDeleteModalOpen(false);
-      getAllUsers();
+      userQuery.refetch();
     } catch (error) {
       console.error("Error deleting user:", error);
       toast.error("Failed to delete user");
@@ -171,19 +172,19 @@ const UsersManagement = () => {
 
       toast.success("User created successfully");
       setIsAddModalOpen(false);
-      getAllUsers();
+      userQuery.refetch();
 
       return response.data;
     } catch (error) {
-      toast.error("Failed to create user");
+      toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    getAllUsers();
-  }, []);
+  // useEffect(() => {
+  //   getAllUsers();
+  // }, []);
 
   // const createUserMutation = useMutation({
   //   mutationFn: createUser,
@@ -205,6 +206,19 @@ const UsersManagement = () => {
   //   };
   //   createUserMutation.mutate(payload);
   // };
+
+  const userQuery = useQuery({
+    queryKey: ["Users"],
+    queryFn: getUsers,
+    refetchInterval: 5000,
+  });
+
+  useEffect(() => {
+    userQuery.isLoading
+      ? console.log("isLoading")
+      : setFilteredUsers(userQuery.data);
+    setFilteredUsersM(userQuery.data);
+  });
 
   return (
     <DashboardLayout activeMenu="Users">
