@@ -127,10 +127,10 @@ const getCommentsByPost = async (req, res) => {
 
     // Create a map for commentId
     const commentMap = {};
-    comments.forEach((comment) => {
-      comment = comment.toObject();
+    comments.forEach((c) => {
+      const comment = c.toObject();
       comment.replies = [];
-      commentMap[comment._id] = comment;
+      commentMap[comment._id.toString()] = comment;
     });
 
     // Nested replies under their parent

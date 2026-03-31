@@ -54,10 +54,9 @@ const BlogPostView = () => {
 
   useEffect(() => {
     if (blogPostData) {
-      const data = blogPostData;
-      fetchCommentByPostId(data?._id);
-      incrementViews(data?._id);
-      refetch;
+      fetchCommentByPostId(blogPostData?._id);
+      incrementViews(blogPostData?._id);
+      refetch();
     }
   }, [slug]);
 
@@ -67,8 +66,9 @@ const BlogPostView = () => {
       const response = await axiosInstance.get("/comments/" + postId);
 
       if (response.data) {
-        const data = response.data;
-        setComments(data);
+        setComments(response.data);
+
+        console.log("Data", response.data);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -119,6 +119,7 @@ const BlogPostView = () => {
 
   const [showPhotos, setShowPhotos] = useState(false);
   const [photo, setPhoto] = useState(1);
+
   return (
     <div>
       {blogPostData ? (
