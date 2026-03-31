@@ -17,7 +17,6 @@ import toast from "react-hot-toast";
 const Login = ({ setCurrentPage, isAdmin = false }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
@@ -30,19 +29,17 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
     if (isLoading) return;
     setIsLoading(true);
 
-    // if (!validateEmail(email)) {
-    //   setError("Please enter a valid email address.");
-    //   setIsLoading(false);
-    //   return;
-    // }
-
-    if (!password) {
-      setError("Please enter the password.");
+    if (!email) {
+      toast.error("Please enter username.");
       setIsLoading(false);
       return;
     }
 
-    setError("");
+    if (!password) {
+      toast.error("Please enter password");
+      setIsLoading(false);
+      return;
+    }
 
     // Login API call
     try {
@@ -51,17 +48,20 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
         password,
       });
 
-      const { token, role } = response?.data;
+      const token = response?.data?.token;
+      const role = response?.data?.role;
+
+      if (!token) {
+        toast.error("Invalid login");
+        return;
+      }
 
       if (token) {
         localStorage.setItem("token", token);
         updateUser(response?.data);
 
-        // Redirect based on role
-        if (role === "admin" || "offices") {
-          setOpenAuthForm(false);
+        if (role === "admin" || role === "offices") {
           navigate("/admin/dashboard");
-          return;
         } else {
           navigate("/");
         }
@@ -70,14 +70,15 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
       }
     } catch (error) {
       if (error.response && error.response?.data.message) {
-        setError(error.response?.data.message);
+        toast.error(error.response?.data?.message);
       } else {
-        setError("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.");
       }
-
-      toast.error(error.response?.data.message);
     } finally {
       setIsLoading(false);
+      setEmail("");
+      setPassword("");
+      toast.success("Login successfully");
     }
   };
   const handleShow = () => {
@@ -153,7 +154,7 @@ const Login = ({ setCurrentPage, isAdmin = false }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 md:py-4 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-70 text-white font-semibold rounded-xl active:scale-[99%] duration-200 flex items-center justify-center gap-2 mt-2"
+            className="w-full py-3 md:py-4 px-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-70 text-white font-semibold rounded-xl active:scale-90 duration-200 flex items-center justify-center gap-2 mt-2"
           >
             {isLoading ? (
               <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24">

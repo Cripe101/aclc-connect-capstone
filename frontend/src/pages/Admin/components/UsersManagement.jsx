@@ -125,8 +125,7 @@ const UsersManagement = () => {
       setIsEditModalOpen(false);
       userQuery.refetch();
     } catch (error) {
-      console.error("Error updating user:", error);
-      toast.error("Failed to update user");
+      toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -141,8 +140,7 @@ const UsersManagement = () => {
       setIsDeleteModalOpen(false);
       userQuery.refetch();
     } catch (error) {
-      console.error("Error deleting user:", error);
-      toast.error("Failed to delete user");
+      toast.error(error.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -218,6 +216,7 @@ const UsersManagement = () => {
       ? console.log("isLoading")
       : setFilteredUsers(userQuery.data);
     setFilteredUsersM(userQuery.data);
+    setUsers(userQuery.data);
   });
 
   return (
