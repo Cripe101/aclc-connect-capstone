@@ -56,20 +56,6 @@ const UsersManagement = () => {
     currentPageM * usersPerPageMobile,
   );
 
-  // Fetch all users
-  // const getAllUsers = async () => {
-  //   try {
-  //     const response = await axiosInstance.get(API_PATHS.AUTH.GET_ALL_USERS);
-  //     setUsers(response.data);
-  //     setFilteredUsers(response.data);
-  //     setFilteredUsersM(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching users:", error);
-  //     toast.error("Failed to fetch users");
-  //   } finally {
-  //   }
-  // };
-
   // Search users
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -181,31 +167,6 @@ const UsersManagement = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getAllUsers();
-  // }, []);
-
-  // const createUserMutation = useMutation({
-  //   mutationFn: createUser,
-  //   onSuccess: () => {
-  //     toast.success("User Successfully Created");
-  //   },
-  //   onError: (error) => {
-  //     toast.error(error.message);
-  //   },
-  // });
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const payload = {
-  //     name: addForm.name,
-  //     username: addForm.username,
-  //     password: addForm.password,
-  //     role: addForm.role,
-  //   };
-  //   createUserMutation.mutate(payload);
-  // };
-
   const userQuery = useQuery({
     queryKey: ["Users"],
     queryFn: getUsers,
@@ -316,7 +277,7 @@ const UsersManagement = () => {
 
                 {/* Mobile */}
                 <span className="w-full grid md:hidden gap-2">
-                  {filteredUsers.map((user) => (
+                  {currentUsersM.map((user) => (
                     <section
                       key={user?._id}
                       className={`flex flex-col py-3 bg-linear-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-100 rounded-xl transition-colors duration-600`}
