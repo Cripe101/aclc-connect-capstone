@@ -22,11 +22,11 @@ const BlogPostSummary = ({
         <img
           src={coverImageUrl}
           alt={title}
-          className="w-full h-60 rounded-t-lg md:rounded-l-lg md:rounded-r-none object-top object-cover"
+          className="w-full h-60 rounded-t-xl md:rounded-l-xl md:rounded-r-none object-top object-cover"
         />
       </section>
 
-      <div className="p-4 md:p-6 bg-linear-to-b md:bg-linear-to-r from-blue-600 via-blue-500 to-blue-400 rounded-b-lg md:rounded-r-lg md:rounded-l-none">
+      <div className="p-4 md:p-6 bg-linear-to-b md:bg-linear-to-r from-blue-600 via-blue-500 to-blue-400 rounded-b-xl md:rounded-r-xl md:rounded-l-none">
         <h2 className="text-white text-xl md:text-2xl font-bold mb-2 line-clamp-1">
           {title}
         </h2>

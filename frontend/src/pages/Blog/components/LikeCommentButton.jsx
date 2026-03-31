@@ -1,5 +1,4 @@
-import { LuMessageCircleDashed } from "react-icons/lu";
-import { PiHandsClapping } from "react-icons/pi";
+import { LuHeartHandshake, LuMessageCircleDashed } from "react-icons/lu";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_PATHS } from "../../../utils/apiPaths";
 import clsx from "clsx";
@@ -79,7 +78,7 @@ const LikeCommentButton = ({
             handleClick();
           }}
         >
-          <PiHandsClapping
+          <LuHeartHandshake
             className={clsx(
               "text-[22px] transition-transform duration-300",
               isAnimating && "scale-115",

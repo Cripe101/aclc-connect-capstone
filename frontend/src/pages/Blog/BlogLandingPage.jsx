@@ -7,7 +7,6 @@ import FeaturedPosts from "./components/FeaturedPosts";
 import BlogPostSummary from "./components/BlogPostSummary";
 import TrendingPostsSection from "./components/TrendingPostsSection";
 import logo from "../../assets/aclc-logo-text.png";
-// import aclcVid from "../../assets/aclc-vid.mp4";
 import { getPosts } from "../../utils/api";
 import { useQuery } from "@tanstack/react-query";
 
@@ -21,42 +20,9 @@ const BlogLandingPage = () => {
   const aclcVid =
     "https://www.dropbox.com/scl/fi/otdreekya8q8pt6cwhut2/ACLC-MARKETING-VIDEO.mp4?rlkey=6wl5fm597lddm61vmvvhoxkb4&st=p7km97yr&dl=1";
 
-  // Fetch paginated post
-  // const getAllPosts = async (pageNumber = 1) => {
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await axiosInstance.get(API_PATHS.POSTS.GET_ALL, {
-  //       params: {
-  //         status: "published",
-  //         page: pageNumber,
-  //       },
-  //     });
-
-  //     const { posts, totalPages } = response.data;
-  //     // console.log(response.data);
-  //     setBlogPostList((prevPosts) =>
-  //       pageNumber === 1 ? posts : [...prevPosts, ...posts],
-  //     );
-  //     setTotalPages(totalPages);
-  //     setPage(pageNumber);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // Load more posts
-  const handleLoadMore = () => {
-    if (page < totalPages) {
-      getAllPosts(page + 1);
-    }
-  };
-
   const handleClick = (post) => {
     navigate(`/${post.slug}`);
   };
-  // console.log(blogPostList);
 
   const queryGetPosts = useQuery({
     queryKey: ["posts"],
@@ -65,10 +31,7 @@ const BlogLandingPage = () => {
 
   // Initial Load
   useEffect(() => {
-    // getAllPosts(1);
     setBlogPostList(queryGetPosts?.data?.posts);
-    // console.log(sortedPosts);
-    // console.log("rendered");
   }, [queryGetPosts]);
 
   const sortedPosts = useMemo(() => {
@@ -85,19 +48,16 @@ const BlogLandingPage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Scroll to anchor if present in URL hash
     if (location.hash) {
       const id = location.hash.replace("#", "");
       const el = document.getElementById(id);
       if (el) {
-        // small timeout to ensure element is rendered
         setTimeout(
           () => el.scrollIntoView({ behavior: "smooth", block: "start" }),
           50,
         );
       }
     } else {
-      // if no hash, optionally scroll to top when navigating to About
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [location]);
@@ -105,11 +65,7 @@ const BlogLandingPage = () => {
   return (
     <BlogLayout>
       <div className="md:mb-5 grid justify-center lg:grid-cols-[1fr_1fr_3fr] gap-3 py-6 md:py-10 lg:px-20 bg-linear-to-r from-blue-800 via-blue-600 to-blue-400">
-        <img
-          src={logo}
-          alt=""
-          className="w-60 md:w-50 p-2 bg-white rounded-lg"
-        />
+        <img src={logo} alt="" className="w-60 p-2 bg-white rounded-xl" />
         <p className="text-white text-justify font-serif w-60">
           {" "}
           ACLC College of Ormoc is a member of the AMA Education System.
@@ -122,7 +78,7 @@ const BlogLandingPage = () => {
           autoPlay={true}
           muted
           controls
-          className="mt-5 rounded-lg w-[90%] md:w-[97%]"
+          className="mt-5 rounded-xl w-[90%] md:w-[97%]"
         ></video>
       </div>
       <div className="grid md:grid-cols-[5fr_1fr] gap-5 md:p-5">
@@ -167,8 +123,8 @@ const BlogLandingPage = () => {
           )}
           {queryGetPosts.isLoading ? (
             <div className="grid grid-cols-2 gap-5 mt-8">
-              <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-lg h-60">
-                <section className="bg-gray-200 rounded-lg"></section>
+              <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-xl h-60">
+                <section className="bg-gray-200 rounded-xl"></section>
                 <section className="grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr] gap-3">
                   <p className="rounded-full bg-gray-200 w-full"></p>
                   <p className=""></p>
@@ -178,8 +134,8 @@ const BlogLandingPage = () => {
                   <p className="rounded-full bg-gray-200 w-full"></p>
                 </section>
               </span>
-              <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-lg h-60">
-                <section className="bg-gray-200 rounded-lg"></section>
+              <span className="animate-pulse grid grid-cols-[1fr_2fr] gap-3 p-3 w-full bg-gray-200 dark:bg-gray-500 rounded-xl h-60">
+                <section className="bg-gray-200 rounded-xl"></section>
                 <section className="grid grid-rows-[2fr_1fr_1fr_1fr_1fr_1fr] gap-3">
                   <p className="rounded-full bg-gray-200 w-full"></p>
                   <p className=""></p>

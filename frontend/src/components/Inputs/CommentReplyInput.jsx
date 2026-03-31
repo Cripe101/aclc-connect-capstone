@@ -39,7 +39,7 @@ const CommentReplyInput = ({
 
           <div className="flex items-center justify-end gap-4">
             <button
-              className="flex font-bold items-center gap-1.5 shadow-md text-sm text-white bg-red-600 px-4 py-1 rounded-lg cursor-pointer hover:bg-red-800 active:bg-red-800 active:scale-90 duraton-200"
+              className="flex font-bold items-center gap-1.5 shadow-md text-sm text-white bg-red-600 px-4 py-1 rounded-xl cursor-pointer hover:bg-red-800 active:bg-red-800 active:scale-90 duraton-200"
               disabled={isLoading}
               onClick={handleCancelReply}
             >
@@ -47,7 +47,7 @@ const CommentReplyInput = ({
             </button>
 
             <button
-              className={`flex items-center gap-1.5 shadow-md text-sm font-bold px-4 py-1 rounded-lg text-white bg-blue-500 hover:bg-blue-700 active:scale-90 active:bg-blue-700 cursor-pointer disabled:opacity-50 duration-200`}
+              className={`flex items-center gap-1.5 shadow-md text-sm font-bold px-4 py-1 rounded-xl text-white bg-blue-500 hover:bg-blue-700 active:scale-90 active:bg-blue-700 cursor-pointer disabled:opacity-50 duration-200`}
               disabled={replyText?.length == 0 || isLoading}
               onClick={handleAddReply}
             >

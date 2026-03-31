@@ -10,7 +10,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
   return (
     <div>
       <label className="text-sm text-slate-800">{label}</label>
-      <div className="bg-slate-100 p-2 rounded-lg my-2">
+      <div className="bg-blue-50 p-2 rounded-xl my-2">
         <input
           className="pl-3 w-full bg-transparent outline-none"
           type={

@@ -13,16 +13,16 @@ const FeaturedPosts = ({
 }) => {
   return (
     <div
-      className="grid md:grid-cols-[2fr_3fr] md:max-h-100 rounded-lg cursor-pointer hover:scale-101 active:scale-98 duration-200"
+      className="grid md:grid-cols-[2fr_3fr] md:max-h-100 cursor-pointer hover:scale-101 active:scale-98 duration-200"
       onClick={onClick}
     >
       <img
         src={coverImageUrl === "" ? images[0] : coverImageUrl}
         alt={title}
-        className="w-full max-h-100 object-cover object-top rounded-t-lg md:rounded-l-lg md:rounded-t-none"
+        className="w-full max-h-100 object-cover object-top rounded-t-xl md:rounded-l-xl md:rounded-t-none"
       />
 
-      <div className="p-6 bg-linear-to-b md:bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 rounded-b-lg md:rounded-r-lg md:rounded-l-none">
+      <div className="flex flex-col p-6 bg-linear-to-b md:bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 rounded-b-xl md:rounded-r-xl md:rounded-l-none">
         <h2 className="text-xl md:text-2xl text-white font-bold mb-2 line-clamp-3">
           {title}
         </h2>

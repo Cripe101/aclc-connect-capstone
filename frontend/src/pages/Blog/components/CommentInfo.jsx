@@ -58,7 +58,7 @@ const CommentInfo = ({
   };
 
   return (
-    <div className="bg-white px-3 py-2 cursor-pointer group">
+    <div className="bg-white rounded-xl p-3 cursor-pointer group">
       <div className="grid grid-cols-12 gap-3">
         <div className="col-span-12 md:col-span-8 order-2 md:order-1">
           <div className="flex items-start gap-3">

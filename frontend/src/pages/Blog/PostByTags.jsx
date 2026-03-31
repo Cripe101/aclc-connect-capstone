@@ -65,7 +65,7 @@ const PostByTags = () => {
       <div className="p-5">
         <div className="grid grid-cols-2 gap-5">
           <div className="col-span-12 md:col-span-9">
-            <div className="flex items-center justify-center bg-linear-to-r from-sky-50 via-teal-50 to-cyan-100 h-32 p-6 rounded-lg">
+            <div className="flex items-center justify-center bg-linear-to-r from-sky-50 via-teal-50 to-cyan-100 h-32 p-6 rounded-xl">
               <div className="text-center">
                 <h3 className="text-xl font-semibold text-sky-900">
                   #{tagName}
@@ -84,7 +84,9 @@ const PostByTags = () => {
                   <BlogPostSummary
                     key={item._id}
                     title={item.title}
-                    coverImageUrl={item.coverImageUrl}
+                    coverImageUrl={
+                      item.coverImageUrl ? item.coverImageUrl : item.images[0]
+                    }
                     description={item.content}
                     tags={item.tags}
                     updatedOn={

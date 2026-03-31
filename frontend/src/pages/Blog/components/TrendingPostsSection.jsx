@@ -42,16 +42,17 @@ const TrendingPostsSection = () => {
             <PostCard
               key={item._id}
               title={item.title}
-              images={item.images}
-              coverImageUrl={item.coverImageUrl}
+              coverImageUrl={
+                item.coverImageUrl ? item.coverImageUrl : item.images[0]
+              }
               tags={item.tags}
               onClick={() => handleClick(item)}
             />
           ))
       ) : (
         <div className="w-full h-full animate-pulse">
-          <section className="p-2 grid grid-cols-[1fr_2fr] gap-3 bg-gray-200 dark:bg-gray-500 h-20 rounded-lg">
-            <h1 className="bg-gray-200 rounded-lg"></h1>
+          <section className="p-2 grid grid-cols-[1fr_2fr] gap-3 bg-gray-200 dark:bg-gray-500 h-20 rounded-xl">
+            <h1 className="bg-gray-200 rounded-xl"></h1>
             <h1 className="grid grid-rows-[1fr_1fr_1fr_1fr] gap-1">
               <p className="bg-gray-200 rounded-full"></p>
               <p className=""></p>
@@ -67,7 +68,7 @@ const TrendingPostsSection = () => {
 
 export default TrendingPostsSection;
 
-const PostCard = ({ title, images, coverImageUrl, tags, onClick }) => {
+const PostCard = ({ title, coverImageUrl, tags, onClick }) => {
   return (
     <div className="cursor-pointer mb-2" onClick={onClick}>
       <h6 className="text-xs font-semibold text-blue-500">
@@ -76,9 +77,9 @@ const PostCard = ({ title, images, coverImageUrl, tags, onClick }) => {
 
       <div className="flex items-center gap-4 mt-1">
         <img
-          src={coverImageUrl === "" ? images[0] : coverImageUrl}
+          src={coverImageUrl}
           alt={title}
-          className="w-18 h-18 object-cover rounded-lg"
+          className="w-18 h-18 object-cover object-center rounded-lg"
         />
 
         <h2 className="text-sm font-medium mb-2 line-clamp-1">{title}</h2>
