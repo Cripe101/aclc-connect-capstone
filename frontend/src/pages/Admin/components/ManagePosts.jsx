@@ -18,7 +18,7 @@ const ManagePosts = () => {
 
   const limit = 6; // posts per page
   const [page, setPage] = useState(1);
-  const [filterStatus, setFilterStatus] = useState("all"); // must match backend
+  const [filterStatus, setFilterStatus] = useState("All"); // must match backend
   const [tabs, setTabs] = useState([]);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
     open: false,

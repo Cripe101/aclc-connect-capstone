@@ -20,7 +20,7 @@ const BlogPosts = () => {
 
   const limit = 6;
   const [page, setPage] = useState(1);
-  const [filterStatus, setFilterStatus] = useState("all"); // must match backend
+  const [filterStatus, setFilterStatus] = useState("All");
   const [tabs, setTabs] = useState([]);
   const [openDeleteAlert, setOpenDeleteAlert] = useState({
     open: false,
