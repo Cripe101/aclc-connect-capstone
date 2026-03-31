@@ -44,13 +44,13 @@ const UsersManagement = () => {
   const usersPerPage = 16;
   const usersPerPageM = 6;
 
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+  const totalPages = Math.ceil(filteredUsers?.length / usersPerPage);
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
   // For Mobile
-  const totalPagesM = Math.ceil(filteredUsersM.length / usersPerPageM);
+  const totalPagesM = Math.ceil(filteredUsersM?.length / usersPerPageM);
   const indexOfLastUserM = currentPageM * usersPerPageM;
   const indexOfFirstUserM = indexOfLastUserM - usersPerPageM;
   const currentUsersM = filteredUsersM.slice(
