@@ -31,8 +31,6 @@ const PostPreview = () => {
       if (response.data) {
         const data = response.data;
         setBlogPostData(data);
-        // fetchCommentByPostId(data._id);
-        // incrementViews(data._id);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -44,7 +42,7 @@ const PostPreview = () => {
     onSuccess: () => {
       toast.success("Post approved successfully");
       navigate(-1);
-      queryClient.invalidateQueries(["posts"]); // refetch posts
+      queryClient.invalidateQueries(["posts"]);
     },
     onError: (error) => {
       toast.error(error.message || "Failed to approve post");
@@ -57,7 +55,7 @@ const PostPreview = () => {
     onSuccess: () => {
       toast.success("Post rejected");
       navigate(-1);
-      queryClient.invalidateQueries(["posts"]); // refetch posts
+      queryClient.invalidateQueries(["posts"]);
     },
     onError: (error) => {
       toast.error(error.message || "Failed to reject post");
@@ -105,8 +103,9 @@ const PostPreview = () => {
               >
                 <FaArrowLeft size={25} />
               </button>
-              {blogPostData?.images?.slice(photo - 1, photo).map((img) => (
+              {blogPostData?.images?.slice(photo - 1, photo).map((img, i) => (
                 <img
+                  key={i}
                   src={img}
                   alt="No Photo"
                   className="w-80 md:w-full max-h-180 rounded-lg"
