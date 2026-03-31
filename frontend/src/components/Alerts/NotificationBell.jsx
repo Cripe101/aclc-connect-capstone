@@ -17,7 +17,7 @@ const NotificationBell = () => {
       const res = await axiosInstance.get(`/notifications/${userId}`);
 
       // const filterNotif = res.data.filter((notif) => !notif.isRead);
-      setNotifications(filterNotif);
+      setNotifications(res?.data);
     } catch (err) {
       console.error(err);
     }
