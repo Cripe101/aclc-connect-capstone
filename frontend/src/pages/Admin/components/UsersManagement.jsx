@@ -19,7 +19,6 @@ import { getUsers } from "../../../utils/api/userApi";
 const UsersManagement = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [filteredUsersM, setFilteredUsersM] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -41,21 +40,20 @@ const UsersManagement = () => {
   const [showAddPwdVisibility, setShowAddPwdVisibility] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageM, setCurrentPageM] = useState(1);
-  const usersPerPage = 16;
-  const usersPerPageM = 6;
+  const usersPerPageDesktop = 16;
+  const usersPerPageMobile = 6;
 
-  const totalPages = Math.ceil(filteredUsers?.length / usersPerPage);
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers?.slice(indexOfFirstUser, indexOfLastUser);
+  const totalPages = Math.ceil(filteredUsers.length / usersPerPageDesktop);
+  const currentUsers = filteredUsers.slice(
+    (currentPage - 1) * usersPerPageDesktop,
+    currentPage * usersPerPageDesktop,
+  );
 
   // For Mobile
-  const totalPagesM = Math.ceil(filteredUsersM?.length / usersPerPageM);
-  const indexOfLastUserM = currentPageM * usersPerPageM;
-  const indexOfFirstUserM = indexOfLastUserM - usersPerPageM;
-  const currentUsersM = filteredUsersM?.slice(
-    indexOfFirstUserM,
-    indexOfLastUserM,
+  const totalPagesM = Math.ceil(filteredUsers.length / usersPerPageMobile);
+  const currentUsersM = filteredUsers.slice(
+    (currentPageM - 1) * usersPerPageMobile,
+    currentPageM * usersPerPageMobile,
   );
 
   // Fetch all users
@@ -76,17 +74,20 @@ const UsersManagement = () => {
   const handleSearch = (query) => {
     setSearchQuery(query);
     setCurrentPage(1);
+    setCurrentPageM(1);
 
-    if (query.trim() === "") {
+    if (!query.trim()) {
       setFilteredUsers(users);
-    } else {
-      const filtered = users.filter(
-        (user) =>
-          user?.name.toLowerCase().includes(query.toLowerCase()) ||
-          user?.email.toLowerCase().includes(query.toLowerCase()),
-      );
-      setFilteredUsers(filtered);
+      return;
     }
+
+    const filtered = users.filter(
+      (user) =>
+        user?.name.toLowerCase().includes(query.toLowerCase()) ||
+        user?.email.toLowerCase().includes(query.toLowerCase()),
+    );
+
+    setFilteredUsers(filtered);
   };
 
   // Open edit modal
@@ -208,16 +209,15 @@ const UsersManagement = () => {
   const userQuery = useQuery({
     queryKey: ["Users"],
     queryFn: getUsers,
-    refetchInterval: 5000,
+    // refetchInterval: 5000,
   });
 
   useEffect(() => {
-    userQuery.isLoading
-      ? console.log("isLoading")
-      : setFilteredUsers(userQuery.data);
-    setFilteredUsersM(userQuery.data);
-    setUsers(userQuery.data);
-  });
+    if (userQuery.data) {
+      setUsers(userQuery.data);
+      setFilteredUsers(userQuery.data);
+    }
+  }, [userQuery.data]);
 
   return (
     <DashboardLayout activeMenu="Users">
@@ -316,7 +316,7 @@ const UsersManagement = () => {
 
                 {/* Mobile */}
                 <span className="w-full grid md:hidden gap-2">
-                  {currentUsersM.map((user) => (
+                  {filteredUsers.map((user) => (
                     <section
                       key={user?._id}
                       className={`flex flex-col py-3 bg-linear-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-100 rounded-xl transition-colors duration-600`}
