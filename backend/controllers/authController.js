@@ -3,13 +3,6 @@ const BlogPost = require("../models/blogPostModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// Generate JWT Token
-// const generateToken = (userId) => {
-//   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-//     expiresIn: "7d",
-//   });
-// };
-
 // Generate JWT token
 const generateToken = (id) => {
   if (!process.env.JWT_SECRET) {
