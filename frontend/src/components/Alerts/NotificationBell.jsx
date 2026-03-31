@@ -16,7 +16,7 @@ const NotificationBell = () => {
     try {
       const res = await axiosInstance.get(`/notifications/${userId}`);
 
-      const filterNotif = res.data.filter((notif) => !notif.isRead);
+      // const filterNotif = res.data.filter((notif) => !notif.isRead);
       setNotifications(filterNotif);
     } catch (err) {
       console.error(err);
@@ -31,7 +31,7 @@ const NotificationBell = () => {
         prev.map((n) => (n._id === id ? { ...n, isRead: true } : n)),
       );
 
-      // await axiosInstance.delete(`/notifications/delete/${id}`);
+      await axiosInstance.delete(`/notifications/delete/${id}`);
 
       setNotifications((prev) => prev.filter((n) => n._id !== id));
       fetchNotifications();
