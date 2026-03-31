@@ -250,17 +250,17 @@ const UsersManagement = () => {
           </section>
         </div>
 
-        {isLoading && filteredUsers.length === 0 ? (
+        {isLoading && filteredUsers?.length === 0 ? (
           <div className="flex justify-center items-center py-10">
             <LuLoaderCircle className="animate-spin text-2xl text-sky-500" />
           </div>
-        ) : filteredUsers.length > 0 ? (
+        ) : filteredUsers?.length > 0 ? (
           <div>
             <div className="">
               <span className="">
                 {/* Desktop */}
                 <span className="w-full md:grid hidden grid-cols-4 gap-2 md:gap-3">
-                  {currentUsers.map((user) => (
+                  {currentUsers?.map((user) => (
                     <section
                       key={user._id}
                       className={`flex flex-col py-3 bg-linear-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-100 rounded-xl transition-colors duration-600`}
@@ -299,13 +299,13 @@ const UsersManagement = () => {
                       <section className="px-3">
                         <span className="flex gap-3 items-center">
                           <img
-                            src={user.profileImageUrl}
+                            src={user?.profileImageUrl}
                             className="w-10 h-10 rounded-full object-cover object-center"
                           />
                           <h1 className="">
-                            <p className="text-sm font-medium">{user.name}</p>
+                            <p className="text-sm font-medium">{user?.name}</p>
                             <p className="text-xs text-slate-500">
-                              {user.email}
+                              {user?.email}
                             </p>
                           </h1>
                         </span>
@@ -318,7 +318,7 @@ const UsersManagement = () => {
                 <span className="w-full grid md:hidden gap-2">
                   {currentUsersM.map((user) => (
                     <section
-                      key={user._id}
+                      key={user?._id}
                       className={`flex flex-col py-3 bg-linear-to-r from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-100 rounded-xl transition-colors duration-600`}
                     >
                       <h1 className="flex items-center justify-between w-full mb-5 pr-3 pl-2">
@@ -340,28 +340,28 @@ const UsersManagement = () => {
                         </p>
                         <p
                           className={`py-1 rounded-full text-xs font-bold font-display ${
-                            user.role === "admin"
+                            user?.role === "admin"
                               ? "px-2.5 bg-blue-50 text-blue-700"
-                              : user.role === "offices"
+                              : user?.role === "offices"
                                 ? "px-2.5 bg-purple-100 text-purple-700"
-                                : user.role === "faculty"
+                                : user?.role === "faculty"
                                   ? "px-2.5 bg-yellow-100 text-yellow-700"
                                   : "px-2.5 bg-green-100 text-green-700"
                           }`}
                         >
-                          {user.role}
+                          {user?.role}
                         </p>
                       </h1>
                       <section className="px-3">
                         <span className="flex gap-3 items-center">
                           <img
-                            src={user.profileImageUrl}
+                            src={user?.profileImageUrl}
                             className="w-10 h-10 rounded-full object-cover object-center"
                           />
                           <h1 className="">
-                            <p className="text-sm font-medium">{user.name}</p>
+                            <p className="text-sm font-medium">{user?.name}</p>
                             <p className="text-xs text-slate-500">
-                              {user.email}
+                              {user?.email}
                             </p>
                           </h1>
                         </span>
@@ -487,7 +487,7 @@ const UsersManagement = () => {
               </label>
               <input
                 type="text"
-                value={formData.name}
+                value={formData?.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
@@ -501,7 +501,7 @@ const UsersManagement = () => {
               </label>
               <input
                 type="text"
-                value={formData.email}
+                value={formData?.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
                 }
@@ -515,7 +515,7 @@ const UsersManagement = () => {
               Role
             </label>
             <select
-              value={formData.role}
+              value={formData?.role}
               onChange={(e) =>
                 setFormData({ ...formData, role: e.target.value })
               }
@@ -562,7 +562,7 @@ const UsersManagement = () => {
               <input
                 type="text"
                 required
-                value={addForm.name}
+                value={addForm?.name}
                 onChange={(e) =>
                   setAddForm({ ...addForm, name: e.target.value })
                 }
@@ -577,7 +577,7 @@ const UsersManagement = () => {
               <input
                 required
                 type="text"
-                value={addForm.email}
+                value={addForm?.email}
                 onChange={(e) =>
                   setAddForm({ ...addForm, email: e.target.value })
                 }
@@ -594,7 +594,7 @@ const UsersManagement = () => {
               <input
                 required
                 type={showAddPwdVisibility ? "text" : "password"}
-                value={addForm.password}
+                value={addForm?.password}
                 onChange={(e) =>
                   setAddForm({ ...addForm, password: e.target.value })
                 }
@@ -620,7 +620,7 @@ const UsersManagement = () => {
             </label>
             <select
               required
-              value={addForm.role}
+              value={addForm?.role}
               onChange={(e) => setAddForm({ ...addForm, role: e.target.value })}
               className="w-full px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500"
             >
@@ -645,11 +645,11 @@ const UsersManagement = () => {
             <button
               type="sumbit"
               onClick={() => {
-                addForm.name == ""
+                addForm?.name == ""
                   ? toast.error("Enter Name")
-                  : addForm.username == ""
+                  : addForm?.username == ""
                     ? toast.error("Enter Username")
-                    : addForm.password == ""
+                    : addForm?.password == ""
                       ? toast.error("Enter Password")
                       : addForm.role == ""
                         ? toast.error("Select Role")
