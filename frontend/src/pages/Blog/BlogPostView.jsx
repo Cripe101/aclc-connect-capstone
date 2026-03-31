@@ -60,6 +60,12 @@ const BlogPostView = () => {
     }
   }, [slug]);
 
+  useEffect(() => {
+    if (blogPostData) {
+      fetchCommentByPostId(blogPostData?._id);
+    }
+  }, [blogPostData]);
+
   // Get Comment by Post Id
   const fetchCommentByPostId = async (postId) => {
     try {
