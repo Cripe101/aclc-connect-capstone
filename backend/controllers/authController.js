@@ -13,7 +13,7 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    let { name, email, password, role } = req.body;
     let username = email;
     // Validate input
     if (!name || !email || !password || !role) {
@@ -61,13 +61,13 @@ const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(500).json({ message: "Invalid username" });
+      return res.status(401).json({ message: "Invalid username" });
     }
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(500).json({ message: "Invalid password" });
+      return res.status(401).json({ message: "Invalid password" });
     }
 
     // Return user data with JWT
@@ -123,7 +123,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, email, username, bio, profileImageUrl, role, password } =
+    let { name, email, username, bio, profileImageUrl, role, password } =
       req.body;
     username = email;
 
